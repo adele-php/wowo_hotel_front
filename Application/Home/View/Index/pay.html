@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>支付方式</title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true"/>
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/order.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/pay.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 支付方式 </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+
+<div id="main" class="hotel-page-height100">
+    <div class="p-index-paybill" id="c_payment_index_OrderDetail_box">
+        <div class="bill-title">
+            <div class="hotel-bill-title-primary"> {$data.room_name}</div>
+            <div class="hotel-bill-checkin-time">
+                <span>{$data.check_in}</span>入住<span>{$data.check_out}</span>离店<span>{$data.room_count}<em>间</em></span></div>
+        </div>
+        <div class="cir-ico"><i class="cir-ico-line"></i></div>
+        <div class="bill-price"><span class="bill-price-title"> 应付总额： </span>
+            <div class="bill-price-content">
+                <div class="bill-price-row1"><span class="bill-price-main"> <span class="corange"> <span class="font12">¥</span> <span
+                        class="cfont18 bold">{$data.total_money}</span>  <span class="font12 bold">.00</span>  </span> </span></div>
+            </div>
+        </div>
+    </div>
+
+    <span class="pay-submit " id="js_paybtn">立即支付</span>
+
+
+    </div>
+    <input type="hidden" class="confirm_type" value="{$data.confirm_type|default='1'}">
+        <script type="text/javascript">
+        $(function () {
+
+
+            $('#js_paybtn').click(function(){
+                var index = layer.load(2, {time: 10*1000});
+                var oid = '{$data.order_no}'
+                var wowo_order_no = '{$data.wowo_order_no}'
+                var total_money = '{$data.total_money}'
+                location.href="{:U('home/index/payMoney','','')}/oid/{$data.order_no}/wowo_order_no/{$data.wowo_order_no}/total_money/{$data.total_money}"
+            })
+
+        $(".icon-back").click(function () {
+            location.href="{:U('home/index/orderList','','')}"
+        });
+
+        $('.hotel-cost-layer').click(function () {
+            $(this).hide();
+        })
+
+        $('#js_price_detail_link').click(function () {
+
+            $('.hotel-cost-layer').css('display', 'table');
+        })
+    });
+</script>
+</body>
+</html>

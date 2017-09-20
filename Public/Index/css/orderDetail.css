@@ -1,0 +1,14 @@
+#main {
+    text-align: center;
+}
+
+.pay-submit {
+    background-color: #ff7d13;
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+    color: #fff;
+    border-radius: 0.2rem;
+    line-height: 1.05rem;
+
+    width:40%;
+}

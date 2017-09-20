@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>会员登录</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/login.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+</head>
+<body>
+    <div class="head w100">
+        <h1>会员登录</h1>
+        <!--<i class="icon iconfont icon-sousuo"></i>-->
+    </div>
+
+    <div class="login">
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" ><i class="icon iconfont icon-shouji"></i></span>
+            <input type="text" class="form-control mobile" placeholder="mobile" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
+            <input type="password" class="form-control password" placeholder="Password" aria-describedby="basic-addon1">
+        </div>
+        <div class="code_img"><img src="{:U('home/index/code')}" class="" ></div>
+        <div class="input-group input-group-lg ">
+            <span class="input-group-addon"><i class="icon iconfont icon-yanzhengma"></i></span>
+            <input type="text" class="form-control code" placeholder="验证码" aria-describedby="basic-addon1">
+        </div>
+        <div class="other_info">
+            <a href="{:U('home/index/register')}" class="register">注册</a>
+            <a href="javascript:void(0)" class="forget">发密码给我</a>
+            <a href="javascript:void(0)" class="wait" style="display: none;">已发送请等待</a>
+        </div>
+        <button class="in_login-submit" >登录</button>
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $('.code_img').click(function(){
+            var url = "{:U('home/index/code','','')}?"+Math.random()
+            $(this).find('img').attr('src',url)
+        })
+
+        $('.forget').click(function(){
+            var mobile = $('.mobile').val()
+            if(!mobile){
+                layer.alert('请输入手机号！');
+                return;
+            }
+
+            $('.forget').hide();
+            $('.wait').show('');
+            var second = 10
+            var int = setInterval(function () {
+                second -= 1;
+                if(second<=0){
+                    $('.wait').hide();
+                    $('.forget').show();
+                    window.clearInterval(int)
+                }
+                $('.wait').html(second+'秒后可以重新发送');
+            }, 1000);
+
+            $.ajax({
+                type: "GET",
+                url: "{:U('home/index/getPassword')}",
+//                url: "{:U('home/index/test')}",
+                data: {
+                    'mobile':mobile,
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.status==0){
+                        //发送失败
+                        layer.alert(data.errmsg)
+                    }
+                }
+            })
+        })
+
+        $('.in_login-submit').click(function(){
+            $.ajax({
+                type: "POST",
+                url: "{:U('home/index/login')}",
+                data: {
+                    'mobile':$('.mobile').val(),
+                    'code':$('.code').val(),
+                    'password':$('.password').val(),
+                    'check':'1',
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.status==0){
+                        layer.alert(data.errmsg);
+                    }else{
+                        location.href="{:U('home/index/index')}"
+                    }
+                }
+            })
+        })
+    });
+</script>
+
+</body>
+</html>

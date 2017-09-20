@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true"/>
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/select_city.css" type="text/css"/>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+</head>
+<body onselectstart="return false" class="" itemscope="" itemtype="//schema.org/WebPage">
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header cm-header--no-right" style="" id="ui-view-25">
+        <span class=" cm-header-icon fl  js_back">
+          <a href="javascript:void(0)"><i class="icon-back" ></i></a>
+        </span>
+        <h1 class="cm-page-title js_title">
+            选择城市
+        </h1>
+    </div>
+</div>
+<!-- 搜索头-->
+<div class="select_head"  style="height: 2.2rem;display: none;">
+    <div class="cm-header cm-header--no-right" style="background: #e6f1f7;" >
+        <span class=" cm-header-icon fl  js_back" >
+          <a href="javascript:void(0)"><i class="icon-back" ></i></a>
+        </span>
+
+        <div class="cui-input-bd" style="width: 70%;border-radius: 50px;background: #fff;position:absolute;left:10%;top:0.22rem;height:1.76rem;overflow: hidden">
+            <div class="icon_sousuo" style="top:0.18rem;">
+                <i class="icon iconfont icon-sousuo" style="color:#000;font-size:1.2rem;"></i>
+            </div>
+            <input class="cui-input-box" placeholder="北京/beijing" type="text" id="js_select">
+        </div>
+
+        <div class="cancel">取消</div>
+    </div>
+</div>
+<!-- /搜索头-->
+<!-- 搜索体-->
+<div class="select_body" style="display: none;">
+
+</div>
+<!-- /搜索体-->
+
+
+<div id="js_hotel_customheader" style="height: 2.2rem; display: none;">
+</div>
+
+<div id="main" class="">
+
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div id="client_id_viewport_1_1504663243973"
+                 page-url="/webapp/hotel/?from=http%3A%2F%2Fm.ctrip.com%2Fhtml5%2F" data-view-name="index"
+                 style="display: none;"><!--主体-->
+                <article class="m js_index_article" style="">
+
+
+                    <!-- start 新手红包-->
+                    <div class="t-ad js_red_envelope" style="" data-ubt-key="c_hotel_inland_index_redenvelope">
+                        <img src="//pic.c-ctrip.com/h5/hotel/hotel-hb.jpg" alt="" width="100%">
+                    </div>
+                    <!-- end 新手红包 -->
+
+
+                    <!-- <p class="inn-bgtop"></p> -->
+
+                    <ul class="t g-b">
+                        <!--我的位置-->
+                        <li class="">
+                            <div class="fr gt-s js_getposition">
+                                <i class="gt-s-i"></i><em class="ms">我的位置</em>
+                            </div>
+                            <!--定位成功 p标签追加 className g-e2-->
+                            <p class="g-b g-arr g-mr" id="js_city">
+                                <em class="g-fn1 g-vb js_city_title">上海</em>
+                            </p>
+                        </li>
+
+                        <!--入离店日期-->
+                        <div class="js_calendarbar_box">
+                            <li class="g-tab g-tab-ab js_open_inoutdaycalendar">
+                                <p class="g-b"><em class="g-fn1" id="js_cki_date_left">9月6日</em>&nbsp;<em class="g-fn3"
+                                                                                                          id="js_cki_date_right">今天</em>
+                                </p>
+                                <p class="g-w"><i>&nbsp;</i><span class="ab-i" id="js_days">1晚</span></p>
+                                <p class="g-b g-t g-arr" id="js_cko_date"><em class="g-fn1"
+                                                                              id="js_cko_date_left">9月7日</em>&nbsp;<em
+                                        class="g-fn3" id="js_cko_date_right">明天</em>
+                                </p>
+                            </li>
+                        </div>
+
+                        <!--凌晨开关-->
+                        <li class="g-b g-lc" id="js_morning_wrap" style="display: none;">
+                            <em class="g-fn2">到店时间</em>
+                            <div class="hotel-morning"></div>
+                        </li>
+
+                        <!--成人儿童-->
+                        <li class="g-b g-arr g-def-txt" id="js_people_selection" style="display: none;">
+                            <p class="g-fn1 g-e1 js_people_selection_txt_box">1成人,&nbsp;0儿童<em class="g-c5">每间</em></p>
+                            <span class="g-close js_btn_close" style="display: none;"></span>
+                        </li>
+
+                        <!--关键字/位置/品牌/酒店名-->
+                        <li class="g-b g-arr" id="js_query_kw">
+                            <p class="g-fn1 g-e1 g-def-txt nofastclick" id="js_kw_text_box">关键字/位置/品牌/酒店名</p>
+                            <span class="g-close js_btn_close" style="display: none;"></span>
+                        </li>
+                        <li class="g-b g-arr" id="js_query_star_price">
+                            <p class="g-fn1 g-e1 g-def-txt js_price_star_label" default-text="价格/星级">价格/星级</p>
+                            <span class="g-close js_btn_close" style="display: none;"></span>
+                        </li>
+
+                        <!--价格/星级-->
+
+
+                        <!--查询btn-->
+                        <li class="g-flex">
+                            <button class="g-btn item" id="js_submit">查询</button>
+                            <span class="g-map js_nearbysearch"
+                                  data-ubt-key="c_hotel_inland_index_findnearby">查找附近酒店</span>
+                        </li>
+                    </ul>
+                    <div class="g-btn2 js_myorder">我的订单</div>
+                    <!-- 非会员订单查询 深航专用 -->
+                    <div class="g-btn2 js_nomember_search" style="display:none;">我的订单</div>
+                    <!--离你最近的酒店入口-->
+                    <div class="js_mod_nearbyhotel"></div>
+                    <!--帮你挑酒店入口-->
+                    <div class="js_mod_pickhotel"></div>
+                    <div class="js_tonightsale_entry tonight-entry" style="display: none;">
+                        <img src="//pages.ctrip.com/hotel_h5/res/img/s-banner-new.png" alt="" width="100%">
+                        <p class="tonight-entry-text"><span class="js_tonightsale_entry_txt"></span>点限时抢&nbsp;&nbsp;最高立省40%
+                        </p>
+                    </div>
+                    <div class="g-oversea-slogan" id="js_oversea_slogan" style="display: none;"><img
+                            src="//pic.c-ctrip.com/h5/hotel/hotel-oversea-slogan.png?t=20160111" width="100%"></div>
+
+                    <div class="h-place" id="js_oversea_hotcity" style="display: none;">
+                        <div class="hotel-dpage-loading js_oversea_hotcity_loading" style="display:none">
+                     <span class="cui-pro-load">
+                          <span class="cui-pro-radius"></span>
+                          <span class="cui-i cui-pro-logo"></span>
+                     </span>
+                            <span class="g-load-txtpl">加载中</span>
+                        </div>
+                        <div class="indexguide_box" style="display:none">
+
+                        </div>
+                    </div>
+
+                    <!--服务保障-->
+                    <div class="js_mod_serveice_guarantee"></div>
+
+                    <div id="js_other" class="g-flex g-bar">
+                        <div class="g-lhr g-bar-temp" id="js_other_hourlyroom" data-type="i" style=""
+                             data-ubt-key="c_hotel_inland_index_hourroom"><i class="hotel-icon-hourroom"></i>
+                            <p>钟点房<br><span class="hr-txt">等？不如躺着</span></p></div>
+                        <div class="g-rs">
+                            <span class="item g-bar-temp" id="js_other_inn_nocityid"
+                                  data-ubt-key="c_hotel_inland_index_inn"><i class="hotel-icon-inn"></i>民宿客栈</span>
+                            <span class="item g-bar-temp" id="js_other_explore" data-type="io"
+                                  data-ubt-key="c_hotel_inland_index_find"><i class="hotel-icon-find"></i>发现特色</span>
+                            <span class="item g-bar-temp" id="js_other_meeting" style=""
+                                  data-ubt-key="c_hotel_inland_index_meeting"><i
+                                    class="hotel-icon-huichang"></i>会议·团房</span>
+                            <span class="item g-bar-temp" id="js_other_salehotel" style=""
+                                  data-ubt-key="c_hotel_inland_index_salehotel"><i class="hotel-icon-salehotel"></i>特价酒店</span>
+                        </div>
+                    </div>
+                    <!--营销小浮动层的容器-->
+                    <div class="js_hotel_market_container"></div>
+
+                    <div style="height:1.5rem;"></div>
+                    <div class="js_hotel_downloadapp_container"></div>
+
+                    <!--深航渠道底部话术-->
+                    <div class="js_addCtripTxt index-txt"></div>
+
+                    <div>
+                        <input id="js_callabt" value="1" type="hidden">
+                    </div>
+                </article>
+            </div>
+            <!--loading-->
+            <div class="cui-mask" id="js_fake_loading2" style="display: none;">
+                <div class="g-m">
+                    <div class="g-m--c"></div>
+                    <div class="g-m--l"></div>
+                </div>
+            </div>
+
+            <div id="client_id_viewport_2_1504663246070" page-url="/webapp/hotel/citylist" style=""
+                 data-view-name="citylist">
+                <article class="cui-city-box hotel-city-box">
+                    <!--搜索 input 框 + 按钮-->
+
+                    <section id="js_searchBox" class="cui-citys-hd cui-input-focus" style="">
+                        <div class="cui-input-bd" style="width: 100%" id="js-input">
+                            <div class="icon_sousuo">
+                                <i class="icon iconfont icon-sousuo"></i>
+                            </div>
+
+                            <input readonly="readonly" class="cui-input-box" placeholder="全球城市/区域/位置/酒店名" type="text">
+                        </div>
+                    </section>
+
+                    <!--City-->
+                    <section class="cui-citys-bd js_ground_layer_body">
+                        <!--Table 切换-->
+                        <div class="h44" id="js_city_tabpanel">
+                            <div id="js_tab" class="tab-city">
+                                <div class="view" style="" id="ui-view-22">
+                                    <ul class="cui-tab-mod">
+                                        <li data-key="1" data-ubt-key="" data-index="0" class="cui-tab-current">
+                                            国内城市
+                                        </li>
+
+                                        <li data-key="2" data-ubt-key="" data-index="1" class="">
+                                            海外城市
+                                        </li>
+
+                                        <i class="cui-tab-scrollbar cui-tabnum2"></i>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--城市列表-->
+                        <ul id="js_tmp_city_mainList_inland_mark" class="cui-city-itmes">
+
+                            <!--<li class="js_current_city">-->
+                                <!--<span class="cui-city-t">当前</span>-->
+                                <!--<ul id="TAG_without" class="hotel-city-tags city_ul">-->
+                                    <!--<li data-mark="pos_around">我的位置</li>-->
+                                    <!--<li data-id="js_postion" data-cityname="" data-mark="pos_city" class="hidden"-->
+                                        <!--style="display: none;"></li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+
+                            <!--<li class="js_simple_city js_history_city">-->
+                                <!--<span class="cui-city-t">历史选择</span>-->
+                                <!--<ul class="hotel-city-tags city_ul">-->
+                                    <!--<li data-path="historyCities.0" class="current" data-cityid="2" data-citytype="1"-->
+                                        <!--data-mark="city">上海-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                            <!--国内热门列表-->
+                            <li class="js_simple_city js_hot_city not-foreign">
+                                <span class="cui-city-t">热门城市</span>
+                                <ul class="hotel-city-tags city_ul">
+                                    <foreach name="citys['国内']['hot']" item="hots">
+                                        <li  data-cityid="{$hots.id}" city="{$hots.cname}">{$hots.cname}</li>
+                                    </foreach>
+                                </ul>
+                            </li>
+                            <!--国外热门列表-->
+                            <li class="js_simple_city js_hot_city foreign">
+                                <span class="cui-city-t">热门城市</span>
+                                <ul class="hotel-city-tags city_ul">
+                                    <foreach name="citys['国外']['hot']" item="hots">
+                                        <li  data-cityid="{$hots.id}" city="{$hots.cname}">{$hots.cname}</li>
+                                    </foreach>
+                                </ul>
+                            </li>
+
+                            <!--国内列表-->
+                            <foreach name="citys['国内']['prefix']" item="prefix" key="key">
+                                <li class="js_simple_city js_char_city cui-arrow-close not-foreign" data-key="{$key}">
+                                    <span class="cui-city-t js_cat_btn">{$key}</span>
+                                    <ul class="cui-city-n city_ul" style="display: none;">
+                                        <foreach name="prefix" item="city">
+                                            <li  data-cityid="{$city.id}" city="{$city.cname}">{$city.cname}</li>
+                                        </foreach>
+                                    </ul>
+                                </li>
+                            </foreach>
+
+                            <!--国外列表-->
+                            <foreach name="citys['国外']['prefix']" item="prefix" key="key">
+                                <li class="js_simple_city js_char_city cui-arrow-close foreign" data-key="{$key}">
+                                    <span class="cui-city-t js_cat_btn">{$key}</span>
+                                    <ul class="cui-city-n city_ul" style="display: none;">
+                                        <foreach name="prefix" item="city">
+                                            <li  data-cityid="{$city.id}" city="{$city.cname}">{$city.cname}</li>
+                                        </foreach>
+                                    </ul>
+                                </li>
+                            </foreach>
+
+                        </ul>
+                        <ul id="js_tmp_city_mainList_oversea_mark" class="cui-city-itmes" style="display: none;"></ul>
+                    </section>
+                    <!-- 弹出搜索 -->
+                    <!-- /弹出搜索 -->
+                    <!--联想固顶文案 -->
+                    <div class="p10 cui-top-fixed js_topbar" style="display: none;">酒店起价为参考价</div>
+                    <!-- 弹出层搜索列表 -->
+                    <section id="js_layerSearchBox_listBox" class="hotel-filter-searchlistbox js_layer_list_wrap"
+                             style="display: none;">
+                        <!--搜索联想结果list-->
+                        <ul id="js_layerSearchBox_listBox_destination"
+                            class="cui-city-associate hotel-asso-wrap hotel-t-border js_layer_list"></ul>
+
+                        <!--无联想结果-->
+                        <ul id="js_layerSearchBox_listBox_empty" class="cui-city-n">
+                            <li class="cui-city-novalue">无联想结果</li>
+                        </ul>
+                    </section>
+                    <!-- 弹出层 目的地联想搜索 历史列表 -->
+                    <section id="js_layer_des_ac_history_listbox" class="hotel-filter-searchlistbox js_layer_list_wrap"
+                             style="display: none;"></section>
+                    <!-- /弹出层搜索列表 -->
+                </article>
+            </div>
+        </div>
+        <div class="main-state">
+        </div>
+    </div>
+
+</div>
+<noscript>
+    <div style="display:inline;"><img
+            src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/941384053/?value=0&amp;guid=ON&amp;script=0"
+            style="border-style:none;" width="1" height="1"></div>
+</noscript>
+<div id="footer"></div>
+
+<script>
+    //搜索
+    $('#js-input').click(function(){
+        $('#headerview').hide();
+        $('#main').hide();
+        $('.select_body').show();
+        $('.select_head').show();
+    });
+
+    $('.cancel').click(function(){
+        $('.select_body').hide();
+        $('.select_head').hide();
+        $('#headerview').show();
+        $('#main').show();
+    })
+
+    $('#js_select').bind('input propertychange', function() {
+        //进行相关操作
+        $.ajax({
+            type: "POST",
+            url: "{:U('home/index/associativeSearch')}",
+            data: {'city':$(this).val()},
+            dataType: "json",
+            success: function(data) {
+                var str = '';
+                for(var a=0;a<data.length;a++){
+                    str += '<div class="select_city">';
+                    str +=      '<p _id="'+data[a]['id']+'" _city="'+data[a]['cname']+'">'+data[a]['cname']+','+data[a]['state_cn']+','+data[a]['country_cn']+'</p>';
+                    str += '</div>';
+                }
+                $('.select_body').empty().append(str);
+            }
+        })
+    });
+    $(document).on('click','.select_city',function(){
+        var cityid = $(this).find('p').attr('_id');
+        var city = $(this).find('p').attr('_city');
+        location.href="{:U('home/index/index')}?city_id="+cityid+'&city='+city+'&{$query}';
+    })
+
+    $(".icon-back").click(function () {
+        history.back()
+    });
+
+    $('#ui-view-22 li').click(function(){
+        var data_key = $(this).attr('data-key');
+
+        if(data_key==1){
+            //国内
+            $('.cui-tab-scrollbar').css('left','0');
+            $('.not-foreign').css('display','block');
+            $('.foreign').css('display','none');
+        }else{
+            //国外
+            $('.cui-tab-scrollbar').css('left','50%');
+            $('.not-foreign').css('display','none');
+            $('.foreign').css('display','block');
+        }
+
+    });
+
+    $('.cui-city-t').click(function(){
+        var display = $(this).next().css('display');
+        if(display=='block'){
+            $(this).next().css('display','none');
+        }else{
+            $(this).next().css('display','block');
+        }
+    });
+
+    $('.city_ul li').click(function(){
+        var cityid = $(this).attr('data-cityid');
+        var city = $(this).attr('city');
+        location.href="{:U('home/index/index')}?city_id="+cityid+'&city='+city+'&{$query}';
+    });
+</script>
+</body>
+</html>

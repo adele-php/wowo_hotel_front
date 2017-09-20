@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Common/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/selectOther.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 星级/价格区间/旅馆类型 </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div style="margin-bottom:44px;">
+                <!--主体-->
+                <foreach name="keyword" item="kw" key="key">
+                    <input type="hidden" class="{$key}" value="{$keyword_default[$key]}">
+                    <div class="{$key}">
+                        <table class="table table-bordered">
+                            <tr><td class="warning">
+                                <if condition="$key eq stars"> 星级
+                                    <elseif condition="$key eq 'prices' "/>价格区间
+                                    <else /> 旅馆类型
+                                </if>
+                            </td></tr>
+                            <foreach name="kw" item="v" key="k">
+                                <tr class="infomation
+                            <if condition="$key eq 'prices'">
+                                    <if condition="$v eq $keyword_default[$key]"> info </if>
+                                <else />
+                                    <if condition="$k eq $keyword_default[$key]"> info </if>
+                                </if>"
+                                _type="{$key}" _data='<if condition="$key eq 'prices'"> {$v}<else /> {$k}</if>'><td  style="padding:14px;">{$v}</td></tr>
+                            </foreach>
+                        </table>
+                    </div>
+                </foreach>
+
+
+            </div>
+            <!--loading-->
+
+            <button class="g_btn_s js_confirm_btn">确定</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('tr.infomation').click(function(){
+            if($(this).hasClass('info')){
+                $(this).removeClass('info').siblings().removeClass('info');
+                var type = $(this).attr('_type');
+                $('.'+type).val('-1')
+            }else{
+                $(this).addClass('info').siblings().removeClass('info');
+                var type = $(this).attr('_type');
+                $('.'+type).val($(this).attr('_data'))
+            }
+        })
+
+        $('.g_btn_s').click(function(){
+            var stars = $('.stars').val();
+            var prices = $('.prices').val();
+            var hotel_types = $('.hotel_types').val();
+
+            var query = '{$query}';
+            if( stars != -1 ){
+                query += '&stars='+stars
+            }
+            if( prices != -1 ){
+                query += '&prices='+prices
+            }
+            if( hotel_types != -1 ){
+                query += '&hotel_types='+hotel_types
+            }
+            location.href="{:U('home/index/index','','')}?"+query;
+        })
+
+
+
+
+        function isInteger(obj) {
+            return (obj | 0) === obj
+        }
+
+        if('{$data.child_num}'!=0){
+            var child_ages = JSON.parse('{$child_ages}')
+            var str='';
+            for(var i=0;i<'{$data.child_num}';i++){
+                str += '<div class="child_old adult"><input type="text" value='+child_ages[i]+' class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
+            }
+            $('.every_room_info').append(str);
+        }
+
+
+
+
+        $(".icon-back").click(function () {
+            history.back()
+        });
+
+        $('.js_adult_num').click(function(){
+            var attr = $(this).attr('_type');
+            var count = parseInt($('.adult_num').val())
+            if(attr == 'add'){
+                count +=1;
+            }else{
+                count -=1;
+            }
+            $('.adult_num').val(count )
+        })
+
+        $('.js_child_num').click(function(){
+            var attr = $(this).attr('_type');
+            var count = parseInt($('.child_num').val())
+            var str='';
+            if(attr == 'add'){
+                count +=1;
+                $('.child_old').remove();
+                for(var i=1;i<=count;i++){
+                    str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
+                }
+                $('.every_room_info').append(str);
+            }else{
+                count -=1;
+                count = (count<0)?0:count;
+                $('.child_old').remove();
+                for(var i=1;i<=count;i++){
+                    str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
+                }
+                $('.every_room_info').append(str);
+            }
+            $('.child_num').val(count )
+        })
+
+
+        $('#js_city').click(function(){
+            location.href="{:U('home/index/selectCity')}"
+        });
+
+        $('#people_num').click(function(){
+            location.href="{:U('home/index/selectPeople')}?"+'{$query}'
+        })
+
+        var _index  = layer.msg('加载中', {icon: 16,shade: 0.01});
+        $.get(CITY_URL,function(res){
+            var _status     =   res.status;
+            var _data       =   res.data;
+            layer.close(_index);
+            if(_status==1){
+                $.each(_data,function(i1, item1){
+                    $.each(item1,function(i2, item2){
+                        var _cname = item2.cname||item2.ename;
+                        $("#select1").append("<option value='"+item2.id +"'>"+_cname+"</option>");
+                    });
+               });
+            }else{
+                layer.alert(res.errmsg);
+            }
+        });
+
+
+        $("#js_submit").click(function(){
+            var city = $('#js_city em').text();
+            var cityid = $('#js_city').attr('cityid');
+//            var starttime   = $('#starttime').val();
+//            var endtime     = $('#endtime').val();
+            var starttime   = document.getElementById("start_time").value;
+            var endtime     = document.getElementById("end_time").value;
+            var hotel_name     = $('#js_kw_text_box').val();
+
+            if(!city){
+                layer.alert("请选择城市");return false;
+            }
+            if(!starttime){
+                layer.alert("入住时间不能空.");return false;
+            }
+            if(!endtime){
+                layer.alert("离店时间不能空.");return false;
+            }
+            if(!hotel_name){
+                hotel_name="thinkphp"
+            }
+            location.href="{:U('home/index/hotelList','','')}/city/"+city+'/check_in/'+starttime+'/check_out/'+endtime+'/keyword/'+hotel_name+'/city_id/'+cityid;
+//            location.href="hotelList.html?hotelcity="+hotelcity+"&starttime="+starttime+"&endtime="+endtime+"&hotelname="+hotelname+"&city_name="+city_name;
+        });
+       
+    });
+</script>
+</body>
+</html>

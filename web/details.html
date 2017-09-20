@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="css/details.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/comm.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+     <style type="text/css">
+        .bg{
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            -webkit-filter: blur(15px);
+            -moz-filter: blur(15px);
+            -o-filter: blur(15px);
+            -ms-filter: blur(15px);
+            filter: blur(15px);
+        }
+        .dt-tag{
+            margin-right: .4rem;
+        }
+        .g-btn {
+            color: #FFF;
+            width: 52px;
+            line-height: 1.2rem;
+            background-color: #ff9a14;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="cm-header">
+        <span class=" cm-header-icon fl  js_back">
+        <i class="icon-back"></i>
+        </span>
+        <h1><span id="title"></span></h1>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        
+
+
+    })
+</script>
+<div id="content">
+    <!--主体-->
+    <article class="dt">
+
+        <div>
+            <div class="dt-h94-test" style="background-color: rgb(255, 255, 255); min-height: 50px;    margin-top: 50px;">
+
+                <section class="dt-b mt5" id="hotel_id">
+                    <!--Star 基础信息-->
+                    <ul class="dt-cell-list dt-tb-border dt-dp-qa" data-ubt-key="c_hotel_inland_detaila_comment">
+                    </ul>
+                    <!--Star 基础信息-->
+                    <ul class="dt-list dt-cell-list dt-t-border dt-b-base mt5">
+                        <li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail">
+                            <div class="cell-star ellips dt-color8">
+                                #HOTEL_TEXT#
+                            </div>
+                        </li>
+                       
+                    </ul>
+                     <ul class="dt-list dt-cell-list dt-t-border dt-b-base mt5 js_goto_hotelintro_ul">
+                        <li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail">
+                 
+                            <div class="cell-star ellips dt-color8">
+                            <span style="color:red;margin-left:10px;" class='show_more_intro'>酒店介绍</span>
+                            <span style="color:red;margin-left:10px;" class='show_more_faci'>酒店设施</span>
+                            <span style="color:red;margin-left:10px;" class='show_more_arounds'>周边设施</span>
+                            <span style="color:red;margin-left:10px;" class='show_more_traffics'>周边交通</span>
+                            </div> 
+                        </li>
+
+                        <div style="display: none;" class='show_intro'>#HOTEL_INTRO#</div>
+                        <div style="display: none;" class='show_facilities'>#HOTEL_FACI#</div>
+                        <div style="display: none;" class='show_arounds'>#HOTEL_AROUNDS#</div>
+                        <div style="display: none;" class='show_traffics'>#HOTEL_TRAFFICS#</div>
+                       
+                    </ul>
+                    <!--Star 同类型&浏览历史-->
+                </section>
+                 <br/>   
+
+                <section class="dt-m" style="margin-top: 10px;">
+                    <div class="js_floatable_box">
+                        <div class="m-checkin-out dt-cell-v dt-tb-border js_in_out_day_filter" data-ubt-key="c_hotel_inland_detaila_main_check">
+                            <div class="in js_check_in">
+                                <input type="text" id='start_time' value='' style="width: 80px;">入住
+                            </div>
+                            <div class="dt-flex1 out dt-l-border js_check_out">
+                                <input type="text" id='end_time' value='' style="width: 80px;">离店
+                                <button class="g-btn item" id="js_submit">查询</button>  
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+         <div>
+            <div class="dt-h94-test">
+            
+            </div>
+        </div>
+        <section class="dt-m dt-b-border js_roomlist">
+    
+        </section>
+    </article>
+</div>
+<script type="text/template" id="main">
+    <ul class="m-room m-room--tile">
+        <li class="item ">
+            <!--Star 左边区域-->
+            <div class="cell-star room--space js_show_baseroom">
+                <div class="room-bd">
+                    <h3>#NAME#</h3>
+                    <p class="room-size">#BED_INFO#  可住#MAX_PEOPLE#人</p>
+                </div>
+            </div>
+            <!--右边区域-->
+            <div data-sub="js_childroomlist_1" class="cell-end dt-cell room--space2 js_baseroomtoggle ">
+                <div class="cell-star room-column">
+                    <p><span class="price" id="price1"><small>&yen;</small> #MONEY#</span><span class="price-star">起</span></p>
+                </div>
+               
+            </div>
+        </li>
+        <ul class="sub-romm js_childroomlist_1" style="">
+               #CHILD_HTML# 
+        </ul>
+     </ul>
+</script>
+<script type="text/template" id="child">
+    <li class="item">
+        <div class="cell-star room-space">
+            <div class="room-bd"  style="margin: 10px 0;">
+                <h4 id="type1"><span style="margin-right: 10px;">[ #NAME# ] </span><em class="dt-tag tag09" style="margin-right: 5px;">#BREAK_FAST#</em> <em> #WIFI#</em>
+                    <br/>
+                    <span style="color:red;margin-left:10px;" class='show_more'>政策</span>
+                    <span style="color:red;margin-left:10px;" class='show_facilities_more'>设施</span>
+                    <span style="color:red;margin-left:10px;" class='show_more_room'>房间图</span>
+                </h4>
+                <div style="display: none;" class='show_remark'>#REMARKS#</div>
+                <div style="display: none;" class='show_facilities'>#FACILITIES#</div>
+                <div style="display: none;" class='show_rooms'>#ROOM_IMAGES#</div>
+                <p style="font-size: 12px;margin: 5px 0">
+                    #DATE_TEXT#
+                </p>
+
+                </div>
+        </div>
+    </li>
+</script>
+<script type="text/javascript">
+    String.prototype.replaceAll = function(search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
+
+    $(function(){
+        var hotel_id    = getUrlParam('hotel_id');
+        var hotel_name  = getUrlParam('hotel_name');
+        var starttime   = getUrlParam('starttime');
+        var endtime     = getUrlParam('endtime');
+        var city_id     = getUrlParam('city_id');
+        var city_name   = getUrlParam('city_name');
+        var _index      = layer.msg('加载中', {icon: 16,shade: 0.01});
+
+
+        $("#js_submit").click(function(){
+            var _start_time =   $("#start_time").val();
+            var _end_time   =   $("#end_time").val();
+            location.href="details.html?hotel_id="+hotel_id+"&hotel_name="+hotel_name+"&starttime="+_start_time+"&endtime="+_end_time+"";
+        });  
+
+
+        $(".js_back").click(function(){
+            var _start_time =   $("#start_time").val();
+            var _end_time   =   $("#end_time").val();
+            location.href="hotel_list.html?hotelcity="+city_id+"&starttime="+_start_time+"&endtime="+_end_time+"&hotelname=&city_name="+city_name;
+        });
+
+
+
+        $("title").html(hotel_name);
+        $("#title").html(hotel_name);
+        $("#start_time").val(starttime);
+        $("#end_time").val(endtime);
+
+        var _ajax_url    = QUERY_ROOM_URL+"?hotel_id="+hotel_id+"&check_in="+starttime+"&check_out="+endtime+"";    
+
+        $.get(_ajax_url,function(res){
+            layer.close(_index);
+         
+            console.log(res);
+            var _status     =   res.status;
+            var _data       =   res.data;
+            if(_status==1){
+               if(_data.length=='0'){
+                  layer.alert("有日期未包含价格,请重新选择日期");return false;
+               }
+
+               var _html    =   "";
+              
+               $.each(_data,function(i,item){
+                    
+                    var _child_temp_html = '';
+                    $.each(item.list,function(_j,_j_item){
+                        var _child_temp  =   $("#child").html();
+                        var _child_temp_date = '';
+                        $.each(_j_item.money_list,function(k,_k_item){
+                            $.each(_k_item,function(k,v){
+                                 _child_temp_date +='<span class="dt-tag tag04">'+k+":￥"+v+'</span>';
+                                 
+                            });
+                        });
+
+                        var _room_image  = '';
+                        $.each(_j_item.room_image,function(k,img){
+                            _room_image +='<a href="'+img+'" target="_blank" class="dt-tag "><img width="50px" src="'+img+'"/></a>';
+                        });
+
+                        _child_temp      =   _child_temp.replace("#NAME#",_j_item.name).replace("#BREAK_FAST#",_j_item.breakfast).replace("#DATE_TEXT#",_child_temp_date).replace("#REMARKS#",_j_item.remarks).replace("#FACILITIES#",_j_item.facilties).replace('#WIFI#',_j_item.internet).replace("#ROOM_IMAGES#",_room_image);
+
+                        _child_temp_html+=   _child_temp;
+                    });   
+                    var _main_temp  =   $("#main").html();
+                    _main_temp      =   _main_temp.replace("#NAME#",item.name).replace("#BED_INFO#",item.bed_remark+",房间大小:"+item.room_size).replace("#MONEY#",item.total_money).replace("#MAX_PEOPLE#",item.max_people).replace("#CHILD_HTML#",_child_temp_html);
+                    _html  += _main_temp;
+
+               });
+               $(".js_roomlist").html(_html); 
+            }else{
+                layer.alert(res.errmsg);
+            }
+        });
+
+        
+        $("body").delegate(".show_more","click",function(){
+            var _html  = $(this).parents(".room-bd").find(".show_remark").html().replaceAll("\n","<br/><br/>");
+
+            layer.alert(_html);
+        });
+         $("body").delegate(".show_facilities_more","click",function(){
+            var _html  = $(this).parents(".room-bd").find(".show_facilities").html().replaceAll("\n","<br/><br/>");
+
+            layer.alert(_html);
+        });
+
+         $("body").delegate(".show_more_room","click",function(){
+             var _html  = $(this).parents(".room-bd").find(".show_rooms").html().replaceAll("\n","<br/><br/>");
+             layer.alert(_html);
+         });
+       
+       //---------------------------酒店数据
+       var hotel_id    = getUrlParam('hotel_id');
+        var hotel_name  = getUrlParam('hotel_name');
+        var starttime   = getUrlParam('starttime');
+        var endtime     = getUrlParam('endtime');
+        var city_id     = getUrlParam('city_id');
+        var city_name   = getUrlParam('city_name');
+
+
+        var _ajax_url    = QUERY_HOTEL_INFO+"?hotel_id="+hotel_id+"&check_in="+starttime+"&check_out="+endtime+"";    
+
+        $.get(_ajax_url,function(res){
+            //layer.close(_index);
+         
+            var _status     =   res.status;
+            var _data       =   res.data;
+            if(_status==1){
+               if(_data.length=='0'){
+                  layer.alert("有日期未包含价格,请重新选择日期");return false;
+               }
+               var _html    =   $("#hotel_id").html();
+               console.log(_data);
+
+               var _HOTEL_TEXT  =   "酒店主图: <a href='"+_data.cover+"' target='_blank'><img src='"+_data.cover+"' width='50px'/></a>  酒店图片数量:["+_data.image_count+"].<br/>酒店地址:"+_data.adr_cn+" <br/> 酒店电话:"+_data.tel+" <br/>";
+
+               if(_data.star.length>0){
+                   _HOTEL_TEXT  +=   "酒店星级:";
+                   $.each(_data.star,function(i,name){
+                        _HOTEL_TEXT +=  name+" , ";
+                   });
+               }
+
+               _HOTEL_TEXT  +=   "酒店标签:";
+               $.each(_data.tags,function(i,name){
+                    _HOTEL_TEXT +=  name+" , ";
+               });
+
+
+
+               _html        =   _html.replace("#HOTEL_INTRO#",_data.introduction)
+                                .replace("#HOTEL_FACI#",_data.facilities)
+                                .replace("#HOTEL_AROUNDS#",_data.arounds)
+                                .replace("#HOTEL_TRAFFICS#",_data.traffics)
+                                .replace("#HOTEL_TEXT#",_HOTEL_TEXT);
+
+
+
+               $("#hotel_id").html(_html);
+            }else{
+                layer.alert(res.errmsg);
+            }
+        });
+
+        $("body").delegate(".show_more_intro","click",function(){
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_intro").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+        $("body").delegate(".show_more_faci","click",function(){
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_facilities").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+        $("body").delegate(".show_more_arounds","click",function(){
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_arounds").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+        $("body").delegate(".show_more_traffics","click",function(){
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_traffics").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+
+    })
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return decodeURI(r[2]); return null; //返回参数值
+    }
+</script>
+</body>
+</html>

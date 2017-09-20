@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>酒店预订，酒店查询，宾馆住宿预订,网上订酒店</title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <link rel="Stylesheet" type="text/css" debug_evn="false" href="__ROOT__/Public/Index/css/base.css"/>
+    <link rel="Stylesheet" type="text/css" debug_evn="false" href="__ROOT__/Public/Index/css/keys.css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/hotelList.css" type="text/css"/>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+    <style type="text/css">
+        .g-btn {
+            color: #FFF;
+            width: 52px;
+            line-height: 1.2rem;
+            background-color: #ff9a14;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <!--loading-->
+            <div>
+                <div class="js_headerview">
+                    <div class="cm-header">
+                        <span class=" cm-header-icon fl  js_back">
+                        <i class="icon-back"></i>
+                        </span>
+                        <h1 class="js_title hotel-h-center cm-page-ellips js_select_city"><span class="cm-page-title">{$data.city}</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="cui-top-fixed" id="js_main_top_filter">
+                    <!-- 顶部筛选按钮 -->
+                </div>
+
+                <!-- B版处理在APP中展示问题:添加假头 -->
+                <!--Star 特惠H5列表页改版-->
+                <div style="height: 2.05rem;margin:6px 0;"></div>
+                <!--body box-->
+
+                <div class='search-results-mod' id='info_area' style='margin: 5px'>
+                    <section class="dt-m">
+                        <div class="js_floatable_box">
+                            <div class="m-checkin-out dt-cell-v dt-tb-border js_in_out_day_filter"
+                                 data-ubt-key="c_hotel_inland_detaila_main_check">
+                                <div class="in js_check_in">
+                                    <input type="date" id='start_time' value='{$data["check_in"]}'
+                                           style="width: 111px;">入住
+                                </div>
+                                <div class="dt-flex1 out dt-l-border js_check_out">
+                                    <input type="date" id='end_time' value='{$data["check_out"]}' style="width: 111px;">离店
+                                    <button class="g-btn item" id="js_submit"
+                                            style="position:absolute;right:0;top:1.05rem;height:1.2rem;margin-top:-0.6rem;">
+                                        查询
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+                <article class="js_tabp js_searchbody1" id="maindiv">
+                    <foreach name="hotel.data" item="v">
+                        <div class="search-results-mod" style="margin: 5px 0">
+                            <div class="hotel-g-bd hotel-hot js_hotel_list">
+                                <ul class="hotel-g-list">
+                                    <a href="{:U('home/index/details','','')}?{$query}&hotel_id={$v.hotel_id}"
+                                       class="js_a_seo" title="{$v.cname}">
+                                        <li class="js_hotel_detail  hotel-list-historybrows">
+                                            <div class="hotel_img">
+                                                <img src="{$v.image}">
+                                            </div>
+                                            <div class="hotel-g-cbd"><h4 class="ellips js_hotelname">{$v.cname}</h4>
+                                                <div class="list-c" address=""><span
+                                                        style="font-size:12px;color: #ADADAD">{$v.address}</span>
+                                                </div>
+                                                <div class="list-c list-tags-flex" style="margin-bottom: 10px;">
+                                                    <div class="ico-txt flex-l">
+                                                        <em class="ico-2">{$v.star}</em>
+                                                        <foreach name="v.tags" item="tag">
+                                                            <em class="ico-3" style="margin-left:5px;">{$tag}</em>
+                                                        </foreach>
+                                                    </div>
+                                            <span class="price-num fr"><b class="num js_translog_price  ">
+                                                <small>¥</small>
+                                                {$v.money}</b>起</span></div>
+                                            </div>
+                                        </li>
+                                    </a></ul>
+                            </div>
+                        </div>
+                    </foreach>
+
+                    <!--search results-->
+                    <!--受欢迎酒店-->
+
+                    <!-- 酒店总数 -->
+                </article>
+                <!--底部筛选排序...-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        $(".js_back").click(function () {
+            var query = 'city_id={$data.city_id}&foreign={$data.foreign}&check_in={$data.check_in}&check_out={$data.check_out}&keyword={$data.keyword}&city={$data.city}';
+            if ('{$data.children_ages}') {
+                query += '&children_ages={$data.children_ages}'
+            }
+
+            if ('{$data.child_count}') {
+                query += '&child_num={$data.child_count}'
+            } else if ('{$data.child_num}') {
+                query += '&child_num={$data.child_num}'
+            }
+
+            if ('{$data.adult_count}') {
+                query += '&adult_count={$data.adult_count}'
+            }
+
+            if ('{$data.stars}') {
+                query += '&stars={$data.stars}'
+            }
+            if ('{$data.prices}') {
+                query += '&stars={$data.prices}'
+            }
+            if ('{$data.hotel_types}') {
+                query += '&stars={$data.hotel_types}'
+            }
+
+            location.href = "{:U('home/index/index','','')}?" + query;
+        });
+
+        //查询  city_id=18568&foreign=0&check_in=2017-09-08&check_out=2017-09-17&adult_count=3&city=香港&keyword=thinkphp
+        $('#js_submit').click(function () {
+            var check_in = document.getElementById("start_time").value;
+            var check_out = document.getElementById("end_time").value;
+
+            var query = 'city_id={$data.city_id}&foreign={$data.foreign}&check_in=' + check_in + '&check_out=' + check_out + '&keyword={$data.keyword}&city={$data.city}';
+            if ('{$data.child_num}') {
+                query += '&child_num={$data.child_num}'
+            }
+
+            if ('{$data.children_ages}') {
+                query += '&children_ages={$data.children_ages}'
+            }
+
+            if ('{$data.child_count}') {
+                query += '&child_num={$data.child_count}'
+            } else if ('{$data.child_num}') {
+                query += '&child_num={$data.child_num}'
+            } else if ('{$data.children_count}') {
+                query += '&children_count={$data.children_count}'
+            }
+
+
+            if ('{$data.adult_count}') {
+                query += '&adult_count={$data.adult_count}'
+            }
+            location.href = "{:U('home/index/hotelList','','')}?" + query;
+        })
+
+
+    });
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return decodeURI(r[2]);
+        return null; //返回参数值
+    }
+</script>
+</body>
+</html>
+
+
+
+
+

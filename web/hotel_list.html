@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>酒店预订，酒店查询，宾馆住宿预订,网上订酒店</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <link rel="Stylesheet" type="text/css" debug_evn="false" href="css/base.css" />
+    <link rel="Stylesheet" type="text/css" debug_evn="false" href="css/keys.css" />
+        <link rel="stylesheet" href="css/details.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/comm.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <style type="text/css">
+        .g-btn {
+            color: #FFF;
+            width: 52px;
+            line-height: 1.2rem;
+            background-color: #ff9a14;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <!--loading-->
+            <div>
+                <div class="js_headerview">
+                    <div class="cm-header">
+                        <span class=" cm-header-icon fl  js_back">
+                        <i class="icon-back"></i>
+                        </span>
+                        <h1 class="js_title hotel-h-center cm-page-ellips js_select_city"><span class="cm-page-title">--加载中</span></h1>
+                    </div>
+                </div>
+                <div class="cui-top-fixed" id="js_main_top_filter">
+                <!-- 顶部筛选按钮 -->
+            </div>
+
+                <!-- B版处理在APP中展示问题:添加假头 -->
+                <!--Star 特惠H5列表页改版-->
+                <div style="height: 2.05rem;margin:6px 0;"></div>
+                <!--body box-->
+
+                <div class='search-results-mod' id='info_area' style='margin: 5px'>
+                   <section class="dt-m">
+                    <div class="js_floatable_box">
+                        <div class="m-checkin-out dt-cell-v dt-tb-border js_in_out_day_filter" data-ubt-key="c_hotel_inland_detaila_main_check">
+                            <div class="in js_check_in">
+                                <input type="text" id='start_time' value='' style="width: 80px;">入住
+                            </div>
+                            <div class="dt-flex1 out dt-l-border js_check_out">
+                                <input type="text" id='end_time' value='' style="width: 80px;">离店
+                                <button class="g-btn item" id="js_submit">查询</button>  
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                </div>
+
+
+                <article class="js_tabp js_searchbody1" id="maindiv">
+                    <!--search results-->
+                        <!--受欢迎酒店-->
+
+                    <!-- 酒店总数 -->
+                </article>
+                <!--底部筛选排序...-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function(){
+        var hotelcity   = getUrlParam('hotelcity');
+        var starttime   = getUrlParam('starttime');
+        var endtime     = getUrlParam('endtime');
+        var hotelname   = getUrlParam('hotelname');
+        var city_name   = getUrlParam('city_name');
+
+
+        $(".cm-page-title").html((city_name));
+
+        $("#start_time").val(starttime);
+        $("#end_time").val(endtime);
+
+        $("#js_submit").click(function(){
+            var _start_time =   $("#start_time").val();
+            var _end_time   =   $("#end_time").val();
+            location.href="hotel_list.html?hotelcity="+hotelcity+"&starttime="+_start_time+"&endtime="+_end_time+"&hotelname="+hotelname+"&city_name="+city_name;
+        });  
+
+
+        //$("#info_area").html("时间段:[ "+starttime+" / "+endtime+" ]");
+        var _index  = layer.msg('加载中', {icon: 16,shade: 0.01});
+        $.post(QUERY_HOTEL_URL,{city_id:hotelcity,check_in:starttime,check_out:endtime,keyword:hotelname},function(res){
+            layer.close(_index);
+            var _status     =   res.status;
+            var _data       =   res.data;
+            if(_status==1){
+                if(_data.length=='0'){
+                  layer.alert("没有数据,请重新选择日期");return false;
+                }
+
+
+                $.each(_data, function (i1, item1) {
+                    var cname = item1.cname;
+                    var adr = item1.cname+"("+item1.ename+")";
+                    var boarddiv = "<div class='search-results-mod' style='margin: 5px 0'>" +
+                                        "<div class='hotel-g-bd hotel-hot js_hotel_list'>" +
+                                        "<ul class='hotel-g-list'>" +
+                                        "<a href='details.html?hotel_id="+item1.id+"&hotel_name="+cname+"&starttime="+starttime+"&endtime="+endtime+"&city_id="+hotelcity+"&city_name="+city_name+"' class='js_a_seo' title = "+item1.cname+">" +
+                                        "<li class='js_hotel_detail  hotel-list-historybrows'>" +
+                                        "<div class='hotel-g-cbd'>" +
+                                        "<h4 class='ellips js_hotelname'>"+item1.cname+"("+item1.ename+")"+"</h4>" +
+                                        "<div class=list-c address>" +
+                                        "<span style='font-size:12px;color: #ADADAD'>"+item1.adr_cn+"</span>" +
+                                        "</div>" +
+                                        "<div class='list-c list-tags-flex' style='margin-bottom: 10px;'>" +
+                                        "<div class='ico-txt flex-l'>" +
+                                        "<em class='ico-2'>"+item1.star+"</em>";
+                                        $.each(item1.tags,function(i,_row){
+                                            boarddiv +="<em class='ico-3' style='margin-left:5px;'>"+_row+"</em>";    
+                                        });
+                        boarddiv    +=  "</div>" +
+                                        "<span class='price-num fr'><b class='num js_translog_price  '><small>&yen;</small>"+item1.money+"</b>起</span>" +
+                                        "</div>" +
+                                        "</div>" +
+                                        "</li>" +
+                                        "</a>" +
+                                        "</ul>" +
+                                        "</div>" +
+                                    "</div>"
+                    $("#maindiv").append(boarddiv);
+                });
+            }else{
+                layer.alert(res.errmsg);
+            }
+        });
+
+        $(".js_back").click(function(){
+            location.href="index.html";
+        });
+    });
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return decodeURI(r[2]); return null; //返回参数值
+    }
+</script>
+</body>
+</html>

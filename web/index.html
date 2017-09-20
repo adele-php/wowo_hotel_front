@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/comm.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 国内/海外酒店 </h1>
+    </div>
+</div>
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div>
+                <!--主体-->
+                <article class="m js_index_article">
+                    <ul class="t g-b">
+                        <!--我的位置-->
+                        <li class=""><p class="g-b g-arr" id="js_city"><em class="g-fn1 g-vb js_city_title">
+                            <select name="" id="select1" class="g-fn1" style="border: 0;height: 40px;width: 98%;">
+                                <option value="">请选择城市</option>
+                            </select>
+                        </em> </p> </li>
+                        <!--入离店日期-->
+                        <div class="js_calendarbar_box">
+                            <li class="g-tab g-tab-ab js_open_inoutdaycalendar">
+                                <p class="g-b"><em class="g-fn1" id="js_cki_date_left"><input type="date" id="start_time" name="start_time" class="g-fn1" style="border: 0px;width: 180px;" value=""/></em>&nbsp;</p>
+                                <p class="g-b g-t g-arr" id="js_cko_date"><em class="g-fn1" id="js_cko_date_left"><input type="date" id="end_time" name="end_time" class="g-fn1" style="border: 0px;width: 180px;" value=""/></em> </p>
+                            </li>
+                        </div>
+                        <!--凌晨开关-->
+                        <!--关键字/位置/品牌/酒店名-->
+                        <li class="g-b g-arr" id="js_query_kw">酒店名:<input class="g-fn1 g-e1 g-def-txt nofastclick" id="js_kw_text_box" style="width: 95%;border: 0px"/>
+                            </li>
+                        <!--查询btn-->
+                        <li class="g-flex"> <button class="g-btn item" id="js_submit">查询</button> </li>
+                    </ul>
+                    <!--服务保障-->
+                </article>
+            </div>
+            <!--loading-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+
+        var _index  = layer.msg('加载中', {icon: 16,shade: 0.01});
+        $.get(CITY_URL,function(res){
+            var _status     =   res.status;
+            var _data       =   res.data;
+            layer.close(_index);
+            if(_status==1){
+                $.each(_data,function(i1, item1){
+                    $.each(item1,function(i2, item2){
+                        var _cname = item2.cname||item2.ename;
+                        $("#select1").append("<option value='"+item2.id +"'>"+_cname+"</option>");
+                    });
+               });
+            }else{
+                layer.alert(res.errmsg);
+            }
+        });
+
+
+        $("#js_submit").click(function(){
+            var city        = document.getElementById("select1");
+            var city_name   = city.options[city.selectedIndex].text;
+            var hotelcity   = escape(city.value);
+            var starttime   = document.getElementById("start_time").value;
+            var endtime     = document.getElementById("end_time").value;
+            var hotelname   = document.getElementById("js_kw_text_box").value;
+
+            if(!hotelcity){
+                layer.alert("请选择城市");return false;
+            }
+            if(!starttime){
+                layer.alert("入住时间不能空.");return false;
+            }
+
+            if(!endtime){
+                layer.alert("离店时间不能空.");return false;
+            }
+
+
+
+            location.href="hotel_list.html?hotelcity="+hotelcity+"&starttime="+starttime+"&endtime="+endtime+"&hotelname="+hotelname+"&city_name="+city_name;
+        });
+       
+    });
+</script>
+</body>
+</html>

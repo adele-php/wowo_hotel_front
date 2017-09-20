@@ -1,0 +1,57 @@
+.info{
+    height:80px;
+    border-bottom:1px solid grey;
+    text-align: center;
+}
+.info h2{
+    font-size:0.9rem;
+    color:#ff7d13;
+}
+.info span{
+    font-size:0.455rem;
+    color:#222;
+}
+.pay-submit {
+    background-color: #ff7d13;
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+    color: #fff;
+    border-radius: 0.2rem;
+    line-height: 1.05rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.detail_info{
+    font-size:0.65rem;
+    padding: 0.4rem;
+}
+.detail_info span{
+    line-height: 36px;
+}
+.detail_info span.money{
+    color:#ff7d13;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

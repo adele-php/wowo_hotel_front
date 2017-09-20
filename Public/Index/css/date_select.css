@@ -1,0 +1,82 @@
+.none {
+  display: none
+}
+
+.row {
+  padding: 10px;
+  color: #333;
+  background: #f5f5f5
+}
+
+.date {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  text-align: center;
+  font-size: 16px;
+}
+
+.date .action {
+  margin-top: 44px;
+}
+
+.date .title div{
+  display: inline;
+}
+
+.date ul li {
+  display: inline-block;
+  width: 14.285%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  float: left;
+  position: relative;
+}
+
+.week li {
+  background-color: #d2d2d2;
+  line-height: 24px !important;
+  height: 24px !important;
+}
+
+.day .enter {
+  background-color: #3e93fa;
+  color: #fff
+}
+
+.day .leave {
+  background-color: salmon;
+  color: #fff
+}
+
+.day .disable {
+  color:#aeaeae;
+}
+
+.close-btn {
+  position: fixed;
+  top: 12px;
+  left: 10px;
+  padding: 0;
+  /*background: #3e93fa;*/
+  color: #fff;
+  text-align: left;
+  z-index: 40;
+}
+
+.tac.bold{background-color: #008acb; color: #fff; font-weight: normal; line-height: 44px; margin: 0; position: fixed; z-index: 20; left: 0px; top: 0px;width:100%;}
+.title.tac.c-blue{background-color: #f7f6f5;width:100%;float:left; height: 40px; line-height: 40px;}
+.week.border-bottom{padding: 0;margin: 0;}
+.day.f-small{padding: 0;margin: 0;}
+.enter_text,.leave_text{position: absolute; z-index: 5; bottom: 0; left: 0; width: 100%; line-height: 12px;}
+
+.weekend_li{color: #ff8400;}

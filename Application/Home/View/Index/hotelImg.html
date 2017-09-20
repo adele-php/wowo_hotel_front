@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+    <style>
+
+    </style>
+
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 酒店图集 </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <foreach name="hotel_img.paths" item="v">
+                <div class="roomImg">
+                    <img src="{$v}">
+                </div>
+            </foreach>
+
+            <!--loading-->
+            <button class="g_btn_s js_confirm_btn">返回预定</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $(".js_confirm_btn").click(function () {
+            history.back()
+        });
+
+        $(".icon-back").click(function () {
+            history.back()
+        });
+
+
+    });
+</script>
+</body>
+</html>

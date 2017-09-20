@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/date_select.css" />
+
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 国内/海外酒店 </h1>
+    </div>
+</div>
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div>
+                <!--主体-->
+                <article class="m js_index_article">
+                    <ul class="t g-b">
+                        <!--我的位置-->
+                        <li class="">
+                            <!-- <div class="fr gt-s js_getposition">
+                                <i class="gt-s-i icon iconfont icon-dingwei"></i><em class="ms">我的位置</em>
+                            </div> -->
+                            <!--定位成功 p标签追加 className g-e2-->
+                            <p class="g-b g-arr g-mr" id="js_city" cityid="{$city.id}" style="margin-right:0px;">
+                                <em class="g-fn1 g-vb js_city_title">{$city.cname|default="请选择城市"}</em>
+                            </p>
+                        </li>
+                        <!--入离店日期-->
+                        <!--<div class="js_calendarbar_box">-->
+                            <!--<li class="g-tab g-tab-ab js_open_inoutdaycalendar">-->
+                                <!--<p class="g-b w50" >-->
+                                    <!--<input type="date" id="start_time" name="start_time" class="g-fn1" style="border: 0px;" value="{$time.start_time|default=''}"/>-->
+                                <!--</p>-->
+                                <!--<p class="g-b g-t g-arr w50" id="js_cko_date"  >-->
+                                    <!--<input type="date" id="end_time" name="end_time" style="border: 0px;" class="g-fn1"  value="{$time.end_time|default=''}"/>-->
+                             <!--</p>-->
+                            <!--</li>-->
+                        <!--</div>-->
+
+                        <li class="g-b g-arr" >入住:<input type="text" id="start_time" name="start_time" readonly="readonly" class="g-fn1 g-e1 g-def-txt select-time input-enter"  style="width: 95%;border: 0px" value="{$time['start_time']}"/></li>
+                        <li class="g-b g-arr" >离店:<input type="text" id="end_time" name="end_time" readonly="readonly" class="g-fn1 g-e1 g-def-txt select-time input-leave"  style="width: 95%;border: 0px" value="{$time['end_time']}"/></li>
+
+                        <!--凌晨开关-->
+
+                        <li class="g-b g-arr">成人儿童数:
+                            <input class="g-fn1 g-e1 g-def-txt nofastclick" id="people_num" style="width: 95%;border: 0px" value="成人:{$people.adult_count|default='2'}，儿童:{$people.child_count|default='0'}" readonly="readonly" />
+                        </li>
+
+                        <li class="g-b g-arr">星级/价格/类型:
+                            <input class="g-fn1 g-e1 g-def-txt nofastclick" id="other" style="width: 95%;border: 0px" value="<foreach name='keyword_show' item='v' key='k'>{$v}|</foreach>" readonly="readonly" />
+                        </li>
+                        <!--关键字/位置/品牌/酒店名-->
+                        <li class="g-b" id="js_query_kw">酒店名:<input value="{$data.keyword}" class="g-fn1 g-e1 g-def-txt nofastclick" id="js_kw_text_box" style="width: 95%;border:none;"/></li>
+
+                        <!--查询btn-->
+                        <li class="g-flex"> <button class="g-btn item" id="js_submit">查询</button> </li>
+                    </ul>
+                    <!--服务保障-->
+                </article>
+            </div>
+            <!--loading-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#js_city').click(function(){
+            var starttime   = document.getElementById("start_time").value;
+            var endtime     = document.getElementById("end_time").value;
+            if( !starttime && !endtime){
+                location.href="{:U('home/index/selectCity')}?"+'{$query}'
+            }else{
+                location.href="{:U('home/index/selectCity')}?"+'{$query}&check_in='+starttime+'&check_out='+endtime;
+            }
+
+        });
+        $('#people_num').click(function(){
+            var starttime   = document.getElementById("start_time").value;
+            var endtime     = document.getElementById("end_time").value;
+            if( !starttime && !endtime){
+                location.href="{:U('home/index/selectPeople')}?"+'{$query}'
+            }else{
+                location.href="{:U('home/index/selectPeople')}?"+'{$query}&check_in='+starttime+'&check_out='+endtime;
+            }
+        })
+        $('#other').click(function(){
+            var starttime   = document.getElementById("start_time").value;
+            var endtime     = document.getElementById("end_time").value;
+            if( !starttime && !endtime){
+                location.href="{:U('home/index/selectOther')}?"+'{$query}'
+            }else{
+                location.href="{:U('home/index/selectOther')}?"+'{$query}&check_in='+starttime+'&check_out='+endtime;
+            }
+        })
+
+
+
+
+        $("#js_submit").click(function(){
+            var city = $('#js_city em').text();
+            var cityid = $('#js_city').attr('cityid');
+//            var starttime   = $('#starttime').val();
+//            var endtime     = $('#endtime').val();
+            var starttime   = document.getElementById("start_time").value;
+            var endtime     = document.getElementById("end_time").value;
+            var hotel_name     = $('#js_kw_text_box').val();
+            var star_id = '{$keyword_default.stars}'
+            var price_range = '{$keyword_default.prices}'
+            var hotel_type = '{$keyword_default.hotel_types}'
+
+            if(!city){
+                layer.alert("请选择城市");return false;
+            }
+            if(!starttime){
+                layer.alert("入住时间不能空.");return false;
+            }
+            if(!endtime){
+                layer.alert("离店时间不能空.");return false;
+            }
+            if(!hotel_name) {
+                hotel_name = "thinkphp"
+            }
+
+
+        //city_id=18568&foreign=0&check_in=2017-09-17&check_out=2017-09-29&keyword=&city=&child_num=1&adult_count=1
+            var query = '&foreign={$data.foreign}&keyword='+hotel_name+'&{$people_query}'
+            if(star_id){
+                query +='&star_id='+star_id
+            }
+            if(price_range){
+                query +='&price_range='+price_range
+            }
+            if(hotel_type){
+                query +='&hotel_type='+hotel_type
+            }
+
+            location.href="{:U('home/index/hotelList')}?"+'check_in='+starttime+'&check_out='+endtime+'&city_id='+cityid+'&city='+city+query;
+//            location.href="{:U('home/index/hotelList','','')}/city/"+city+'/check_in/'+starttime+'/check_out/'+endtime+'/keyword/'+hotel_name+'/city_id/'+cityid;
+//            location.href="{:U('home/index/hotelList','','')}?"+'{$query}'+'&city='+city+'&keyword='+hotel_name
+
+        });
+       
+    });
+</script>
+
+<script type="text/javascript" src="__ROOT__/Public/Index/js/date_select.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    //绑定南航日期
+    var bind_date=function(){
+        if($('.select-time')[0]){
+            $('.select-time').hotelDate();
+        }
+    }
+    bind_date();
+});   
+</script>
+</body>
+</html>

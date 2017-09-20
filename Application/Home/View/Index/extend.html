@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>延住</title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true"/>
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/order.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 延住申请</h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div class="roomDetail">
+                <ul class="t-smeal" style="margin-bottom:20px;">
+                    <!-- 基础信息（国内用）-->
+                    <li class="cell-v" style="">
+                        <div class="bk-cell-num">
+                            <div class="smeal-evl">
+                                <p style="font-size:0.8rem;color:#000; font-weight: 600;">{$data.room_name}</p>
+                                <p></p>
+                                <p>注意：
+                                    <span class="room_count" style="color:#ff7d13">是否有房需确认</span>
+                                    <span class="confirm_type" style="color:#ff7d13">{$data.confirm_type|confirmType}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- /基础信息（国内用）-->
+                    <!-- start 修改日期按钮 -->
+                    <li id="js_checkInOutDay" class="cell-v">
+                        <p class="smeal-evl bk-cell-num">
+
+                            <em>入住：<input type="date" class='start_time' name="start_time" class="g-fn1 disabled" style="border: 0px;" value="{$data.check_out}"/></em>
+                            <!--钟点房不显示离店日期及晚数-->
+                            <em>离店：<input type="date" class="end_time" name="end_time" class="g-fn1" style="border: 0px;" value=""/></em></em>
+                        </p>
+                    </li>
+                    <!-- end 修改日期按钮 -->
+                </ul>
+
+            </div>
+            <!--loading-->
+            <div class="tips">
+                <p class="tip" id="js_booking_cancelInfo">{$data.remarks}</p>
+
+            </div>
+
+
+            <section class="bk-pay" id="js_paybar_wrap">
+                <span class="pay-submit " id="js_booking_paybtn">提交更改</span>
+            </section>
+        </div>
+    </div>
+</div>
+<input type="hidden" class="confirm_type" value="{$data.confirm_type|default='1'}">
+<input type="hidden" class="mark" value="0">
+<script type="text/javascript">
+    $(function () {
+
+        //提交修改
+        $('#js_booking_paybtn').click(function(){
+            var city_id            = "{$data.city_id}";
+            var confirm_type       = "2";
+            var hotel_id           = '{$data.hotel_id}';
+            var contact_tel        = '{$data.contact_tel}';
+            var room_username_list = '{$data.room_user_list}';
+            var room_count         = '{$data.room_count}';
+            var adult_count        = '{$data.adult_count}';
+            var children_count     = '{$data.children_count}';
+            var children_ages      = ( children_count != 0)?'{$data.children_ages}':'';
+
+            $.ajax({
+                type: "POST",
+                url: '{:U("home/index/createOrder")}',      //创建本地订单
+                data: {
+                    'mobile'        :contact_tel,
+                    'name'          :room_username_list,
+                    'city_id'       :city_id,
+                    'confirm_type'  :confirm_type,
+                    'hotel_id'      :hotel_id,
+                    'room_count'    :room_count,
+                    'adult_count'   :adult_count,
+                    'children_count':children_count,
+                    'children_ages' :children_ages,
+                },
+                success: function (oid) {
+                    var index = layer.load(2, {time: 10*1000});
+                    pay(oid,index)
+                }
+            });
+        })
+
+        //支付
+        function pay(oid,index) {
+            var data = {};
+            data.city_id            = '{$data.city_id}';
+            data.check_in           = $('.start_time').val();
+            data.check_out          = $('.end_time').val();
+            data.hotel_id           = '{$data.hotel_id}';
+            data.room_name          = '{$data.room_name}';
+            data.rate_code          = '{$data.rate_code}';
+            data.room_count         = '{$data.room_count}';      //TODO
+            data.adult_count        = '{$data.adult_count}';
+            data.children_count     = '{$data.children_count}';
+            data.contact_tel        = '{$data.contact_tel}';
+            data.contact_username   = '{$data.contact_username}';
+            data.room_username_list = '{$data.room_username_list}';
+            data.confirm_type       = '2';
+            data.is_extension       = '1';
+            if (data.children_count != 0) {
+                data.children_ages = '{$data.children_ages}'
+            }
+
+            if (1 == 2) {
+                //特殊要求
+                data.remark = '';
+            }
+
+            //订单号
+            data.order_no =oid;
+
+            $.ajax({
+                type: "POST",
+                url: 'http://demo.wowoyoo.com/airchina_api/create_order',
+                data: data,
+                dataType: "json",
+                success: function (d) {
+                    layer.close(index);
+                    if (d.status == 0) {
+                        layer.alert('订单创建失败');
+                    } else {
+                        var query = "wowo_order_no="+d.wowo_order_no+'&oid='+oid+'&order_status='+d.order_status+'&total_money='+d.total_money+'&is_cancel='+d.is_cancel;
+                        if(d.is_cancel == 1){
+                            query += '&cancel_time='+d.cancel_time
+                        }
+                        location.href="{:U('home/index/extendCheck')}?"+query;
+                    }
+                }
+            });
+        }
+        //支付 end
+
+
+
+        //更改时间
+        $(".start_time").bind("change", function(){
+            layer.alert('只能修改离店时间!');
+            $('.start_time').val("{$data.check_in}");
+        });
+//        $(".end_time").bind("change", function(){
+//            var index = layer.load(1, {time: 10*1000}); //又换了种风格，并且设定最长等待10秒
+//            var data  = {
+//                'order_no': '{$data.order_no}',
+//                'wowo_order_no': '{$data.wowo_order_no}',
+//                'check_out':$(this).val(),
+//            };
+//            $.ajax({
+//                type: "GET",
+//                url: "{:U('home/index/orderChange')}",
+//                data: data,
+//                dataType:'json',
+//                success: function (d) {
+//                    layer.close(index);
+//                    if(d.status==1){
+//                        location.href="{:U('home/index/extendCheck','','')}/oid/{$data.order_no}/wowo_order_no/{$data.wowo_order_no}";
+//                    }else{
+//                        layer.alert(d.errmsg);
+//                    }
+//                }
+//            });
+//        });
+
+
+        $(".js_confirm_btn").click(function () {
+            history.back()
+        });
+
+        $(".icon-back").click(function () {
+            history.back()
+        });
+
+
+
+    })
+
+
+</script>
+</body>
+</html>

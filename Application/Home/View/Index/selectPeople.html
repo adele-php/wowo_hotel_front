@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+    <style>
+        .adult{
+            border-width: 1px 0 0;
+            background: #fff;
+            font-family: -apple-system,Helvetica,'Hiragino Sans GB W3','Microsoft YaHei',arial,sans-serif;
+            font-size: 0.7rem;
+            line-height: 1.65rem;
+            height:1.65rem;
+            padding:0.5rem;
+        }
+        .cm-num-adjust{
+            height: 1.65rem;
+            color: #099fde;
+            background-color: #fff;
+            display: inline-block;
+            border-radius: 0.2rem;
+        }
+    </style>
+    <style>
+        .cm-num-adjust {
+            height           : 1.65rem;
+            color            : #099fde;
+            background-color : #fff;
+            display          : inline-block;
+            border-radius    : 0.2rem
+        }
+        .cm-num-adjust .cm-adjust-minus, .cm-num-adjust .cm-adjust-plus, .cm-num-adjust .cm-adjust-view {
+            width              : 1.65rem;
+            height             : 1.65rem;
+            line-height        : 1.55rem;
+            text-align         : center;
+            float              : left;
+            -webkit-box-sizing : border-box;
+            box-sizing         : border-box
+        }
+        .cm-num-adjust .cm-adjust-minus, .cm-num-adjust .cm-adjust-plus {
+            cursor : pointer;
+            border : 1px solid #099fde
+        }
+        .cm-num-adjust .cm-adjust-minus.disabled,.cm-num-adjust .cm-adjust-view.disabled, .cm-num-adjust .cm-adjust-plus.disabled {
+            cursor           : default !important;
+            background-color : #fff !important;
+            border-color     : #999 !important;
+            color            : #999 !important
+        }
+        .cm-num-adjust .cm-adjust-minus.disabled::before, .cm-num-adjust .cm-adjust-minus.disabled::after, .cm-num-adjust .cm-adjust-plus.disabled::before, .cm-num-adjust .cm-adjust-plus.disabled::after {
+            background-color : #999 !important
+        }
+        .cm-num-adjust .cm-adjust-minus:active, .cm-num-adjust .cm-adjust-plus:active {
+            background-color : #099fde
+        }
+        .cm-num-adjust .cm-adjust-minus:active::before, .cm-num-adjust .cm-adjust-minus:active::after, .cm-num-adjust .cm-adjust-plus:active::before, .cm-num-adjust .cm-adjust-plus:active::after {
+            background-color : #fff
+        }
+        .cm-num-adjust .cm-adjust-minus {
+            border-right  : none;
+            border-radius : 0.2rem 0 0 0.2rem;
+            position      : relative
+        }
+        .cm-num-adjust .cm-adjust-minus::before {
+            content           : "";
+            height            : 0.1rem;
+            width             : 0.8rem;
+            background-color  : #099fde;
+            position          : absolute;
+            top               : 50%;
+            left              : 50%;
+            -webkit-transform : translate3d(-50%, -50%, 0);
+            transform         : translate3d(-50%, -50%, 0)
+        }
+        .cm-num-adjust .cm-adjust-minus + .cm-adjust-plus {
+            border-left : 1px solid #099fde
+        }
+        .cm-num-adjust .cm-adjust-plus {
+            border-left   : none;
+            border-radius : 0 0.2rem 0.2rem 0;
+            position      : relative
+        }
+        .cm-num-adjust .cm-adjust-plus::before, .cm-num-adjust .cm-adjust-plus::after {
+            content           : "";
+            width             : 0.8rem;
+            height            : 0.1rem;
+            background-color  : #099fde;
+            position          : absolute;
+            top               : 50%;
+            left              : 50%;
+            -webkit-transform : translate3d(-50%, -50%, 0);
+            transform         : translate3d(-50%, -50%, 0)
+        }
+        .cm-num-adjust .cm-adjust-plus::after {
+            width  : 0.1rem;
+            height : 0.8rem
+        }
+        .cm-num-adjust .cm-adjust-view {
+            border   : 1px solid #099fde;
+            overflow : hidden
+        }
+        .cm-num-adjust input.cm-adjust-view {
+            background-color   : #fff;
+            border-radius      : 0;
+            line-height        : normal;
+            padding-top        : 0.25rem;
+            width              : 1.85rem;
+            -webkit-appearance : none
+        }
+        .cm-num-adjust input.cm-adjust-view:focus {
+            outline            : none;
+            -webkit-box-shadow : none;
+            box-shadow         : none
+        }
+        .search-txt{
+            height: 1.5rem;
+            padding: 0.1rem 1.1rem 0.1rem 1.4rem;
+            line-height: normal;
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: 0.15rem;
+            font-size: 0.55rem;
+            text-rendering: auto;
+            color: initial;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+        }
+        .adult{
+            border-bottom:1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 每间人数 </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div>
+                <!--主体-->
+                <div class="every_room_info">
+                    <div class="adult">
+                        <span>成人</span>
+                        <div class="cm-num-adjust" style="float:right">
+                            <span class="cm-adjust-minus js_num_minus   js_adult_num" _type="del"></span>
+                            <input type="tel" class="cm-adjust-view js_cur_num adult_num" value="{$data.adult_count|default='1'}">
+                            <span class="cm-adjust-plus js_num_plus js_adult_num" _type="add"></span>
+                        </div>
+                    </div>
+
+                    <div class="child adult">
+                        <span>孩子</span>
+                        <div class="cm-num-adjust" style="float:right">
+                            <span class="cm-adjust-minus js_num_minus   js_child_num" _type="del"></span>
+                            <input type="tel" class="cm-adjust-view js_cur_num child_num" value="{$data.child_num|default='0'}">
+                            <span class="cm-adjust-plus js_num_plus js_child_num" _type="add"></span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!--loading-->
+            <button class="g_btn_s js_confirm_btn">确定</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        function isInteger(obj) {
+            return (obj | 0) === obj
+        }
+
+        if('{$data.child_num}'!=0){
+            var child_ages = JSON.parse('{$child_ages}');
+            //console.log(child_ages);
+            var str='';
+            for(var i=0;i<'{$data.child_num}';i++){
+                //str += '<div class="child_old adult"><input type="text" value='+child_ages[i]+' class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
+                str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;" value='+child_ages[i]+'><option value="1">孩子"'+i+'"年龄 ≤1岁</option><option value="2">孩子"'+i+'"年龄 2岁</option><option value="3">孩子"'+i+'"年龄 3岁</option><option value="4">孩子"'+i+'"年龄 4岁</option><option value="5">孩子"'+i+'"年龄 5岁</option><option value="6">孩子"'+i+'"年龄 6岁</option><option value="7">孩子"'+i+'"年龄 7岁</option><option value="8">孩子"'+i+'"年龄 8岁</option><option value="9">孩子"'+i+'"年龄 9岁</option><option value="10">孩子"'+i+'"年龄 10岁</option><option value="11">孩子"'+i+'"年龄 11岁</option><option value="12">孩子"'+i+'"年龄 12岁</option><option value="13">孩子"'+i+'"年龄 13岁</option><option value="14">孩子"'+i+'"年龄 14岁</option><option value="15">孩子"'+i+'"年龄 15岁</option><option value="16">孩子"'+i+'"年龄 16岁</option><option value="17">孩子"'+i+'"年龄 17岁</option></select></div>';
+            }
+            $('.every_room_info').append(str);
+
+            $(".child_age").each(function(index, el) {
+                $(this).find('option').eq(child_ages[index]-1).attr('selected','selected');
+            });
+        }
+
+        $('.g_btn_s').click(function(){
+            var adult_count = $('.adult_num').val();
+            var child_count = $('.child_num').val();
+            var children_ages =  '';
+            if( child_count==0){
+                children_ages=0
+            }else{
+                for(var i=0;i<child_count;i++){
+                    var child_age = parseInt( $('.child_age').eq(i).val() );
+
+
+                    if(!isInteger(child_age) || child_age<=0 ){
+                        layer.alert('孩子的年龄必须为正整数！')
+                        return;
+                    }
+                    children_ages += child_age+'-';
+                }
+            }
+            location.href="{:U('home/index/index','','')}?adult_count="+adult_count+'&child_num='+child_count+'&children_ages='+children_ages+'&{$query}'
+        })
+
+
+        $(".icon-back").click(function () {
+            history.back()
+        });
+
+        $('.js_adult_num').click(function(){
+            var attr = $(this).attr('_type');
+            var count = parseInt($('.adult_num').val())
+            if(attr == 'add'){
+                count +=1;
+            }else{
+                count -=1;
+            }
+            $('.adult_num').val(count )
+        })
+
+        $('.js_child_num').click(function(){
+            var attr = $(this).attr('_type');
+            var count = parseInt($('.child_num').val())
+            var str='';
+            if(attr == 'add'){
+                count +=1;
+                $('.child_old').remove();
+                for(var i=1;i<=count;i++){
+                    //str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
+                    //str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
+                    str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">孩子"'+i+'"年龄 ≤1岁</option><option value="2">孩子"'+i+'"年龄 2岁</option><option value="3">孩子"'+i+'"年龄 3岁</option><option value="4">孩子"'+i+'"年龄 4岁</option><option value="5">孩子"'+i+'"年龄 5岁</option><option value="6">孩子"'+i+'"年龄 6岁</option><option value="7">孩子"'+i+'"年龄 7岁</option><option value="8">孩子"'+i+'"年龄 8岁</option><option value="9">孩子"'+i+'"年龄 9岁</option><option value="10">孩子"'+i+'"年龄 10岁</option><option value="11">孩子"'+i+'"年龄 11岁</option><option value="12">孩子"'+i+'"年龄 12岁</option><option value="13">孩子"'+i+'"年龄 13岁</option><option value="14">孩子"'+i+'"年龄 14岁</option><option value="15">孩子"'+i+'"年龄 15岁</option><option value="16">孩子"'+i+'"年龄 16岁</option><option value="17">孩子"'+i+'"年龄 17岁</option></select></div>';
+                }
+                $('.every_room_info').append(str);
+            }else{
+                count -=1;
+                count = (count<0)?0:count;
+                $('.child_old').remove();
+                for(var i=1;i<=count;i++){
+                    //str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
+                    //str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
+                    str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">孩子"'+i+'"年龄 ≤1岁</option><option value="2">孩子"'+i+'"年龄 2岁</option><option value="3">孩子"'+i+'"年龄 3岁</option><option value="4">孩子"'+i+'"年龄 4岁</option><option value="5">孩子"'+i+'"年龄 5岁</option><option value="6">孩子"'+i+'"年龄 6岁</option><option value="7">孩子"'+i+'"年龄 7岁</option><option value="8">孩子"'+i+'"年龄 8岁</option><option value="9">孩子"'+i+'"年龄 9岁</option><option value="10">孩子"'+i+'"年龄 10岁</option><option value="11">孩子"'+i+'"年龄 11岁</option><option value="12">孩子"'+i+'"年龄 12岁</option><option value="13">孩子"'+i+'"年龄 13岁</option><option value="14">孩子"'+i+'"年龄 14岁</option><option value="15">孩子"'+i+'"年龄 15岁</option><option value="16">孩子"'+i+'"年龄 16岁</option><option value="17">孩子"'+i+'"年龄 17岁</option></select></div>';
+                }
+                $('.every_room_info').append(str);
+            }
+            $('.child_num').val(count )
+        })
+
+
+        $('#js_city').click(function(){
+            location.href="{:U('home/index/selectCity')}"
+        });
+
+        $('#people_num').click(function(){
+            location.href="{:U('home/index/selectPeople')}?"+'{$query}'
+        })
+
+        var _index  = layer.msg('加载中', {icon: 16,shade: 0.01});
+        $.get(CITY_URL,function(res){
+            var _status     =   res.status;
+            var _data       =   res.data;
+            layer.close(_index);
+            if(_status==1){
+                $.each(_data,function(i1, item1){
+                    $.each(item1,function(i2, item2){
+                        var _cname = item2.cname||item2.ename;
+                        $("#select1").append("<option value='"+item2.id +"'>"+_cname+"</option>");
+                    });
+               });
+            }else{
+                layer.alert(res.errmsg);
+            }
+        });
+
+
+        $("#js_submit").click(function(){
+            var city = $('#js_city em').text();
+            var cityid = $('#js_city').attr('cityid');
+//            var starttime   = $('#starttime').val();
+//            var endtime     = $('#endtime').val();
+            var starttime   = document.getElementById("start_time").value;
+            var endtime     = document.getElementById("end_time").value;
+            var hotel_name     = $('#js_kw_text_box').val();
+
+            if(!city){
+                layer.alert("请选择城市");return false;
+            }
+            if(!starttime){
+                layer.alert("入住时间不能空.");return false;
+            }
+            if(!endtime){
+                layer.alert("离店时间不能空.");return false;
+            }
+            if(!hotel_name){
+                hotel_name="thinkphp"
+            }
+            location.href="{:U('home/index/hotelList','','')}/city/"+city+'/check_in/'+starttime+'/check_out/'+endtime+'/keyword/'+hotel_name+'/city_id/'+cityid;
+//            location.href="hotelList.html?hotelcity="+hotelcity+"&starttime="+starttime+"&endtime="+endtime+"&hotelname="+hotelname+"&city_name="+city_name;
+        });
+       
+    });
+</script>
+</body>
+</html>

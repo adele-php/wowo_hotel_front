@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true"/>
+    <!-- QQ浏览器全屏 -->
+    <link rel="Stylesheet" type="text/css" debug_evn="false" href="__ROOT__/Public/Index/css/base.css"/>
+    <link rel="Stylesheet" type="text/css" debug_evn="false" href="__ROOT__/Public/Index/css/keys.css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+    <style type="text/css">
+        .bg {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            -webkit-filter: blur(15px);
+            -moz-filter: blur(15px);
+            -o-filter: blur(15px);
+            -ms-filter: blur(15px);
+            filter: blur(15px);
+        }
+
+        .dt-tag {
+            margin-right: .4rem;
+        }
+
+        .g-btn {
+            color: #FFF;
+            width: 52px;
+            line-height: 1.2rem;
+            background-color: #ff9a14;
+            margin-left: 10px;
+        }
+
+        .hotel_img {
+            width: 100%;
+            height: 270px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .imgs {
+            width: 300%;height:100%;
+        }
+
+        .img {
+            float: left;
+            width: 33.3333%;height:100%;
+        }
+        .img img{
+            height:100%;
+        }
+        #hotel_img_info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .hotel_img .phone-num {
+            position: absolute;
+            right: .5rem;
+            bottom: .5rem;
+            background-color: rgba(0, 0, 0, .3);
+            padding: .15rem .5rem;
+            border-radius: 1.5rem;
+            font-weight: 500;
+            font-family: arial;
+            color: #fff;
+        }
+
+        .hotel_addr {
+            width: 100%;
+            height: 81px;
+            font-size: .7rem;
+            line-height: 1.5;
+            font-family: -apple-system, Helvetica, Hiragino Sans GB W3, Microsoft YaHei, arial, sans-serif;
+        }
+
+        .adr-area {
+            padding: .5rem;
+        }
+
+        .cust {
+            color: #b2b2b2;
+            font-size: .65rem;
+        }
+
+        .house_type {
+            width: 100%;
+        }
+
+        .item {
+            position: relative;
+            overflow: hidden;
+            border-color: #ddd;
+            border-width: 1px 0 0;
+            font-family: -apple-system, Helvetica, Hiragino Sans GB W3, Microsoft YaHei, arial, sans-serif;
+            font-size: .7rem;
+            line-height: 1.5;
+        }
+
+        .room--space {
+            padding: 1%;
+            width: 71%;
+            float: left;
+            text-overflow: ellipsis;
+        }
+
+        .room-img {
+            width: 3rem;
+            float: left;
+            position: relative;
+            margin-right: .5rem;
+            border-radius: .15rem;
+            overflow: hidden;
+            background: #f2f2f2 url(//pic.c-ctrip.com/h5/hotel/hotel-loading-default.png) 50% no-repeat;
+            background-size: 1.35rem 1.45rem;
+        }
+
+        .room-img img {
+            width: 3.1rem;
+            height: 3.1rem;
+            display: block;
+            margin: -1px;
+        }
+
+        .room-bd h3 {
+            font-size: .75rem;
+            color: #2b2b2b;
+            font-weight: 400;
+        }
+
+        .room-size {
+            color: gray;
+            font-size: .6rem;
+        }
+
+        .room--space2 {
+            padding: 1%;
+            width:25%;
+            float: right;
+            height: 100%;
+
+        }
+
+        .cell-star.room-column {
+            text-align: right;
+            padding: 0 .5rem;
+            box-sizing: border-box;
+            line-height: 1.1;
+            -webkit-box-align: flex-end;
+            align-items: flex-end;
+        }
+
+        .price {
+            font-size: 1rem;
+            line-height: 1rem;
+            font-weight: 700;
+            color: #ff7d13;
+        }
+
+        .price-star {
+            font-size: .6rem;
+            color: #b2b2b2;
+            padding-left: .15rem;
+        }
+
+        .tag03 {
+            background-color: #fff;
+            border: 1px solid #ffb78b;
+            color: #ff6000;
+            margin-right: 0;
+        }
+
+        .dt-btn-t {
+            width: 1.65rem;
+            height: 1.35rem;
+            font-size: .75rem;
+            padding: .1rem 0 1px;
+            box-sizing: border-box;
+            background-color: transparent;
+            color: #fff;
+            border-radius: .2rem .2rem 0 0;
+            background-color: #ff9a14;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="cm-header">
+        <span class=" cm-header-icon fl  js_back">
+        <i class="icon-back"></i>
+        </span>
+        <h1><span id="title">{$hotel_info.cname}</span></h1>
+    </div>
+</div>
+
+<div id="content">
+    <!--主体-->
+    <article class="dt">
+
+        <div>
+            <div class="dt-h94-test"
+                 style="background-color: rgb(255, 255, 255); min-height: 50px;    margin-top: 50px;">
+
+                <section class="dt-b mt5" id="hotel_id">
+                    <!--Star 基础信息-->
+                    <ul class="dt-cell-list dt-tb-border dt-dp-qa" data-ubt-key="c_hotel_inland_detaila_comment">
+                    </ul>
+                    <!--Star 基础信息-->
+
+                    <div class="hotel_img">
+                        <div class="imgs">
+                            <!--<foreach name="hotel_img.paths" item="img">-->
+                                <!--<div class="img">-->
+                                    <!--<img src="{$img}"-->
+                                         <!--data-state="https://dimg04.c-ctrip.com/images/hotel/373000/372135/c3028fa548b34dd883e187498a1fe26e_C_550_412_Q50.jpg_.webp"-->
+                                         <!--width="100%" is="c-img" pagecode="H5HotelDetail">-->
+                                <!--</div>-->
+                            <!--</foreach>-->
+                        </div>
+                        <ul class="dt-list dt-cell-list dt-t-border dt-b-base mt5" id="hotel_img_info">
+                            <li class="items js_goto_hotelintro" data-name="info"
+                                data-ubt-key="c_hotel_inland_detail_mod_detail">
+                                <div class="cell-star ellips dt-color8"
+                                     style="color:white;line-height: 1.25;font-size: .85rem;">
+                                    {$hotel_info.star}
+                                </div>
+                            </li>
+                        </ul>
+                        <span class="phone-num js_goto_images"><span
+                                class="dt-fn13 imgs_count">1/{$hotel_img['count']}</span></span>
+                    </div>
+
+                    <div class="hotel_addr">
+                        <div class="adr-area">
+                            <span id="hotel_address">{$hotel_info.address}</span><p class="cust">{$hotel_info.address_en}</p>
+                        </div>
+                    </div>
+
+                    <section class="dt-m" style="margin-top: 10px;">
+                        <div class="js_floatable_box">
+                            <div class="m-checkin-out dt-cell-v dt-tb-border js_in_out_day_filter"
+                                 data-ubt-key="c_hotel_inland_detaila_main_check">
+                                <div class="in js_check_in">
+                                    <input type="date" id='start_time' value='{$data["check_in"]}' style="width: 111px;">入住
+                                </div>
+                                <div class="dt-flex1 out dt-l-border js_check_out">
+                                    <input type="date" id='end_time' value='{$data["check_out"]}' style="width: 111px;">离店
+                                    <button class="g-btn item" id="js_submit" style="position:absolute;right:0;top:1.05rem;height:1.2rem;margin-top:-0.6rem;">查询</button>
+                                    <!--<button class="g-btn item" id="js_submit">查询</button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!--房型-->
+                    <div class="house_type">
+
+                    </div>
+                    <!--房型end-->
+
+
+                    <ul class="dt-list dt-cell-list dt-t-border dt-b-base mt5 js_goto_hotelintro_ul hotel_detail">
+
+                        <li class="items js_goto_hotelintro" data-name="info"
+                            data-ubt-key="c_hotel_inland_detail_mod_detail">
+                            <div class="cell-star ellips dt-color8">
+                                <span style="color:red;margin-left:10px;" class='show_more_intro'>酒店介绍</span>
+                                <span id="hotel_intro">{$hotel_info.introduction}</span>
+                            </div>
+                        </li>
+
+
+                        <li class="items js_goto_hotelintro" data-name="info"
+                            data-ubt-key="c_hotel_inland_detail_mod_detail">
+                            <div class="cell-star ellips dt-color8 hotel_facilities">
+                                <span style="color:red;margin-left:10px;" class='show_more_faci'>酒店设施</span>
+                                <foreach name="hotel_info.facilities" item="facilities" key="key">
+                                    <span style="margin-left:10px;">{$key}:{$facilities}</span>
+                                </foreach>
+                            </div>
+                        </li>
+
+
+
+
+
+
+
+                    </ul>
+                    <!--Star 同类型&浏览历史-->
+                </section>
+
+            </div>
+        </div>
+
+        <div>
+            <div class="dt-h94-test">
+
+            </div>
+        </div>
+        <section class="dt-m dt-b-border js_roomlist">
+
+        </section>
+    </article>
+</div>
+
+<!--弹出层-->
+<div class="view cui-layer" style="z-index: 3006;display:none;" id="ui-view-16">
+
+</div>
+<div class="view cui-mask" style="z-index: 3005; width: 100%; height: 2768px; position: absolute; left: 0px; top: 0px;display:none;" id="ui-view-17"></div>
+<style>
+    .view{
+        z-index: 3005;
+        width: 100%;
+        height: 2768px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+    .cui-mask{
+        background-color: rgba(0,0,0,.5);
+        right: 0;
+        bottom: 0;
+    }
+
+</style>
+
+<script type="text/template" id="main">
+    <ul class="m-room m-room--tile">
+        <li class="item ">
+            <!--Star 左边区域-->
+            <div class="cell-star room--space js_show_baseroom">
+                <div class="room-bd">
+                    <h3>#NAME#</h3>
+                    <p class="room-size">#BED_INFO# 可住#MAX_PEOPLE#人</p>
+                </div>
+            </div>
+            <!--右边区域-->
+            <div data-sub="js_childroomlist_1" class="cell-end dt-cell room--space2 js_baseroomtoggle ">
+                <div class="cell-star room-column">
+                    <p><span class="price" id="price1"><small>&yen;</small> #MONEY#</span><span
+                            class="price-star">起</span></p>
+                </div>
+
+            </div>
+        </li>
+        <ul class="sub-romm js_childroomlist_1" style="">
+            #CHILD_HTML#
+        </ul>
+    </ul>
+</script>
+<script type="text/template" id="child">
+    <li class="item">
+        <div class="cell-star room-space">
+            <div class="room-bd" style="margin: 10px 0;">
+                <h4 id="type1"><span style="margin-right: 10px;">[ #NAME# ] </span><em class="dt-tag tag09"
+                                                                                       style="margin-right: 5px;">#BREAK_FAST#</em>
+                    <em> #WIFI#</em>
+                    <br/>
+                    <span style="color:red;margin-left:10px;" class='show_more'>政策</span>
+                    <span style="color:red;margin-left:10px;" class='show_facilities_more'>设施</span>
+                    <span style="color:red;margin-left:10px;" class='show_more_room'>房间图</span>
+                </h4>
+                <div style="display: none;" class='show_remark'>#REMARKS#</div>
+                <div style="display: none;" class='show_facilities'>#FACILITIES#</div>
+                <div style="display: none;" class='show_rooms'>#ROOM_IMAGES#</div>
+                <p style="font-size: 12px;margin: 5px 0">
+                    #DATE_TEXT#
+                </p>
+
+            </div>
+        </div>
+    </li>
+</script>
+
+<script type="text/javascript">
+    String.prototype.replaceAll = function (search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
+
+    $(function () {
+        //异步加载
+        var index = layer.load(2, {time: 10*1000});
+        var hotel_id = "{$data.hotel_id}"
+        var url = '{:U("home/index/order")}?{$query}';
+        $.ajax({
+            type: "GET",
+            url: "{:U('home/index/roomImgs','','')}/hotel_id/{$data.hotel_id}",
+            dataType: "json",
+            success: function (data) {
+                $('.imgs_count').text('1/'+data.count)
+                for( var a in data.paths){
+                    var str = '<div class="img">'
+                    str    += '<img src="'+data.paths[a]+'"  width="100%" is="c-img" pagecode="H5HotelDetail">'
+                    str    += ' </div>'
+                }
+                $('.imgs').append(str)
+                //加载房型
+                $.ajax({
+                    type: "GET",
+                    url: "{:U('home/index/rooms','','')}?{$query}",
+                    dataType: "json",
+                    success: function (data) {
+                        layer.close(index)
+                        if(data.status ==0 ){
+                            //TODO
+                            layer.alert('房型获取失败！');
+                            return ;
+                        }
+                        var str = '';
+                        for(var b in data){
+                            str += ' <div class="item house_item" style="" data-ubt-key="c_hotel_inland_detaila_room_basic">'
+                            str += ' <div class="cell-star room--space js_show_baseroom" data-bid="14159268">'
+                            str += ' <div class="room-img">'
+                            str += ' <img class="js_rommimage" src="'+data[b].list[0].room_image+'" width="60" height="60" alt=""  >'
+                            str += ' </div><div class="room-bd">'
+                            str += ' <h3>'+data[b].list[0].cname+'</h3>'
+                            str += ' <p class="room-size">'
+                            str += ' <em>'+data[b].list[0].bed_remark+'</em>'
+                            str += ' <em>'+data[b].list[0].breakfast+'</em>'
+                            str += ' <em>'+data[b].list[0].internet+'</em>'
+                            str += ' <em>'+data[b].list[0].cancel_tag+'</em>'
+                            if(data[b].list[0].confirm_type ==2){
+                                str += ' <em>二次确认</em>'
+                            }else{
+                                str += ' <em>立即确认</em>'
+                            }
+
+                            str += ' </p> </div> </div>'
+                            str += ' <div class="cell-end dt-cell room--space2 js_baseroomtoggle "><div class="cell-star room-column">'
+                            str += ' <p><span class="price"><small>总¥</small>'
+                            str += ' <span class="js-cas-p">'+data[b].list[0].total_money+'</span>'
+                            str += ' </span><span class="price-star">起</span></p></div><div class="cell-end room-column"> <i class="font-dt-icon-fold-up js_basearrow_icon"></i>'
+                            str += ' </div></div></div>'
+
+                            /**
+                             * Created by TC on 2017/9/19.
+                             */
+                            str    += '<div class="room_list" style="display: none;">'
+                            for( var a in data[b].list){
+                                str    += ' <div class="search-results-mod" style="margin: 5px 0;">'
+                                str    += ' <div class="hotel-g-bd hotel-hot js_hotel_list">'
+                                str    += ' <ul class="hotel-g-list"> '
+                                str    += ' <a href="javascript:void(0)" class="js_a_seo" title="'+data[b].list[a].cname+'"> '
+                                str    += '  <li class="js_hotel_detail  hotel-list-historybrows">'
+                                str    += ' <div class="hotel-g-cbd"><h4 class="ellips js_hotelname">'+data[b].list[a].cname+'</h4> '
+                                str    += ' <div class="list-c list-tags-flex" style="margin-bottom: 10px;height:100%;"> '
+                                str    += ' <div class="ico-txt flex-l" style="width:66%;overflow: inherit"> '
+                                str    += '  <em class="ico-2">'+data[b].list[a].bed_remark+'</em>'
+                                str    += '  <em class="ico-2">'+data[b].list[a].breakfast+'</em>'
+                                str    += '  <em class="ico-2">'+data[b].list[a].internet+'</em>'
+                                str += ' <em class="ico-2">'+data[b].list[0].cancel_tag+'</em>'
+                                if(data[b].list[0].confirm_type ==2){
+                                    str += ' <em class="ico-2">二次确认</em>'
+                                }else{
+                                    str += ' <em class="ico-2">立即确认</em>'
+                                }
+                                str    += '  </div>'
+                                str    += ' <span class="price-num fr"  style="width:23%;    text-align: right;"><b class="num js_translog_price  "> '
+                                str    += ' <small>总¥</small>'+data[b].list[a].total_money+' </b>起 '
+                                str    += ' <button class="dt-btn-t" >预订</button></span></div> </div></li></a></ul> </div> </div>'
+                                str    += ' <div class="lay_info" style="display: none;"> '
+                                str    += ' <div class="l js_pop_box" rel="房型弹层html区域"> '
+                                str    += ' <div class="hd js_hd gray" rel="灰色固定头部">'+data[b].list[a].cname+'<span class="a-area js_btn_close"><i class="l-close"></i></span></div> '
+                                str    += ' <div class="bd js_swrapper" rel="中间带滚动条区域" style="overflow: auto; position: relative; height: 225px;"> '
+                                str    += ' <div style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"> '
+                                str    += ' <ul class="l-base c-box l-tb-border mb5"> '
+                                str    += ' <li class="item"><span class="tit">可住人数</span><p>'+data[b].list[a].max_people+'</p></li> '
+                                str    += ' <li class="item"><span class="tit">早餐</span><p>'+data[b].list[a].breakfast+'</p></li> '
+                                str    += '  <li class="item"><span class="tit">床</span><p>'+data[b].list[a].bed_remark+'</p></li>'
+                                str    += '  <li class="item"><span class="tit">是否可退</span><p>'+data[b].list[a].remarks+'</p></li>'
+                                str    += ' </ul> </div>'
+                                str    += '  <div style="position: absolute; z-index: 9999; width: 7px; bottom: 2px; top: 2px; right: 1px; overflow: hidden; transform: translateZ(0px); transition-duration: 0ms; opacity: 0;"><div style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; width: 100%; transition-duration: 0ms; height: 104px; transform: translate(0px, 0px) translateZ(0px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);"></div>'
+                                str    += '</div></div> <div class="ed js_footer" rel="固定底部"> <ul class="l-pay l-list"><li class="item"> '
+                                str    += '  <div class="l-cell-num"><p><span class="l-price"><small>¥</small>'+data[b].list[a].total_money+'</span></p>'
+                                url +='&rate_code='+data[b].list[a].rate_code
+                                str    += ' </div> <button data-ubt-key="c_hotel_inland_detail_room_sub_reserve" class="l-btn btn--ui3 js_btn_book " _url='+url+' >';
+                                str    += ' <em class="pay-way  way-yf ">在线付</em>预订</button></li> </ul></div> </div> </div> '
+                            }
+                            str    += ' </div> '
+                        }
+
+
+                        $('.house_type').html(str);
+                    }
+                })
+            }
+        })
+
+        $.ajax({
+            type: "GET",
+            url: "http://demo.wowoyoo.com/airchina_api/hotel_info",
+            data: {'hotel_id':hotel_id},
+            dataType: "json",
+            success: function(data) {
+                $('#title').text(data.data.cname);
+                $('#hotel_img_info .hotel_img_info').text(data.data.star);
+                $('#hotel_address').text(data.data.address);
+                $('.cust').text(data.data.address_en);
+                $('#hotel_intro').text(data.data.introduction);
+//                           <span style="margin-left:10px;">{$key}:{$facilities}</span>
+                var facilities = '';
+                for(var a in data.data.facilities){
+                    facilities += a+':'+data.data.facilities[a];
+                }
+                $('.hotel_facilities').append(facilities);
+
+                if(data.data.arounds){
+                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail">'
+                    str    += '<div class="cell-star ellips dt-color8">';
+                    str    += ' <span style="color:red;margin-left:10px;" class="show_more_arounds">周边设施</span>';
+                    var around = '';
+                    for(var a in data.data.arounds){
+                        around += data.data.arounds[a];
+                    }
+                    str    += '<span style="margin-left:10px;">'+around+'</span>';
+                    str    += ' </div>';
+                    str    += ' </li>';
+
+                    $('.hotel_detail').append(str);
+                }
+
+                if(data.data.traffics){
+                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail">'
+                    str    += '<div class="cell-star ellips dt-color8">';
+                    str    += ' <span style="color:red;margin-left:10px;" class="show_more_arounds">周边交通</span>';
+                    var around = '';
+                    for(var a in data.data.traffics){
+                        around += data.data.traffics[a];
+                    }
+                    str    += '<span style="margin-left:10px;">'+around+'</span>';
+                    str    += ' </div>';
+                    str    += ' </li>';
+
+                    $('.hotel_detail').append(str);
+
+
+
+
+                }
+
+            }
+        })
+
+        //酒店图片
+        $('.imgs').click(function(){
+            location.href="{:U('home/index/hotelImg','','')}/hotel_id/{$data.hotel_id}"
+        })
+
+
+        //酒店详情
+        $('.hotel_detail').click(function(){
+            location.href="{:U('home/index/hotelDetail','','')}/hotel_id/{$data.hotel_id}"
+        })
+
+        $(document).on('click','.search-results-mod',function(){
+            var str = $(this).next().html();
+            $('.cui-layer').html(str);
+            $('.view').css('display','block');
+            $('.cui-layer').css({'width':"100%"});
+            $('.js_btn_close').click(function(){
+                $('.view').css('display','none');
+            })
+        })
+
+        $(".js_back").click(function () {
+            self.location=document.referrer;
+        });
+
+        $('.house_item').click(function () {
+
+        })
+
+        $(document).on('click','.js_btn_book',function(){
+            location.href=$(this).attr('_url')
+        })
+
+        $(document).on('click','.house_item',function(){
+            if ($(this).next().css('display') == 'none') {
+                $(this).next().css('display', 'block');
+                $(this).find('i').addClass('font-dt-icon-fold-up').removeClass('font-dt-icon-fold-down')
+            } else {
+                $(this).next().css('display', 'none');
+                $(this).find('i').removeClass('font-dt-icon-fold-up').addClass('font-dt-icon-fold-down')
+            }
+        })
+
+        //更改日期 city_id=18568&foreign=0&check_in=2017-09-08&check_out=2017-09-17&adult_count=2&children_ages=2&city=香港&keyword=&children_count=1&hotel_id=568834
+        $('#js_submit').click(function(){
+            var check_in   = document.getElementById("start_time").value;
+            var check_out  = document.getElementById("end_time").value;
+
+            var query = 'city_id={$data.city_id}&foreign={$data.foreign}&check_in='+check_in+'&check_out='+check_out+'&keyword={$data.keyword}&city={$data.city}';
+            query += '&hotel_id={$data.hotel_id}';
+
+            if( '{$data.child_num}' ){
+                query += '&child_num={$data.child_num}'
+            }
+
+            if( '{$data.children_ages}' ){
+                query += '&children_ages={$data.children_ages}'
+            }
+
+            if( '{$data.children_count}' ){
+                query += '&children_count={$data.children_count}'
+            }
+
+            if( '{$data.adult_count}' ){
+                query += '&adult_count={$data.adult_count}'
+            }
+            location.href="{:U('home/index/details','','')}?"+query;
+
+        })
+
+
+    })
+
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return decodeURI(r[2]);
+        return null; //返回参数值
+    }
+
+
+//    var w = $(".img").eq(0).width();
+//    var x = 0;
+//
+//    document.addEventListener('touchmove', touch, false);
+//    function touch(event) {
+//        var event = event || window.event;
+//        console.log($(".imgs").css('margin-left'))
+//        switch (event.type) {
+//            case "touchstart":
+////                   x = event.touches[0].clientX;
+//                break;
+//            case "touchend":
+////                x1 = event.changedTouches[0].clientX;
+//
+//                break;
+//            case "touchmove":
+////                event.preventDefault();
+//                x1 = event.touches[0].clientX;
+//                console.log('x:' + x + '--x1:' + x1);
+//                if (x != 0) {
+//                    if (x - x1 > 10) {
+//                        var str = parseInt($(".imgs").css('margin-left')) - w + 'px'
+//                        $(".imgs").animate({marginLeft: str}, 100);
+//                        x = 0;
+//                    } else if (x1 - x > 10) {
+//                        var str = parseInt($(".imgs").css('margin-left')) + w + 'px'
+//                        $(".imgs").animate({marginLeft: str}, 100);
+//                        $(".imgs").animate({marginLeft: str}, 100);
+//                        x = 0
+//                    } else {
+//
+//                    }
+//                } else {
+//                    x = x1;
+//                }
+//
+//
+//                break;
+//        }
+//
+//    }
+
+
+  /*
+
+  * **/
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
+
+

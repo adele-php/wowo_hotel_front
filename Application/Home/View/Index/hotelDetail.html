@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+    <style>
+        .roomDetail{
+            border-width: 1px 0 0;
+            background: #fff;
+            font-family: -apple-system,Helvetica,'Hiragino Sans GB W3','Microsoft YaHei',arial,sans-serif;
+            font-size: 0.7rem;
+            line-height: 1.65rem;
+            padding:0.5rem;
+        }
+
+        .roomDetail img{
+            width: 100%;
+            display: block;
+            margin-top: 0.5rem;
+            border: 0;
+        }
+        .roomDetail p{
+            padding: 0.5rem 0.25rem;
+            color: #808080;
+            font-size: 0.65rem;
+        }
+    </style>
+
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> {$hotel_info.cname}酒店详情 </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div class="roomDetail">
+                <!--主体-->
+                <img  src="{$hotel_info.image}">
+                <p>酒店介绍：{$hotel_info.introduction}</p>
+                <p>酒店星级：{$hotel_info.star}</p>
+                <p>酒店设施：<br/>
+                <foreach name="hotel_info['facilities']" item="v" key="k">
+                    {$k}:{$v}<br/>
+                </foreach>
+                </p>
+                <p>周边设施：<br/>
+                    <foreach name="hotel_info.arounds" item="v" key="k">
+                        {$k}:{$v}<br/>
+                    </foreach>
+                </p>
+                <p>周边交通：<br/>
+                    <foreach name="hotel_info.traffics" item="v" key="k">
+                        {$k}:{$v}<br/>
+                    </foreach>
+                </p>
+
+            </div>
+            <!--loading-->
+            <button class="g_btn_s js_confirm_btn">返回预定</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $(".js_confirm_btn").click(function () {
+            history.back()
+        });
+
+        $(".icon-back").click(function () {
+            history.back()
+        });
+
+
+    });
+</script>
+</body>
+</html>

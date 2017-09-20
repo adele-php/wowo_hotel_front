@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>订单详情</title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true"/>
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Common/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/order.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/orderDetail.css" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> {$data.order_status|orderStatus} </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+
+<div id="main" class="hotel-page-height100">
+    <h2>订单详情</h2>
+    <table class="table table-bordered" style="background: #fff;">
+        <tr>
+            <td>入住酒店</td>
+            <td colspan="2">{$data.room_name}</td>
+        </tr>
+
+        <tr>
+            <td>入住信息</td>
+            <td colspan="2">
+                入住时间{$data.check_in}<br/>
+                离店时间{$data.check_out}<br/>
+            </td>
+        </tr>
+        <tr>
+            <td>入住人</td>
+            <td colspan="2">{$data.contact_username}</td>
+        </tr>
+        <tr>
+            <td>联系方式</td>
+            <td colspan="2">{$data.contact_tel}</td>
+        </tr>
+        <tr>
+            <td>订单编号：</td>
+            <td colspan="2">{$data.order_no}</td>
+
+        </tr>
+        <tr>
+            <td >酒店确认号：</td>
+            <td colspan="2">{$data.wowo_order_no}</td>
+        </tr>
+
+        <tr>
+            <td>订单金额：</td>
+            <td colspan="2">{$data.total_money|default='等待客服确认价格'}</td>
+        </tr>
+        <tr>
+            <td>状态：</td>
+            <td colspan="2" style="color:#ff7d13">{$data.order_status|orderStatus}</td>
+        </tr>
+
+        <tr>
+            <td>状态</td>
+            <td>描述</td>
+            <td>时间</td>
+        </tr>
+        <foreach name="status" item="v">
+            <tr>
+                <td>{$v.order_log_type}</td>
+                <td>{$v.order_log_remark}</td>
+                <td>{$v.order_log_time}</td>
+            </tr>
+        </foreach>
+
+    </table>
+    <div class="detail_btn">
+    <if condition="$data.order_status eq 3">
+        <span class="pay-submit " id="update_order">修改订单</span>
+        <span class="pay-submit " id="cancel_order">取消订单</span>
+        <elseif condition="$data.order_status eq  2"/>
+        <span class="pay-submit " id="pay">立即支付</span>
+        <else/>
+
+    </if>
+    </div>
+
+</div>
+    <input type="hidden" class="confirm_type" value="{$data.confirm_type|default='1'}">
+        <script type="text/javascript">
+        $(function () {
+            //立即支付(支付成功)
+            $('#pay').click(function(){
+                var index = layer.load(2, {time: 10*1000});
+                var oid = '{$data.order_no}'
+                var wowo_order_no = '{$data.wowo_order_no}'
+                var total_money = '{$data.total_money}'
+
+                location.href="{:U('home/index/payMoney','','')}/oid/{$data.order_no}/wowo_order_no/{$data.wowo_order_no}/total_money/{$data.total_money}"
+
+            })
+
+
+            $('#update_order').click(function(){
+                location.href="{:U('home/index/modifyOrder','','')}/oid/{$data.order_no}/wowo_order_no/{$data.wowo_order_no}"
+            })
+
+        $(".icon-back").click(function () {
+            location.href="{:U('home/index/orderList')}"
+        });
+
+            //取消订单
+            $('#cancel_order').click(function(){
+                location.href="{:U('home/index/orderCancel','','')}/oid/{$data.order_no}/wowo_order_no/{$data.wowo_order_no}"
+            })
+
+
+
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>酒店预订,酒店价格查询,宾馆住宿预定,手机订酒店</title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true"/>
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/order.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> {$data.cname} </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+
+<div id="main" class="hotel-page-height100">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div class="roomDetail" style="overflow: auto;">
+                <ul class="t-smeal" style="margin-bottom:20px;">
+                    <!-- 基础信息（国内用）-->
+                    <li class="cell-v" style="">
+                        <div class="bk-cell-num">
+                            <div class="smeal-evl">
+                                <p>
+                                    <em>{$data.bed_remark}</em>
+                                    <em>{$data.max_people}</em>
+                                    <!--钟点房不显示早餐信息-->
+                                    <em>{$data.breakfast}</em>
+                                    <em>{$data.internet}</em>
+                                    <em>{$data.remarks}</em>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- /基础信息（国内用）-->
+                    <!-- start 修改日期按钮 -->
+                    <li id="js_checkInOutDay" class="cell-v">
+                        <p class="smeal-evl bk-cell-num">
+                            <em>入住：{$info.check_in}</em>
+                            <!--钟点房不显示离店日期及晚数-->
+                            <em>离店：{$info.check_out}</em><em></em>
+                        </p>
+                    </li>
+                    <!-- end 修改日期按钮 -->
+                </ul>
+
+                <!--房间数-->
+                <div class="every_room_info">
+                    <div class="adult">
+                        <span>房间数</span>
+                        <div class="cm-num-adjust" style="float:right">
+                            <span class="cm-adjust-minus js_num_minus   js_adult_num" _type="del"></span>
+                            <input type="tel" class="cm-adjust-view js_cur_num adult_num" value="1">
+                            <span class="cm-adjust-plus js_num_plus js_adult_num" _type="add"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <ul class="m-list" style="margin-top: 14px;">
+                    <li class="js_roomCount_button name">
+                        <label class="m-label">入住人</label>
+                        <input type="text" style="width:34.5%;float: right;" class="m-input nofastclick js_input lastname" placeholder="名">
+                        <input type="text" style="width:34.5%;float: right;" class="m-input nofastclick js_input firstname" placeholder="姓">
+                    </li>
+                    <li class="js_roomCount_button">
+                        <label class="m-label">大陆手机</label>
+                        <input type="text" style="float: right;" class="m-input nofastclick js_input phone" placeholder="手机号">
+                    </li>
+                    <li class="js_roomCount_button">
+                        <label class="m-label">优惠码</label>
+                        <input type="text" style="float: right;" class="m-input nofastclick js_input code" placeholder="请输入优惠码">
+                    </li>
+                    <!--/房间数-->
+                    <!--Star 房间数下拉控件-->
+
+                    <!-- end 境内手机 -->
+                </ul>
+            </div>
+            <!--loading-->
+            <div class="tips">
+                <p class="tip" id="js_booking_cancelInfo">{$data.remarks}</p>
+
+            </div>
+
+            <!--layout-->
+            <div class="hotel-cost-layer" style="display: none;">
+                <div class="vh-middle">
+                    <h2>费用明细</h2>
+                    <dl class="cost-list">
+                        <dt>
+                            <span class="hotel-font-color">房费</span>
+                        </dt>
+
+                        <foreach name="data.money_list" item="v" key="k">
+                            <dd>
+                                <foreach name="v" key="date" item="money">
+                                    <span class="w45">{$date}</span>
+                                    <span>{$data.breakfast}</span>
+                                    <span style="text-align: right;"><small>¥</small>{$money} × <small class="roomNum">1</small></span>
+                                </foreach>
+                            </dd>
+                        </foreach>
+                    </dl>
+                    <div class="cost-txt">
+                        <p>
+                            总额：
+                            <strong class="g-price">¥{$data.total_money}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="bk-pay" id="js_paybar_wrap">
+
+                <div class="pay-txt">
+                    <span class="pay-money">总额：
+                            <small>¥</small>
+                            <b>{$data.total_money}</b></span>
+                    <span class="pay-detail" id="js_price_detail_link">费用早餐明细<i class="bk-icon-arrow-right"></i></span>
+                </div>
+                <if condition="$data.confirm_type eq 2">
+                    <span class="pay-submit " id="js_booking_paybtn" _type="0">提交订单</span>
+                    <else/>
+                    <span class="pay-submit " id="js_booking_paybtn" _type="1">立即支付</span>
+                </if>
+            </section>
+        </div>
+    </div>
+</div>
+<input type="hidden" class="confirm_type" value="{$data.confirm_type|default='1'}">
+<script type="text/javascript">
+    $(function () {
+
+
+        var init = layer.load(1, {time: 5*1000});
+        $.ajax({
+            type: "POST",
+            url: 'http://demo.wowoyoo.com/airchina_api/query_room_price',
+            data: {
+                city_id:'{$info.city_id}',
+                check_in:'{$info.check_in}',
+                check_out:'{$info.check_out}',
+                hotel_id:'{$info.hotel_id}',
+                rate_code:'{$info.rate_code}',
+                room_count:1,
+            },
+            dataType: "json",
+            success: function(data){
+                layer.close(init);
+                if( data.status == 1){
+                    $('.pay-money b').text(data.data.total_money)
+                    $('.g-price').text('￥'+data.data.total_money);
+                    $('.confirm_type').val(data.data.confirm_type);
+                }else{
+                    //失败时 TODO
+
+                }
+
+            }
+        });
+
+        //提交订单 || 立即支付
+        $('#js_booking_paybtn').click(function(){
+            var contact_tel = $('.phone').val();
+            if (!contact_tel) {
+                layer.alert('请填写联系电话！');
+                return;
+            }
+
+            var room_username_list = '';
+            for (var i = 1; i <= $('.adult_num').val(); i++) {
+                if (i == 1) {
+                    var first = $('.name .firstname').val();
+                    var last = $('.name .lastname').val();
+                    room_username_list += first + ':' + last + '|'
+                } else {
+                    var first = $('.name' + i + ' .firstname').val();
+                    var last = $('.name' + i + ' .lastname').val();
+                    room_username_list += first + ':' + last + '|'
+                }
+            }
+            room_username_list = room_username_list.substring(0, room_username_list.length - 1);
+            var type = $(this).attr('_type')
+            var city_id = "{$info.city_id}"
+            var confirm_type = "{$data.confirm_type}"
+            var hotel_id = '{$info.hotel_id}';
+            var room_count =$('.adult_num').val();      //TODO
+            var adult_count = '{$info.adult_count}';
+            var children_count = '{$info.child_count}';
+            var children_ages = ( children_count != 0)?'{$info.children_ages}':'';
+
+            login(contact_tel,room_username_list)
+
+            $.ajax({
+                type: "POST",
+                url: '{:U("home/index/createOrder")}',
+                data: {
+                    'mobile':contact_tel,
+                    'name':room_username_list,
+                    'city_id':city_id,
+                    'confirm_type':confirm_type,
+                    'hotel_id':hotel_id,
+                    'room_count'    :room_count,
+                    'adult_count'    :adult_count,
+                    'children_count'    :children_count,
+                    'children_ages'    :children_ages,
+                },
+                success: function (data) {
+                    if(data==0){
+                        return;
+                    }
+                    var index = layer.load(2, {time: 10*1000});
+                    pay(data,index,type)
+                }
+            });
+        })
+
+        //支付
+        function pay(oid,index,type) {
+            var data = {};
+            data.city_id = '{$info.city_id}';
+            data.check_in = '{$info.check_in}';
+            data.check_out = '{$info.check_out}';
+            data.hotel_id = '{$info.hotel_id}';
+            data.room_name = '{$data.cname}';
+            data.rate_code = '{$data.rate_code}';
+            data.room_count = parseInt($('.adult_num').val());
+            data.adult_count = '{$info.adult_count}';
+            data.children_count = '{$info.children_count|default="0"}';
+
+
+            if (data.children_count != 0) {
+                data.children_ages = '{$info.children_ages}'
+            }
+
+            data.confirm_type = $('.confirm_type').val();
+            data.contact_tel = $('.phone').val();
+            if (!data.contact_tel) {
+                layer.alert('请填写联系电话！');
+                return;
+            }
+            data.contact_username = $('.name .firstname').val() + $('.name .lastname').val();
+            if (!data.contact_username) {
+                layer.alert('请填写联系人！');
+                return;
+            }
+
+            //[张:三|李:四]
+            var room_username_list = '';
+            for (var i = 1; i <= $('.adult_num').val(); i++) {
+                if (i == 1) {
+                    var first = $('.name .firstname').val();
+                    var last = $('.name .lastname').val();
+                    room_username_list += first + ':' + last + '|'
+                } else {
+                    var first = $('.name' + i + ' .firstname').val();
+                    var last = $('.name' + i + ' .lastname').val();
+                    room_username_list += first + ':' + last + '|'
+                }
+            }
+            data.room_username_list = room_username_list.substring(0, room_username_list.length - 1);
+
+            if (1 == 2) {
+                //特殊要求
+                data.remark = '';
+            }
+
+            //订单号
+            data.order_no =oid;
+
+            if ($('.code').val()) {
+                data.coupon_code = $('.code').val();
+            }
+
+            $.ajax({
+                type: "POST",
+                url: 'http://demo.wowoyoo.com/airchina_api/create_order',
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    layer.close(index);
+                    if (data.status == 0) {
+                        layer.alert('订单创建失败');
+                    } else {
+                        if(type==1){
+                            location.href="{:U('home/index/pay')}?wowo_order_no="+data.wowo_order_no+'&oid='+oid+'&order_status='+data.order_status;
+                        }else{
+                            location.href="{:U('home/index/orderCheck')}?wowo_order_no="+data.wowo_order_no+'&oid='+oid+'&order_status='+data.order_status;
+                        }
+
+                    }
+                }
+            });
+        }
+        //支付 end
+
+        //如果没有注册则自动注册 如果没有登录则自动登录
+        function login(mobile,username){
+            var data = {
+                'mobile':mobile,
+                'username':username
+            }
+            $.ajax({
+                type: "GET",
+                url: "{:U('home/index/autoRegisterAndLogin')}",
+                data: data,
+                async:false,            //同步 阻塞
+                dataType: "json",
+                success: function (data) {
+                    if(data.status ==0 ){
+                        layer.alert(data.errmsg);
+                    }
+                }
+            });
+        }
+
+
+        $('.js_adult_num').click(function(){
+            var attr = $(this).attr('_type');
+            var count = parseInt($('.adult_num').val());
+            if(attr == 'add'){
+                count +=1;
+            }else{
+                count -=1;
+                count = (count<0)?0:count;
+            }
+            var index = layer.load();
+            var mark = 1;
+            setTimeout(function(){
+                if(mark == 1){
+                    layer.close(index);
+                    layer.alert('请求超时！');
+                }
+            },5000)
+
+            $.ajax({
+                type: "POST",
+                url: 'http://demo.wowoyoo.com/airchina_api/query_room_price',
+                data: {
+                    city_id:'{$info.city_id}',
+                    check_in:'{$info.check_in}',
+                    check_out:'{$info.check_out}',
+                    hotel_id:'{$info.hotel_id}',
+                    rate_code:'{$info.rate_code}',
+                    room_count:count,
+                },
+                dataType: "json",
+                success: function(data){
+                    mark=0;
+                    layer.close(index);
+                    if(data.status ==0 ){
+                        layer.alert(data.errmsg);
+                    }else{
+
+                        if(attr == 'add' && count>1){
+                            var str = '<li class="js_roomCount_button name'+count+'">'
+                            str += '<label class="m-label">入住人'+count+'</label>'
+                            str += '<input type="text"  style="width:34.5%;float: right;" class="m-input nofastclick js_input lastname" placeholder="名">'
+                            str += '<input type="text"  style="width:34.5%;float: right;" class="m-input nofastclick js_input firstname" placeholder="姓">'
+                            str += '</li>'
+                            $('.m-list').prepend(str);
+                        }else if(attr == 'del' && count>=1){
+                            $('.m-list .name'+(count+1)).remove();
+                        }
+
+                        $('.pay-money b').text(data.data.total_money)
+                        $('.adult_num').val(count )
+                        $('.g-price').text('￥'+data.data.total_money);
+                        $('.g-roomNum').text(count);
+                        $('.confirm_type').val(data.data.confirm_type);
+                    }
+                }
+            });
+        })
+
+        $(".js_confirm_btn").click(function () {
+            history.back()
+        });
+
+        $(".icon-back").click(function () {
+            history.back()
+        });
+
+        $('.hotel-cost-layer').click(function(){
+            $(this).hide();
+        })
+
+        $('#js_price_detail_link').click(function(){
+
+            $('.hotel-cost-layer').css('display','table');
+        })
+    });
+</script>
+</body>
+</html>

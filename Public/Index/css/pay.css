@@ -1,0 +1,118 @@
+.p-index-paybill {
+    margin: 0 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.6rem;
+    overflow: hidden;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.p-index-paybill .bill-title {
+    padding: 0.6rem 0.5rem 0.15rem 0.5rem;
+    background-color: #d6eaff;
+}
+
+.p-index-paybill .cir-ico {
+    position: relative;
+    height: 0.55rem;
+    margin: 0 0.25rem;
+    background-color: #d6eaff;
+}
+.p-index-paybill .bill-price {
+    padding: 0.1rem 0.5rem 0.2rem 0.5rem;
+    color: #748dae;
+    line-height: 0.9rem;
+    background-color: #d6eaff;
+}
+.p-index-paybill .hotel-bill-title-primary {
+    font-size: 0.7rem;
+    color: #32465b;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.p-index-paybill .hotel-bill-checkin-time {
+    overflow: hidden;
+    color: #748dae;
+    height: 1rem;
+    margin-top: 0.35rem;
+}
+.p-index-paybill .cir-ico-line {
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    left: 0;
+    top: 0.25rem;
+    background-color: #cae0f7;
+}
+.p-index-paybill .bill-price {
+    padding: 0.1rem 0.5rem 0.2rem 0.5rem;
+    color: #748dae;
+    line-height: 0.9rem;
+    background-color: #d6eaff;
+}
+.p-index-paybill .bill-price-title {
+    float: left;
+    line-height: 1.7;
+}
+.p-index-paybill .hotel-bill-checkin-time span:nth-child(1) {
+    margin-left: 0;
+}
+.p-index-paybill .hotel-bill-checkin-time span:nth-child(2) {
+    margin-left: 1.15rem;
+}
+.p-index-paybill .hotel-bill-checkin-time span:nth-child(3) {
+    margin-left: 1.15rem;
+}
+
+.pay-submit {
+    background-color: #ff7d13;
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+    color: #fff;
+    border-radius: 0.2rem;
+    line-height: 1.05rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

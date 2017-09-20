@@ -1,0 +1,217 @@
+ 
+        html, body, div, header, h1, h2, ul, li, p { margin: 0; padding: 0 }
+        ul, li { list-style: none; }
+        button { border: 0; outline: none }
+        em { font-style: normal; }
+        body { color: #333; overflow-x: hidden; background: #f5f5f5;}
+        body, button {font-family: -apple-system,Helvetica,'Hiragino Sans GB W3','Microsoft YaHei',arial,sans-serif;font-size: 0.7rem;line-height: 1.5}
+        .w50{width:50%;}
+        .fl{float: left;}
+        .cui-grayload-text {margin: 0 !important;-webkit-transform: translate3d(-50%,-50%,0);}
+        /* fake */
+        /* header */
+        #headerview{position: relative; z-index: 5;}
+        .cm-header { position: fixed; top: 0; left: 0; width: 100%; height: 2.2rem; line-height: 2.2rem; text-align: center; background-color: #008acb; color: #fff; z-index: 960;-webkit-transform:translate3d(0,0,0); }
+        .cm-header h1 { font-weight: normal; font-family: inherit }
+        .cm-header .cm-header-icon { width: 2.2rem; height: 2.2rem; display: inline-block; text-align: center }
+        .cm-header .cm-page-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+        .cm-header .cm-page-title { line-height: 2.2rem; font-size: 0.9rem }
+        .icon-back { width: 2.2rem; height: 2.2rem; line-height: 2.2rem }
+        .icon-back::before { content: ""; display: inline-block; width: 0.5rem; height: 0.5rem; vertical-align: middle; border-left: 2px solid #fff; border-bottom: 2px solid #fff; -webkit-transform: rotate(45deg); transform: rotate(45deg); -webkit-box-sizing: border-box; box-sizing: border-box }
+        /* g */
+        .fr { float: right; }
+        .g-w { width: auto; min-width: 2rem; text-align: center; margin: 0 auto; }
+        .g-w i{color:#B2B2B2;display: inline-block; width:2rem; height:2rem; line-height:2.2rem;}
+        .g-fn1 { font-size: 0.8rem; }
+        .g-fn2 { font-size: 1rem; }
+        .g-fn3 { font-size: 0.55rem; color: #b2b2b2; }
+        .g-fn4 { font-size: 0.7rem; }
+        .g-c5 { color: #b2b2b2;padding-left: 1rem }
+        .g-c6 { color: #2b2b2b }
+        .g-c7 {color: #808080}
+        .g-c8 {color: #26aaf2}
+        .g-mr { margin-right: 3.5rem;}
+        .g-mr:after{content: "目的地"; position: absolute;left: 0; top: -0.25rem;font-size: 0.7rem; color: #333;}
+        .pl25 {padding-left: 1.25rem}
+        /* btn */
+        .g-btn { color: #FFF; font-size: 0.9rem; width: 100%; height: 2.2rem; line-height: 2.2rem; margin-top: 0.35rem; border-radius: 0.15rem; text-align: center; background-color: #ff9a14;display: block; }
+        .g-btn:active { background: #e37911; }
+        /*我的订单btn*/
+        .g-btn2 { background-color: #fff;padding:0.65rem; line-height: 1;font-size: 0.85rem;border-radius: 0.25rem;text-align: center;margin:0.5rem; color: #26aaf2; box-shadow: 0 0 0.5rem rgba(0,0,0,.1);}
+
+        .g-icon-history {background-position: 0 -3.75rem}
+        .g-icon-coupon {background-position: 0 -4.75rem}
+        .g-icon-order {background-position: 0 -5.75rem}
+        .g-icon-comment {background-position: 0 -6.85rem}
+        .g-icon-sendroom {background-position: 0 -8.15rem}
+        .g-map {border:1px solid #E3E4E8;height: 2.1rem; line-height: 2.3rem; margin:0.35rem 0 0 0.5rem;padding:0 0.5rem;border-radius: 0.15rem;display: block;color: #26aaf2}
+        .g-icon-my {width: 1.1rem;height: 1.3rem;background-position: 0 -1.4rem}
+        .g-mytxt {font-size: 0.7rem;margin:0 1rem 0 0.25rem; position:relative;}
+        .g-new {background-color: #fe4520;font-size: 0.45rem;color: #fff;line-height: 1.2;padding:0 0.15rem 0.1rem;position: absolute;right:0;top:0.25rem;border-radius: 15px;}
+        .g-reward {background-color: #fe4520;font-size: 0.45rem;color: #fff;line-height: 1.2;;position: absolute;border-radius: 4px; min-width: 50px; left:50%; -webkit-transform:translateX(-50%);transform:translateX(-50%);top:-0.55rem;}
+        .g-reward:after{width:0;height:0;border-top:3px solid #fe4520;border-left:3px solid transparent;border-right:3px solid transparent;content:"";position:absolute;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);bottom:-3px}
+        /* 文字截断 */
+        .g-e1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .g-e2 { line-height: 0.75rem; font-size:0.65rem;position: relative;top:1.2rem; padding: 0 0.5rem 0 0; box-sizing: border-box; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2;word-break: break-all; }
+        .g-e2 .g-fn1 { font-size: 0.7rem; padding-right: 0.25rem; font-weight: 700 }
+        .g-arr:before { position: absolute; content: ''; right: 0.15rem; top: 50%; margin-top: -0.25rem; width: 0.35rem; height: 0.35rem; border-top: 2px solid #ddd; border-right: 2px solid #ddd; -webkit-transform: rotate(45deg); transform: rotate(45deg); }
+        /* border-image */
+        .g-b,.g-border,.g-left,.h-place .h-items li,.g-tab.g-tab-ab .g-w { position: relative; border-width: 0 0 1px 0; border-style: solid; border-color: #ddd; border-image: url(ddata:image/gif;base64,R0lGODlhBQAFAIABAN3d3f///yH5BAEAAAEALAAAAAAFAAUAAAIHhB9pGatnCgA7) 2 stretch; -webkit-border-image: url(data:image/gif;base64,R0lGODlhBQAFAIABAN3d3f///yH5BAEAAAEALAAAAAAFAAUAAAIHhB9pGatnCgA7) 2 stretch; }
+        .g-border{border-width: 1px 0;}
+        .g-left{border-width: 0 0 0 1px;}
+        .g-b.g-arr:active { background-color: #f5f5f5 }
+        .m .t li.g-tab{line-height: 0.1rem;padding-top: 1rem;min-height: 1rem}
+        .g-tab { display: table; width: 100% }
+        .g-tab .g-b { display: table-cell; }
+        .g-tab .g-b:before{content: "入住"; position: absolute;left: 0.1rem; top: 0rem; font-size: 0.6rem; color: #b2b2b2;}
+        .g-tab .g-t:before{content: "离店";}
+        .g-tab .g-arr:before{margin-top: -0.2rem;}
+        .g-tab.g-tab-ab .g-w i {width:2.3rem;}
+        .ab-i {width:2.3rem;height:1.1rem; line-height: 1.1rem; border:1px solid #e6e8eb;border-radius: 50px;color: #2b2b2b;font-size: 0.65rem;position: absolute;left:-0.25rem;top:0;font-weight: 300}
+        .lc-itme .cm-num-adjust .cm-adjust-view{ width: 0.05rem; border-right: 0;color: transparent;}
+        /*index底部增加说明文案 --- 深航渠道使用 16/12/12*/
+        .index-txt{position: fixed;bottom: 0.5rem;color: #808080;width: 100%;text-align: center;font-size: 0.6rem}
+        /* hotel mod */
+        .m .t-ad {height: 4rem}
+        .m .t-ad + .t {margin:-1.5rem 0.5rem 0}
+        .m .t-99 + .t {margin:-1.5rem 0.5rem 0}
+        .m .t { padding: 0.4rem 0.5rem 0.3rem; margin:0.5rem 0.5rem 0;/*margin:-29px 10px 0;*/background-color: #fff;border-radius: 0.25rem; box-shadow: 0 0 0.5rem rgba(0,0,0,.1);overflow: hidden;}
+        .m .t li { min-height: 2rem; padding-top: 5px;}
+        .m .t .g-vb {display: block;padding-top: 0.9rem;color:#bbb;}
+        .m .t li.g-arr, .m .t li .g-arr { padding-right: 0.5rem; }
+        .m .t .hotel-morning {height: 2.75rem;position: absolute;top: 0;right:0;bottom: 0;width: 60%;}
+        .m .t .cui-tab-mod li {-webkit-box-flex: 1;-moz-box-flex: 1;-webkit-flex: 1;-ms-flex: 1;flex: 1;text-align:center}
+        .m .t .g-b {-webkit-transition:margin-right 350ms linear;transition:margin-right 350ms linear;}
+        /* star 我的位置 */
+        .gt-s {width: 2.2rem; height: 2.2rem; line-height: 0.95rem; border: 1px solid #099fde; color: #099fde; text-align: center; border-radius: 0.2rem;  }
+        .gt-s .ms {font-size: 0.6rem;-webkit-transform:scale(0.75);display:block;width: 150%;margin-left: -0.55rem;}
+        .gt-s:active { border-color: #ddd; background-color: #ddd}
+        .gt-s-i { position: relative; display: block; width: 1rem; height: 1rem; margin: 0.3rem auto 0; }
+        /* end 我的位置 */
+        .g-def-txt { font-size: 0.8rem; color: #bbb; padding-top: 5px;}
+        .g-close { width: 2.5rem; height: 100%; color: #099fde; position: absolute; right: -2.5rem; top: 0; }
+        .g-close:after { width: 1rem; height: 1rem; line-height: 1rem; font-size: 1rem; content: "×"; border: #099fde 1px solid; border-radius: 50%; text-align: center; position: absolute; right: 0.5rem; top: 50%; margin-top: -0.5rem; }
+        .g-close:active:after { background: #099fde; color: #fff }
+        .g-oversea-slogan {padding:0.75rem 1.2rem 0 1.2rem;}
+        /* reset cui-number ui */
+        /* loading */
+        .cui-mask { z-index: 2000; position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100%; width: 100%; background-color: rgba(0, 0, 0, .5); }
+        .g-m { width: 4rem; height: 3.5rem; border-radius: 0.25rem; background: rgba(0, 0, 0, .7); z-index: 9999; position: fixed; left: 50%; top: 50%; -webkit-transform: translate3d(-50%, -50%, 0); }
+        .g-m--c { position: absolute; width: 2.4rem; height: 2.4rem; left: 50%; top: 50%; margin: -1.25rem 0 0 -1.25rem; -webkit-animation: cui-loading 1.58s linear infinite; animation: cui-loading 1.58s linear infinite; border-top: 2px solid #fff; border-left: 2px solid #fff; border-radius: 50%; }
+        .g-m--l { position: absolute; width: 1.4rem; height: 1.4rem; left: 50%; top: 50%; z-index: 9; margin: -0.75rem 0 0 -0.6rem; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAA2CAMAAAC2heqoAAAAhFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8g2+bRAAAAK3RSTlMA8U0C+bkL/CZ+9cs4Fgftw5N3cT8Qpp1ZRizn3tlsXx+MUzKwl2Yc4tGGuUvfggAAAo1JREFUSMeVltfWqjAQhUPvAgpIR4qNef/3OyFRYgzB838XLlnuJFP2EJEUzXeM2gW9Mk4B+s19rmBFj80f8svZAo7mvic/OC5842lyffmEDW5S/U3nhFFswMJTFs6Zk1vDKbYTEmG6qTcN4LjGlR8jBzDF/YAYdufE8y0JIuBRlWs6IP+defLa9tiAhPwRYUGyNoS0sKhAitHB1AUsrwHrcwt2iJM2cdijj9Cowy7uU2EPGT7AgN94dFPFWdqtW1ObE+vIqTr1dGwL6sCBJH6EfZoC8SR7aiXLBXs7UrU1qYcNR4TSRmwPQgsyVLSJ98cFF5Aybi44yQu0PZmG0FrHY17YQOHlequhkn6z/yeFMFkminzt0CYFb89x7eQRbdOJhfR1fNLAJDtFOiNMGkI9B5yIuYm3qkLfJoHJq2MX6kI4QR52RkpWru+6j4qSA5Ivvf2OVqzSROLpEY9KfB7bbAP+levkiGdckvPN3OloahrrNAnzWSKeFADyS4M/6/uXlw7kZ2HEXOzCiZmLlcklTXORuCA6WLTsq5nYo6oIdwDAlAIFEaL3xJMFQkglwPnOFJgBXlzIglL0Tu9TQYUIWvPhvBFObyX7tXjl6bHWEPolYt0Q3NxoERN8VvahkYxGzhgKPtkHyurAu8JiuoHxqX8AXLVo3fDNwGJMFWjXirYKQKbNG2Z2mJuOYHV468uo9hVA2K4T8+DG5EqbbeNtnwCxWfbRo/auuRlksGbAEcNCHdA8w7mkXZtXbzrCO5n4pcHdo5d/6BlR+HHLI4GkJjoVO7AWLorN6TV7nZjYRunXvff0pf+tyJIpT+0zG6xo0JCU4OTRi9DIKmq464h+EOS9UYck7ezoc5v/A8imzeBKssPpAAAAAElFTkSuQmCC) no-repeat; background-size: 1.2rem 1.35rem; }
+        @-webkit-keyframes cui-loading {
+            0% {opacity: 1;-webkit-transform: rotate(0deg); }
+            100% {opacity: 1;-webkit-transform: rotate(360deg); }
+        }
+        @keyframes cui-loading {
+            0% {opacity: 1;transform: rotate(0deg); }
+            100% {opacity: 1;transform: rotate(360deg); }
+        }
+        @media (max-width : 345px) {
+            .g-fn1 {font-size: 0.95rem}
+            .g-def-txt {font-size: 0.8rem}
+
+        }
+        .g-flex .item,.indextab li {-webkit-box-flex: 1;-moz-box-flex: 1;-webkit-flex: 1;-ms-flex: 1;flex: 1;}
+        .indextab li {padding-left: 0.75rem; line-height: 0.9rem;}
+        .indextab li em{font-size: 0.9rem; color: #26aaf2;position: relative;}
+
+        .h-place h2 {height: 2rem; line-height: 2rem; background-color: #f5f5f5;font-size: 0.75rem;color: #808080;text-align: center;font-weight: normal;margin-top: 1rem;}
+        .h-place .h-items li {padding:0.5rem;background-color: #fff;overflow: hidden;border-width: 0 0 1px 0;}
+        .h-place .h-items li h3 {margin: 0;font-size: 0.95rem;color: #2b2b2b;padding: 0.4rem 0 0.65rem;line-height: 1}
+        .h-place .h-items .fl {width: 8rem;height: 4rem;border-radius: 0.2rem;overflow: hidden;background: #f2f2f2 url(//pic.c-ctrip.com/h5/hotel/hotel-loading-default.png) center center no-repeat;  background-size: 1.35rem 1.45rem;}
+        .h-place .h-items .fl img {min-width: 8rem;max-width: 8rem;min-height: 4rem;}
+
+        /*快捷操作*/
+        .r-fixed {width: 10rem;height:100%;font-size:0.7rem;color:#fff;position: fixed;top:0;right:0;bottom:0;z-index:9999;-webkit-transform:translate3d(10.5rem,0,0);transform:translate3d(10.5rem,0,0);-webkit-transition:-webkit-transform .35s cubic-bezier(0.250, 0.460, 0.450, 0.940);transition:transform .35s cubic-bezier(0.250, 0.460, 0.450, 0.940);background-color: #262631;box-shadow: -5px 0 22px rgba(0,0,0,.2);}
+        .r-user {background-color: #333344;text-align: center;padding:0.75rem 0.25rem;box-sizing:border-box;}
+        .r-user b {font-size: 0.8rem;}
+        .r-user .u-btn {min-width:4rem;border:1px solid #fff;border-radius: 3px;padding:0.35rem 0.65rem;background-color: transparent;color: #fff;margin-top: 0.6rem}
+        .r-enter li {padding:0.75rem 0.1rem 0.5rem 0.9rem}
+        .r-enter li:active {background-color: #393944}
+        .r-enter li i {width: 0.9rem;height:0.9rem;margin-right: 0.25rem}
+        .r-enter .r-new  {font-size: 0.55rem;background-color: #ff9a14;color: #fff;padding:0 0.2rem 0.05rem;border-radius: 0.5rem;margin-left: 0.25rem;}
+        .r-dptxt {color: #ff9a14;font-size: 0.55rem; padding: 0 0.1rem 0 2rem;margin-top: -0.45rem}
+
+        @-webkit-keyframes fadeInRight {
+            0% {
+                -webkit-transform: translate3d(80%,0,0);
+                transform: translate3d(80%,0,0)
+            }
+
+            100% {
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+        @keyframes fadeInRight {
+            0% {
+                -webkit-transform: translate3d(80%,0,0);
+                transform: translate3d(80%,0,0)
+            }
+
+            100% {
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        @-webkit-keyframes fadeOut {
+            0% {
+                opacity:1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .slide-inn li {
+            -webkit-animation-name: fadeInRight;
+            animation-name: fadeInRight;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both
+        }
+        .r-enter li:nth-of-type(1) {
+            -webkit-animation-duration: 300ms;
+            animation-duration: 300ms;
+        }
+        .r-enter li:nth-of-type(2) {
+            -webkit-animation-duration: 400ms;
+            animation-duration: 400ms;
+        }
+        .r-enter li:nth-of-type(3) {
+            -webkit-animation-duration: 500ms;
+            animation-duration: 500ms;
+        }
+        .r-enter li:nth-of-type(4) {
+            -webkit-animation-duration: 600ms;
+            animation-duration: 600ms;
+        }
+        .r-enter li:nth-of-type(5) {
+            -webkit-animation-duration: 700ms;
+            animation-duration: 700ms;
+        }
+        .r-enter li:nth-of-type(6) {
+            -webkit-animation-duration: 800ms;
+            animation-duration: 800ms;
+        }
+        /*待支付*/
+        .g-gopay .item {margin: 0.5rem;box-shadow: 0 0 0.5rem rgba(0,0,0,.1);background-color: #fff;border-radius: 0.25rem;}
+        .gopay-t {padding:0.5rem 0.75rem ; line-height:1.2 }
+        .gopay-t h2 {font-size:0.75rem; font-weight: 300; color: #2b2b2b;padding-bottom: 0.25rem}
+        .gopay-b {font-size:0.65rem;background-color: #f8f8f8;position: relative;padding:0.5rem 1rem 0.5rem 0.75rem;}
+        .gopay-b.g-arr:before {right:0.5rem;}
+
+
+        @font-face { font-family: 'dt-font'; src: url('//webresource.c-ctrip.com/ResH5HotelOnline/R8/res/20170615163924j/img/fonts/dt-font.ttf?6ksdxd') format('truetype'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'bk-font'; src: url('//webresource.c-ctrip.com/ResH5HotelOnline/R8/res/20170615163924j/img/fonts/bk-font.ttf?cwsunh') format('truetype'); font-weight: normal; font-style: normal; }
+
+
+.g_btn_s{position: fixed !important; left: 0px; bottom: 0px;}

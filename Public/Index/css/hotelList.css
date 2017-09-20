@@ -1,0 +1,14 @@
+.hotel_img{
+    width:19%;
+    float: left;
+    padding-top: 0.65rem;
+    padding-left: 0.2rem;
+}
+.hotel_img img{
+    width:100%;
+    height:100%;
+}
+.hotel-g-cbd{
+    width:70%;
+    float: left;
+}

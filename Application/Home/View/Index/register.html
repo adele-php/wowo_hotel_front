@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>会员登录</title>
+    <meta name="viewport" content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/login.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+
+
+
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+</head>
+<body>
+    <div class="head w100">
+        <h1>会员注册</h1>
+        <i class="icon iconfont icon-fanhui"></i>
+    </div>
+
+    <div class="login">
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" ><i class="icon iconfont icon-shouji"></i></span>
+            <input type="text" class="form-control mobile" placeholder="mobile" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" ><i class="icon iconfont icon-user"></i></span>
+            <input type="text" class="form-control username" placeholder="your name" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
+            <input type="password" class="form-control password" placeholder="Password" aria-describedby="basic-addon1">
+        </div>
+        <div class="code_img"><img src="{:U('home/index/code')}" class="" ></div>
+        <div class="input-group input-group-lg ">
+            <span class="input-group-addon"><i class="icon iconfont icon-yanzhengma"></i></span>
+            <input type="text" class="form-control code" placeholder="验证码" aria-describedby="basic-addon1">
+        </div>
+
+        <button class="in_login-submit" >注册</button>
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $('.icon-fanhui').click(function(){
+            location.href="{:U('home/index/login')}"
+        })
+
+        $('.code_img').click(function(){
+            var url = "{:U('home/index/code','','')}?"+Math.random()
+            $(this).find('img').attr('src',url)
+        })
+
+        $('.in_login-submit').click(function(){
+            $.ajax({
+                type: "POST",
+                url: "{:U('home/index/register')}",
+                data: {
+                    'mobile':$('.mobile').val(),
+                    'code':$('.code').val(),
+                    'password':$('.password').val(),
+                    'username':$('.username').val(),
+                    'check':'1',
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.status==0){
+                        layer.alert(data.errmsg);
+                    }else{
+                        location.href="{:U('home/index/login')}"
+                    }
+
+                }
+            })
+        })
+    });
+</script>
+
+</body>
+</html>
