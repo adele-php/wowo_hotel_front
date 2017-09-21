@@ -34,7 +34,7 @@
         .g-mr:after{content: "目的地"; position: absolute;left: 0; top: -0.25rem;font-size: 0.7rem; color: #333;}
         .pl25 {padding-left: 1.25rem}
         /* btn */
-        .g-btn { color: #FFF; font-size: 0.9rem; width: 100%; height: 2.2rem; line-height: 2.2rem; margin-top: 0.35rem; border-radius: 0.15rem; text-align: center; background-color: #ff9a14;display: block; }
+        .g-btn { color: #FFF; font-size: 0.7rem; width: 100%; height: 2.2rem; line-height: 2.2rem; margin-top: 0.35rem; border-radius: 0.15rem; text-align: center; background-color: #ff9a14;display: block; }
         .g-btn:active { background: #e37911; }
         /*我的订单btn*/
         .g-btn2 { background-color: #fff;padding:0.65rem; line-height: 1;font-size: 0.85rem;border-radius: 0.25rem;text-align: center;margin:0.5rem; color: #26aaf2; box-shadow: 0 0 0.5rem rgba(0,0,0,.1);}
@@ -215,3 +215,35 @@
 
 
 .g_btn_s{position: fixed !important; left: 0px; bottom: 0px;}
+
+.hotellist_date_box{width:80px;-webkit-flex:none !important;}    
+.hotellist_date_input{width: 111px;}
+/* iphone5 */
+@media (min-width: 320px) {
+.hotellist_date_box{width:110px;}    
+.hotellist_date_input{width: 80px;}
+}
+/* 华为 */
+@media (min-width: 360px) {
+.hotellist_date_input{width: 80px;}
+}
+/* iphone6 */
+@media (min-width: 375px) {
+
+}
+/* iphone6 plus */
+@media (min-width: 414px) {
+.hotellist_date_box{width: 120px;}
+}
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: 768px) {
+
+}
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: 992px) {
+
+}
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: 1200px) {
+
+}

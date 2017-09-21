@@ -94,16 +94,17 @@
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-right btn-info" oid="{$order.order_no}" wid="{$order.wowo_order_no}">查看详情</button>
                             </div>
-
                         </case>
                         <case value="3">
                             <!--已支付，待入住-->
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-left btn-modify" oid="{$order.order_no}" wid="{$order.wowo_order_no}">修改订单</button>
                             </div>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-adele btn-cancel" oid="{$order.order_no}" wid="{$order.wowo_order_no}">取消订单</button>
-                            </div>
+                            <if condition="$order.is_cancel eq 1">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-adele btn-cancel" oid="{$order.order_no}" wid="{$order.wowo_order_no}">取消订单</button>
+                                </div>
+                            </if>
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-right btn-info" oid="{$order.order_no}" wid="{$order.wowo_order_no}">查看详情</button>
                             </div>

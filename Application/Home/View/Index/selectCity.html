@@ -247,14 +247,14 @@
                                 <!--</ul>-->
                             <!--</li>-->
 
-                            <!--<li class="js_simple_city js_history_city">-->
-                                <!--<span class="cui-city-t">历史选择</span>-->
-                                <!--<ul class="hotel-city-tags city_ul">-->
-                                    <!--<li data-path="historyCities.0" class="current" data-cityid="2" data-citytype="1"-->
-                                        <!--data-mark="city">上海-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                            <!--</li>-->
+                            <li class="js_simple_city js_history_city">
+                                <span class="cui-city-t">历史选择</span>
+                                <ul class="hotel-city-tags city_ul">
+                                    <foreach name="history_city" item="city" key="cid">
+                                        <li  data-cityid="{$cid}" city="{$city}">{$city}</li>
+                                    </foreach>
+                                </ul>
+                            </li>
                             <!--国内热门列表-->
                             <li class="js_simple_city js_hot_city not-foreign">
                                 <span class="cui-city-t">热门城市</span>
@@ -370,11 +370,20 @@
             }
         })
     });
+
+    //联想搜索选择
     $(document).on('click','.select_city',function(){
         var cityid = $(this).find('p').attr('_id');
         var city = $(this).find('p').attr('_city');
         location.href="{:U('home/index/index')}?city_id="+cityid+'&city='+city+'&{$query}';
     })
+
+    //选择城市
+    $('.city_ul li').click(function(){
+        var cityid = $(this).attr('data-cityid');
+        var city = $(this).attr('city');
+        location.href="{:U('home/index/index')}?city_id="+cityid+'&city='+city+'&{$query}';
+    });
 
     $(".icon-back").click(function () {
         history.back()
@@ -406,11 +415,7 @@
         }
     });
 
-    $('.city_ul li').click(function(){
-        var cityid = $(this).attr('data-cityid');
-        var city = $(this).attr('city');
-        location.href="{:U('home/index/index')}?city_id="+cityid+'&city='+city+'&{$query}';
-    });
+
 </script>
 </body>
 </html>

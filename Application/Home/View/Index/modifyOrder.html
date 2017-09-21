@@ -180,6 +180,7 @@
                 type: "POST",
                 url: "{:U('home/index/orderModify')}",
                 data: data,
+                dataType:'json',
                 success: function (d) {
                     layer.close(index)
                     if(d.status==1){
@@ -187,8 +188,6 @@
                     }else{
                         layer.alert(d.errmsg)
                     }
-
-
                 }
             });
         })

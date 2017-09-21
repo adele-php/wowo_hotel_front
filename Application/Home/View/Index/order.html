@@ -144,7 +144,6 @@
 <script type="text/javascript">
     $(function () {
 
-
         var init = layer.load(1, {time: 5*1000});
         $.ajax({
             type: "POST",
@@ -287,18 +286,18 @@
 
             $.ajax({
                 type: "POST",
-                url: 'http://demo.wowoyoo.com/airchina_api/create_order',
+                url: "{:U('home/index/createWoWoYooOrder')}",
                 data: data,
                 dataType: "json",
                 success: function (data) {
                     layer.close(index);
                     if (data.status == 0) {
-                        layer.alert('订单创建失败');
+                        layer.alert(data.errmsg);
                     } else {
                         if(type==1){
-                            location.href="{:U('home/index/pay')}?wowo_order_no="+data.wowo_order_no+'&oid='+oid+'&order_status='+data.order_status;
+                            location.href="{:U('home/index/pay')}?wowo_order_no="+data.data.wowo_order_no+'&oid='+oid+'&order_status='+data.data.order_status;
                         }else{
-                            location.href="{:U('home/index/orderCheck')}?wowo_order_no="+data.wowo_order_no+'&oid='+oid+'&order_status='+data.order_status;
+                            location.href="{:U('home/index/orderCheck')}?wowo_order_no="+data.data.wowo_order_no+'&oid='+oid+'&order_status='+data.data.order_status;
                         }
 
                     }
@@ -326,7 +325,6 @@
                 }
             });
         }
-
 
         $('.js_adult_num').click(function(){
             var attr = $(this).attr('_type');

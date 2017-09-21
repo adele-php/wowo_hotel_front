@@ -5,10 +5,13 @@
     <title>酒店预订，酒店查询，宾馆住宿预订,网上订酒店</title>
     <meta name="viewport"
           content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
     <link rel="Stylesheet" type="text/css" debug_evn="false" href="__ROOT__/Public/Index/css/base.css"/>
     <link rel="Stylesheet" type="text/css" debug_evn="false" href="__ROOT__/Public/Index/css/keys.css"/>
     <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
     <link rel="stylesheet" href="__ROOT__/Public/Index/css/hotelList.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/date_select.css" />
+
     <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
     <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
     <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
@@ -51,12 +54,11 @@
                         <div class="js_floatable_box">
                             <div class="m-checkin-out dt-cell-v dt-tb-border js_in_out_day_filter"
                                  data-ubt-key="c_hotel_inland_detaila_main_check">
-                                <div class="in js_check_in">
-                                    <input type="date" id='start_time' value='{$data["check_in"]}'
-                                           style="width: 111px;">入住
+                                <div class="in js_check_in hotellist_date_box">
+                                    <input type="text" id='start_time' readonly="readonly" class="select-time input-enter hotellist_date_input" value='{$data["check_in"]}'><span>入住</span>
                                 </div>
                                 <div class="dt-flex1 out dt-l-border js_check_out">
-                                    <input type="date" id='end_time' value='{$data["check_out"]}' style="width: 111px;">离店
+                                    <input type="text" id='end_time' readonly="readonly" class="select-time input-leave hotellist_date_input" value='{$data["check_out"]}'>离店
                                     <button class="g-btn item" id="js_submit"
                                             style="position:absolute;right:0;top:1.05rem;height:1.2rem;margin-top:-0.6rem;">
                                         查询
@@ -179,6 +181,21 @@
         if (r != null) return decodeURI(r[2]);
         return null; //返回参数值
     }
+</script>
+
+
+
+<script type="text/javascript" src="__ROOT__/Public/Index/js/date_select.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    //绑定南航日期
+    var bind_date=function(){
+        if($('.select-time')[0]){
+            $('.select-time').hotelDate();
+        }
+    }
+    bind_date();
+});   
 </script>
 </body>
 </html>

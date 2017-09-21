@@ -9,14 +9,20 @@ class IndexController extends Controller {
     public function index(){
 
         if(isset($_GET['city_id'])){
+            //加入历史选择城市
+            if( !session('?history.'.I('get.city_id')) ){
+                session('history.'.I('get.city_id'),I('get.city'));
+            }
             $this->assign('city',['cname'=>I('get.city'),'id'=>I('get.city_id')]);
         }
 
         if( isset($_GET['adult_count'])){
             $people = ['adult_count'=>$_GET['adult_count'],'child_count'=>$_GET['child_num'],'children_ages'=>$_GET['children_ages']];
-            $this->assign('people',$people);
-            $this->assign('people_query',http_build_query($people));
+        }else{
+            $people = ['adult_count'=>2,'child_count'=>0,'children_ages'=>''];
         }
+        $this->assign('people',$people);
+        $this->assign('people_query',http_build_query($people));
 
         $time = array();
         if( isset($_GET['check_in'])){
@@ -53,7 +59,6 @@ class IndexController extends Controller {
             $keyword_show['hotel_types'] = $spt['data']['hotel_types'][$keyword_default['hotel_types']];
         }
 
-
         $this->assign('keyword_default',$keyword_default);
         $this->assign('keyword_show',$keyword_show);
         $this->assign('time',$time);
@@ -66,6 +71,7 @@ class IndexController extends Controller {
 
     public function selectCity(){
         $data = S('citys');
+
         if(false===$data){
             $data = curl('http://demo.wowoyoo.com/airchina_api/citys');
             S('citys',$data,30000);
@@ -94,6 +100,11 @@ class IndexController extends Controller {
         }
         if( isset($_GET['city']) ){
             unset($_GET['city']);
+        }
+
+        //存在历史选择
+        if( session('?history') ){
+            $this->assign('history_city',session('history'));
         }
 
         $query = http_build_query(I('get.'));
@@ -330,13 +341,15 @@ class IndexController extends Controller {
         $this->display();
     }
 
+    //创建本地订单
     public function createOrder(){
 
         if(empty(session('mobile'))){
             echo 0;return;
         }
+
         $oid = M('order')->add([
-            'contact_tel'     =>I('post.mobile'),
+            'contact_tel'     =>I('post.mobile'),// 联系电话
             'contact_username'=>I('post.name'),
             'city_id'         =>I('post.city_id'),
             'confirm_type'    =>I('post.confirm_type'),
@@ -345,10 +358,28 @@ class IndexController extends Controller {
             'adult_count'     =>I('post.adult_count'),
             'children_count'  =>I('post.children_count'),
             'children_ages'   =>I('post.children_ages'),
-            'mobile'          =>session('mobile'),    //TODO 用户登录手机号
+            'mobile'          =>session('mobile'),    // 用户登录手机号
         ]);
         echo $oid;
         //没有创建成功(已创建重复刷新) TODO
+    }
+
+    //创建wowoyoo订单
+    public function createWoWoYooOrder(){
+        $opt = [
+            CURLOPT_POST=>1,
+            CURLOPT_POSTFIELDS=>I('post.')
+        ];
+        $create_order = curl('http://demo.wowoyoo.com/airchina_api/create_order',$opt);
+        if($create_order['status']==1){
+            M('order')
+                ->where('order_no='.I('post.order_no'))
+                ->save([
+                    'is_cancel'=>$create_order['data']['is_cancel'],
+                    'cancel_time'=>$create_order['data']['cancel_time'],
+                ]);
+        }
+        echo json_encode($create_order);
 
     }
 
@@ -373,33 +404,37 @@ class IndexController extends Controller {
 
         //订单状态日志
         M('order_status_log')->add([
-            'order_no'=>$order_detail['data']['order_no'],
-            'wowo_order_no'=>$order_detail['data']['wowo_order_no'],
-            'order_status'=>$order_detail['data']['order_status'],
-            'order_log_type'=>$order_detail['data']['order_logs'][0]['type'],
+            'order_no'        =>$order_detail['data']['order_no'],
+            'wowo_order_no'   =>$order_detail['data']['wowo_order_no'],
+            'order_status'    =>$order_detail['data']['order_status'],
+            'order_log_type'  =>$order_detail['data']['order_logs'][0]['type'],
             'order_log_remark'=>$order_detail['data']['order_logs'][0]['remark'],
-            'order_log_time'=>$order_detail['data']['order_logs'][0]['time']['date'],
+            'order_log_time'  =>$order_detail['data']['order_logs'][0]['time']['date'],
         ]);
 
         //订单信息补充
         M('order')
             ->where("order_no=".$order_detail['data']['order_no'])
             ->save([
-                'order_status'=>$order_detail['data']['order_status'],
-                'room_name'=>$order_detail['data']['room_name'],
-                'check_in'=>$order_detail['data']['check_in'],
-                'check_out'=>$order_detail['data']['check_out'],
-                'total_money'=>$order_detail['data']['total_money'],
-                'wowo_order_no'=>$order_detail['data']['wowo_order_no'],
-                'rate_code'=>$order_detail['data']['rate_code'],
-                'confirm_code'=>$order_detail['data']['confirm_code'],
+                'order_status'  =>$order_detail['data']['order_status'],
+                'room_name'     =>$order_detail['data']['room_name'],
+                'check_in'      =>$order_detail['data']['check_in'],
+                'check_out'     =>$order_detail['data']['check_out'],
+                'total_money'   =>$order_detail['data']['total_money'],
+                'wowo_order_no' =>$order_detail['data']['wowo_order_no'],
+                'rate_code'     =>$order_detail['data']['rate_code'],
+                'confirm_code'  =>$order_detail['data']['confirm_code'],
+                'confirm_type'  =>$order_detail['data']['confirm_type'],
+                'is_cancel'     =>$order_detail['data']['is_cancel'],
+                'cancel_time'   =>$order_detail['data']['cancel_time'],
+                'pay_date_limit'=>$order_detail['data']['pay_date_limit'],
         ]);
         $this->assign('data',$order_detail['data']);
         $this->display();
 
     }
 
-    //支付页面
+    //立即支付页面
     public function pay(){
         //用户重复刷新
         if( $order_detail=S(I('get.oid')) ){
@@ -432,14 +467,18 @@ class IndexController extends Controller {
         M('order')
             ->where("order_no=".$order_detail['data']['order_no'])
             ->save([
-                'order_status'=>$order_detail['data']['order_status'],
-                'room_name'=>$order_detail['data']['room_name'],
-                'check_in'=>$order_detail['data']['check_in'],
-                'check_out'=>$order_detail['data']['check_out'],
-                'total_money'=>$order_detail['data']['total_money'],
-                'wowo_order_no'=>$order_detail['data']['wowo_order_no'],
-                'rate_code'=>$order_detail['data']['rate_code'],
-                'confirm_code'=>$order_detail['data']['confirm_code'],
+                'order_status'  =>$order_detail['data']['order_status'],
+                'room_name'     =>$order_detail['data']['room_name'],
+                'check_in'      =>$order_detail['data']['check_in'],
+                'check_out'     =>$order_detail['data']['check_out'],
+                'total_money'   =>$order_detail['data']['total_money'],
+                'wowo_order_no' =>$order_detail['data']['wowo_order_no'],
+                'rate_code'     =>$order_detail['data']['rate_code'],
+                'confirm_code'  =>$order_detail['data']['confirm_code'],
+                'confirm_type'  =>$order_detail['data']['confirm_type'],
+                'is_cancel'     =>$order_detail['data']['is_cancel'],
+                'cancel_time'   =>$order_detail['data']['cancel_time'],
+                'pay_date_limit'=>$order_detail['data']['pay_date_limit'],
             ]);
 //        var_dump($order_detail);die;
         $this->assign('data',$order_detail['data']);
@@ -455,6 +494,7 @@ class IndexController extends Controller {
         $data['contact_username'] = $this->_handleName($data['contact_username']);
         $status = M('order_status_log')
             ->where($condition)
+            ->order('order_log_time asc')
             ->select();
 
         $this->assign('status',$status);
@@ -488,24 +528,12 @@ class IndexController extends Controller {
             CURLOPT_POST=>1,
             CURLOPT_POSTFIELDS=>I('post.')
         ];
-        $res = curl('http://demo.wowoyoo.com/airchina_api/change_order',$opt);
-        if( $res['status']!=1 ){
-            echo json_encode($res);
+        $result = curl('http://demo.wowoyoo.com/airchina_api/change_order',$opt);
+        if( $result['status']!=1 ){
+            echo json_encode($result);
             return;
         }
 
-        $condition = ['order_no'=>I('post.order_no'),'wowo_order_no'=>I('post.wowo_order_no')];
-        $order = M('order')->where($condition)->find();
-        $order['room_username_list'] = $order['contact_username'];
-        $order['contact_username'] = $this->_handleName(explode('|',$order['contact_username'])[0]);
-
-        //得到修改的内容
-        $keys = array_keys(I('post.'));
-        foreach($order as $k =>$v ){
-            if( !in_array($k,$keys) ){unset($order[$k]);}
-        }
-        $diff = array_diff(I('post.'),$order);
-        $diff_keys = array_keys($diff);
         $map = [
             'check_in'=>'入住时间',
             'check_out'=>'离店时间',
@@ -514,14 +542,44 @@ class IndexController extends Controller {
             'contact_username'=>'联系人',
             'room_username_list'=>'入住人',
         ];
+        $condition = ['order_no'=>I('post.order_no'),'wowo_order_no'=>I('post.wowo_order_no')];
+        $order = M('order')->where($condition)->find();
 
+        $order['room_username_list'] = $order['contact_username'];
+        $order['contact_username'] = $this->_handleName(explode('|',$order['contact_username'])[0]);
+
+        //得到修改的内容
+        $keys = array_keys(I('post.'));
+        foreach($order as $k =>$v ){
+            if( !in_array($k,$keys) ){unset($order[$k]);}
+        }
+        $diff      = array_diff(I('post.'),$order);
+        $diff_keys = array_keys($diff);
         $res = ['status'=>1];
         foreach($diff_keys as $key){
             $res['msg'] .= isset($map[$key])?($map[$key].'变更、'):'';
         }
         $res['msg']=substr($res['msg'],0,-strlen('、'));
-        echo json_encode($res);
 
+        //更改订单状态
+        //订单状态日志
+        M('order_status_log')->add([
+            'order_no'        =>$order['order_no'],
+            'wowo_order_no'   =>$order['wowo_order_no'],
+            'order_status'    =>$order['order_status'],
+            'order_log_type'  =>'订单修改',
+            'order_log_remark'=>$res['msg'],
+            'order_log_time'  =>date('Y-m-d H:i:s',time()),
+        ]);
+
+        //订单信息更新
+        $_POST['contact_username'] = I('post.room_username_list');
+        unset($_POST['room_username_list']);
+        $order_model = M('order');
+        $data = $order_model->create();
+        $order_model->where("order_no=".$order['order_no'])->save($data);
+
+        echo json_encode($res);
     }
 
     //订单修改提交 审核页
@@ -580,9 +638,14 @@ class IndexController extends Controller {
     //订单取消申请页
     public function orderCancel(){
         $condition = ['order_no'=>I('get.oid'),'wowo_order_no'=>I('get.wowo_order_no')];
-        $data = M('order')
-            ->where($condition)
-            ->find();
+        $data = M('order')->where($condition)->find();
+        //判断是否超过取消申请时间
+        if(!empty($data['cancel_time'])){
+            $is_pay = time()-strtotime($data['cancel_time']);
+            if($is_pay>0){
+                $this->error('支付时间已过');
+            }
+        }
         $data['contact_username'] = $this->_handleName($data['contact_username']);
 
         $this->assign('data',$data);
@@ -590,11 +653,41 @@ class IndexController extends Controller {
     }
     //订单取消接口
     public function cancelOrder(){
+        //判断是否超过取消申请时间
+        $condition = ['order_no'=>I('get.oid'),'wowo_order_no'=>I('get.wowo_order_no')];
+        $data = M('order')->where($condition)->find();
+        if(!empty($data['cancel_time'])){
+            $is_pay = time()-strtotime($data['cancel_time']);
+            if($is_pay>0){
+                $this->error('支付时间已过');
+            }
+        }
+
+        //申请取消
         $opt = [
             CURLOPT_POST=>1,
             CURLOPT_POSTFIELDS=>I('get.')
         ];
-        echo json_encode( curl('http://demo.wowoyoo.com/airchina_api/cancel_order',$opt) );
+        $result = curl('http://demo.wowoyoo.com/airchina_api/cancel_order',$opt) ;
+        if($result['status']==1){
+            //订单状态日志  TODO
+            M('order_status_log')->add([
+                'order_no'=>I('get.order_no'),
+                'wowo_order_no'=>I('get.wowo_order_no'),
+                'order_status'=>'5',                //TODO 状态不知 暂定5
+                'order_log_type'=>$result['data'],
+                'order_log_remark'=>$result['data'],
+                'order_log_time'=>date('Y-m-d H:i:s',time()),
+            ]);
+
+            //订单信息补充 TODO
+//            M('order')
+//                ->where("order_no=".I('get.order_no'))
+//                ->save([
+//                    'order_status'=>'5',
+//                ]);
+        }
+        echo json_encode($result);
 
     }
 
@@ -655,6 +748,7 @@ class IndexController extends Controller {
                 'wowo_order_no'=>$order_detail['data']['wowo_order_no'],
                 'rate_code'=>$order_detail['data']['rate_code'],
                 'confirm_code'=>$order_detail['data']['confirm_code'],
+                'confirm_type'=>$order_detail['data']['confirm_type'],
             ]);
         $order     =  M('order')->where($condition)->find();
 
@@ -703,8 +797,15 @@ class IndexController extends Controller {
     //支付  调用支付宝接口
     public function payMoney(){
         $condition = ['order_no'=>I('get.oid'),'wowo_order_no'=>I('get.wowo_order_no')];
-        //校对价格
         $order_info = M('order')->where($condition)->find();
+        //判断是否能支付
+        if(!empty($order_info['pay_date_limit'])){
+            $is_pay = time()-strtotime($order_info['pay_date_limit']);
+            if($is_pay>0){
+                $this->error('支付时间已过');
+            }
+        }
+        //校对价格
         if($order_info['total_money']!=I('get.total_money')){
             //TODO  error
             die('请勿更改价格！');
@@ -719,14 +820,6 @@ class IndexController extends Controller {
         $this->alipay($param);
     }
 
-    //TODO
-    public function asjd(){
-        $opt = [
-            CURLOPT_POST=>1,
-            CURLOPT_POSTFIELDS=>['order_no'=>I('get.oid'),'wowo_order_no'=>I('get.wowo_order_no'),'total_money'=>I('get.total_money')]
-        ];
-        $payment_success = curl('http://demo.wowoyoo.com/airchina_api/payment_success',$opt);
-    }
 
     /* ************************支付宝支付**************************** */
 
@@ -793,7 +886,7 @@ class IndexController extends Controller {
         //计算得出通知验证结果
         $alipayNotify = new \AlipayNotify($alipay_config);
         $verify_result = $alipayNotify->verifyNotify();
-        if ($verify_result || 1==1) {
+        if ($verify_result) {
             //验证成功  插入notice  log
             M('alipay_notice_log')->add(I('post.'));
 
@@ -803,8 +896,7 @@ class IndexController extends Controller {
                 'room_name'=>trim(I('post.subject')),        //商品名称
                 'total_money'=>I('post.total_fee'),      //订单的总金额
             ];
-            $order =  M('order')->where($condition);
-            $order_info = $order->find();
+            $order_info = M('order')->where($condition)->find();
 //            file_put_contents(__DIR__.'/1.txt',$order_info);die;
             if(!$order_info){
                 //对账失败 TODO
@@ -812,7 +904,7 @@ class IndexController extends Controller {
             }
 
             if ($_POST['trade_status'] == 'TRADE_FINISHED' ||$_POST['trade_status'] == 'TRADE_SUCCESS' ) {
-                //wowoyou推送支付成功
+                //向wowoyou推送支付成功
                 $opt = [
                     CURLOPT_POST=>1,
                     CURLOPT_POSTFIELDS=>[
@@ -832,8 +924,8 @@ class IndexController extends Controller {
 
                 //增加订单状态变更日志
                 M('order_status_log')->add([
-                    'order_no'=>$order_info['data']['order_no'],
-                    'wowo_order_no'=>$order_info['data']['wowo_order_no'],
+                    'order_no'=>$order_info['order_no'],
+                    'wowo_order_no'=>$order_info['wowo_order_no'],
                     'order_status'=>3,
                     'order_log_type'=>'订单支付',
                     'order_log_remark'=>'支付成功',
@@ -849,6 +941,18 @@ class IndexController extends Controller {
         }
     }
 
+    public function ding(){
+        $opt = [
+            CURLOPT_POST=>1,
+            CURLOPT_POSTFIELDS=>[
+                'order_no'=>'69',
+                'wowo_order_no'=>'12226068500006',
+                'total_money'=>'651'
+            ],
+        ];
+        $payment_success = curl('http://demo.wowoyoo.com/airchina_api/payment_success',$opt);
+        var_dump($payment_success);
+    }
 
 
     // ------------------------------------登录注册------------------------------------
@@ -937,7 +1041,9 @@ class IndexController extends Controller {
         $userinfo = curl('https://wowoyoo.com/member_api/login_by_tel',$opt);
         if($userinfo['status']==0){
             //未注册
-            $opt[CURLOPT_POSTFIELDS]['username'] = explode('|',I('get.username'))[0] ;
+            $_username  =   str_replace([",",":"],"",explode('|',I('get.username'))[0]);
+
+            $opt[CURLOPT_POSTFIELDS]['username'] = $_username ;
             $opt[CURLOPT_POSTFIELDS]['password'] = '000000';
             $register = curl('https://wowoyoo.com/member_api/register',$opt);
             if($register['status']==1){
@@ -946,35 +1052,11 @@ class IndexController extends Controller {
             echo json_encode($register);
         }else{
             //已注册 自动登录
-            session('mobile',$userinfo['info']['tel']);
+            session('mobile',$userinfo['data']['mobile']);
             echo json_encode($userinfo);
         }
 
     }
-
-
-
-    public function test(){
-        $opt = [
-            CURLOPT_POST=>1,
-            CURLOPT_POSTFIELDS=>['mobile'=>'18006661209'],
-            CURLOPT_SSL_VERIFYPEER=>FALSE,
-            CURLOPT_SSL_VERIFYHOST=>FALSE
-        ];
-        $userinfo = curl('https://wowoyoo.com/member_api/login_by_tel',$opt);
-
-        var_dump($userinfo);
-    }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -984,9 +1066,6 @@ class IndexController extends Controller {
     //二次确认推送 客人下订单后，当酒店有房，无房或无房酒店变更时信息推送(续住也使用这个接口)
     public function reconfirm(){
         $this->_orderLogParam();
-        //重复刷新 TODO
-
-        $rid = M('order_reconfirm_log')->add(I('post.'));
 
         $res = M('order')
             ->where('order_no='.I('post.order_no').' and wowo_order_no='.I('post.wowo_order_no'))
@@ -995,7 +1074,8 @@ class IndexController extends Controller {
                 'total_money'=>I('post.total_money'),
             ]);
 
-        //增加订单日志
+        $data = I('post.');
+        //增加订单日志 二次推送日志
         for($i=0;$i<count(I('post.order_log_type'));$i++){
             M('order_status_log')->add([
                 'order_no'=>I('post.order_no'),
@@ -1005,6 +1085,23 @@ class IndexController extends Controller {
                 'order_log_remark'=>I('post.order_log_remark')[$i],
                 'order_log_time'=>I('post.order_log_time')[$i],
             ]);
+
+            M('order_reconfirm_log')->add([
+                'order_log_type'=>I('post.order_log_type')[$i],
+                'order_log_remark'=>I('post.order_log_remark')[$i],
+                'order_log_time'=>I('post.order_log_time')[$i],
+                'confirm_code'=>I('post.confirm_code'),
+                'hotel_id'=>I('post.hotel_id'),
+                'is_cancel'=>I('post.is_cancel'),
+                'order_no'=>I('post.order_no'),
+                'order_status'=>I('post.order_status'),
+                'rate_code'=>I('post.rate_code'),
+                'room_count'=>I('post.room_count'),
+                'room_name'=>I('post.room_name'),
+                'total_money'=>I('post.total_money'),
+                'wowo_order_no'=>I('post.wowo_order_no'),
+            ]);
+
         }
 
         json_encode(['status'=>$res]);
@@ -1041,7 +1138,7 @@ class IndexController extends Controller {
         for($i=0;$i<count($order_log);$i++){
             $_POST['order_log_type'][$i]   =$order_log[$i]['type'] ;
             $_POST['order_log_remark'][$i] = $order_log[$i]['remark'];
-            $_POST['order_log_time'][$i]   = $order_log[$i]['time']['date'];
+            $_POST['order_log_time'][$i]   = $order_log[$i]['time'];
         }
 
         unset($_POST['order_log']);
@@ -1051,7 +1148,20 @@ class IndexController extends Controller {
 
 
 
-
+    public function test(){
+        echo strtotime(' 2017-09-21 10:54:23.000000 ');die;
+        $order_model = M('order');
+        $orders = $order_model->select();
+        foreach($orders as $order){
+            $opt = [
+                CURLOPT_POST=>1,
+                CURLOPT_POSTFIELDS=>['order_no'=>$order['order_no'],'wowo_order_no'=>$order['wowo_order_no']]
+            ];
+            $order_detail = curl('http://demo.wowoyoo.com/airchina_api/order_detail',$opt);
+            $data = $order_model->create($order_detail['data']);
+            $order_model->save($data);
+        }
+    }
 
 
 

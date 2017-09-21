@@ -98,7 +98,6 @@
                     'remark':$('#reason').val()
                 }
 
-
                 $.ajax({
                     type: "GET",
                     url: '{:U("home/index/cancelOrder")}',
@@ -111,7 +110,6 @@
                         }else{
                             layer.alert(d.errmsg);
                         }
-
                     }
                 });
 
