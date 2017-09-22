@@ -209,12 +209,18 @@
             var adult_count = $('.adult_num').val();
             var child_count = $('.child_num').val();
             var children_ages =  '';
+
+            //判断成人数量
+            if(adult_count<=0){
+                layer.alert('成人数至少为1人！');
+                return;
+            }
+
             if( child_count==0){
                 children_ages=0
             }else{
                 for(var i=0;i<child_count;i++){
                     var child_age = parseInt( $('.child_age').eq(i).val() );
-
 
                     if(!isInteger(child_age) || child_age<=0 ){
                         layer.alert('孩子的年龄必须为正整数！')
@@ -238,6 +244,9 @@
                 count +=1;
             }else{
                 count -=1;
+            }
+            if(count<=0){
+                count =1 ;
             }
             $('.adult_num').val(count )
         })

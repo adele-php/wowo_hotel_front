@@ -31,7 +31,7 @@ ul, ol { list-style: none }
 .mt10 { margin-top: 0.5rem; }
 .ml10 { margin-left: 0.5rem; }
 .mr5 { margin-right: 0.25rem; }
-.hotel-border, .hotel-t-b-border,.hotel-b-border, .cui-tab-mod, .hotel-t-border, .hotel-sellp .hotel-g-list, .hotel-sellp .hotel-g-list li, .popup-operate ul li, .booking-bd-items, .cui-roller-btns, .cui-roller-btns .cui-flexbd:nth-of-type(2), .hotel-fixed-top { border-style: solid; border-color: #ddd; border-image: url(https://pages.ctrip.com/hotel_h5/res/img/border-image.gif) 2 stretch; -webkit-border-image: url(https://pages.ctrip.com/hotel_h5/res/img/border-image.gif) 2 stretch; }
+.hotel-border, .hotel-t-b-border,.hotel-b-border, .cui-tab-mod, .hotel-t-border, .hotel-sellp .hotel-g-list, .hotel-sellp .hotel-g-list li, .popup-operate ul li, .booking-bd-items, .cui-roller-btns, .cui-roller-btns .cui-flexbd:nth-of-type(2), .hotel-fixed-top { border-style: solid; border-color: #ddd;  }
 .hotel-t-border, .hotel-sellp .hotel-g-list, .booking-bd-items, .cui-roller-btns { border-width: 1px 0 0; }
 .hotel-border { border-width: 1px; }
 .cui-roller-btns .cui-flexbd:nth-of-type(2) { border-width: 0 0 0 1px; }
@@ -117,7 +117,7 @@ small{padding-right: 0.15rem;font-size: 0.55rem;}
 .sell-food .food-recommend strong {color: #808080}
 
 /*酒店设施icon*/
-.sicon { display: inline-block; background-image: url(https://pic.c-ctrip.com/h5/hotel/hotel-service-icon.png?t=20151020); background-repeat: no-repeat; background-size: 5rem 18.5rem; vertical-align: middle; text-indent: -9999px; width: 0.75rem; height: 0.75rem; }
+.sicon { display: inline-block;  background-repeat: no-repeat; background-size: 5rem 18.5rem; vertical-align: middle; text-indent: -9999px; width: 0.75rem; height: 0.75rem; }
 .sicon1 { background-position: 0 0 }
 .sicon2 { background-position: -1.9rem 0 }
 .sicon3 { background-position: -3.8rem 0 }
@@ -161,7 +161,7 @@ small{padding-right: 0.15rem;font-size: 0.55rem;}
 /*附加选择*/
 
 /*酒店周边*/
-.sa-icon, .hotel-checkbox-wrap { display: inline-block; background: url(https://pages.ctrip.com/hotel_h5/res/img/hotel-info20161019.png) no-repeat; background-size: 6.25rem 6.5rem; vertical-align: middle; text-indent: -9999px; }
+.sa-icon, .hotel-checkbox-wrap { display: inline-block;  background-size: 6.25rem 6.5rem; vertical-align: middle; text-indent: -9999px; }
 .sa-icon-caterers { background-position: 0 0 }
 .sa-icon-entertainment { background-position: 0 -1rem }
 .sa-icon-spots { background-position: 0 -2rem }
@@ -198,7 +198,7 @@ small{padding-right: 0.15rem;font-size: 0.55rem;}
 
 /*客栈类型酒店卖点--*/
 .inn-h { background-color: #fff; border-radius: 0.15rem; box-shadow: 2px 2px 4px rgba(131, 126, 115, 0.18); margin: 3.1rem 0 0 0; padding: 1.85rem 0.4rem 0.75rem 0.4rem; position: relative; }
-.boss-img { width: 3.75rem; height: 3.75rem; border-radius: 50%; border: 2px solid #fff; overflow: hidden; position: absolute; top: -2.4rem; left: 50%; -webkit-transform: translateX(-50%); transform: translateX(-50%); background: #f5f5f5 url(https://pic.c-ctrip.com/h5/hotel/hotel-loading-default.png) center center no-repeat; background-size: 1.35rem 1.45rem }
+.boss-img { width: 3.75rem; height: 3.75rem; border-radius: 50%; border: 2px solid #fff; overflow: hidden; position: absolute; top: -2.4rem; left: 50%; -webkit-transform: translateX(-50%); transform: translateX(-50%); background: #f5f5f5 ; background-size: 1.35rem 1.45rem }
 .boss-img img { width: 3.85rem; height: 3.85rem; border-radius: 50%; margin: -0.05rem; }
 
 /*Star 预订 btn*/

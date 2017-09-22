@@ -143,6 +143,15 @@
 <input type="hidden" class="confirm_type" value="{$data.confirm_type|default='1'}">
 <script type="text/javascript">
     $(function () {
+        //手机号验证
+        function is_mobile(mobile){
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(!myreg.test(mobile)) {
+                return false;
+            }else{
+                return true;
+            }
+        }
 
         var init = layer.load(1, {time: 5*1000});
         $.ajax({
@@ -179,6 +188,10 @@
                 return;
             }
 
+            if(!is_mobile(contact_tel)){
+                layer.alert('请填写正确的联系电话！');
+                return;
+            }
             var room_username_list = '';
             for (var i = 1; i <= $('.adult_num').val(); i++) {
                 if (i == 1) {

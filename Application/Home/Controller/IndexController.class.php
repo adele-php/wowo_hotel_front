@@ -8,6 +8,14 @@ class IndexController extends Controller {
     }
     public function index(){
 
+        //是否登录
+        $user = empty(session('mobile'))?[]:[
+            'mobile'=>session('mobile'),
+            'username'=>session('username'),
+            'is_login'=>1
+        ];
+        $this->assign('user',$user);
+
         if(isset($_GET['city_id'])){
             //加入历史选择城市
             if( !session('?history.'.I('get.city_id')) ){
@@ -254,6 +262,7 @@ class IndexController extends Controller {
 
         $query = http_build_query($_GET);
         $this->assign('hotel',$hotel);
+        $this->assign('default_img',__ROOT__.'/Public/Common/img/default.jpeg');
         $this->assign('query',$query);
 
         $this->display();
@@ -322,6 +331,7 @@ class IndexController extends Controller {
     public function hotelDetail(){
         $hotel_info = curl('http://demo.wowoyoo.com/airchina_api/hotel_info?hotel_id='.I('hotel_id'));
         $this->assign('hotel_info',$hotel_info['data']);
+        $this->assign('type',I('get.type'));
         $this->display();
     }
 
@@ -622,11 +632,16 @@ class IndexController extends Controller {
 
     //订单列表
     public function orderList(){
-        $mobile = '18006661209';
+        // TODO
+
+        if(empty(session('mobile'))){
+            $this->redirect('home/index/login');
+        }
+
+        $mobile = session('mobile');
         $orders = M('order')
             ->where('mobile='.$mobile)
             ->select();
-
         foreach( $orders as $k=>$v){
             $orders[$k]['contact_username'] = $this->_handleName(explode('|',$orders[$k]['contact_username'])[0]);
         }
@@ -978,8 +993,8 @@ class IndexController extends Controller {
                 echo json_encode($userinfo);return;
             }
             session('mobile',$userinfo['data']['mobile']);
+            session('username',$userinfo['data']['username']);
             echo json_encode(['status'=>1]);return;
-
         }
         $this->display();
     }

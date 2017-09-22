@@ -22,6 +22,7 @@
             font-size: 0.7rem;
             line-height: 1.65rem;
             padding:0.5rem;
+            margin-bottom: 82px;
         }
 
         .roomDetail img{
@@ -51,23 +52,34 @@
             <div class="roomDetail">
                 <!--主体-->
                 <img  src="{$hotel_info.image}">
-                <p>酒店介绍：{$hotel_info.introduction}</p>
                 <p>酒店星级：{$hotel_info.star}</p>
-                <p>酒店设施：<br/>
-                <foreach name="hotel_info['facilities']" item="v" key="k">
-                    {$k}:{$v}<br/>
-                </foreach>
-                </p>
-                <p>周边设施：<br/>
-                    <foreach name="hotel_info.arounds" item="v" key="k">
-                        {$k}:{$v}<br/>
-                    </foreach>
-                </p>
-                <p>周边交通：<br/>
-                    <foreach name="hotel_info.traffics" item="v" key="k">
-                        {$k}:{$v}<br/>
-                    </foreach>
-                </p>
+                <switch name="type">
+                    <case value="introduction">
+                        <p>酒店介绍：{$hotel_info.introduction}</p>
+                    </case>
+                    <case value="facilities">
+                        <p>酒店设施：<br/>
+                            <foreach name="hotel_info['facilities']" item="v" key="k">
+                                {$k}:{$v}<br/>
+                            </foreach>
+                        </p>
+                    </case>
+                    <case value="arounds">
+                        <p>周边设施：<br/>
+                            <foreach name="hotel_info.arounds" item="v" key="k">
+                                {$k}:{$v}<br/>
+                            </foreach>
+                        </p>
+                    </case>
+                    <case value="traffics">
+                        <p>周边交通：<br/>
+                            <foreach name="hotel_info.traffics" item="v" key="k">
+                                {$k}:{$v}<br/>
+                            </foreach>
+                        </p>
+                    </case>
+                </switch>
+
 
             </div>
             <!--loading-->

@@ -19,6 +19,16 @@
 <div id="headerview" style="height: 2.2rem;">
     <div class="cm-header" id="ui-view-15">
         <h1 class="cm-page-title js_title"> 国内/海外酒店 </h1>
+        <div class="is_login">
+            <i class="iconfont icon-user"></i>
+            <if condition="$user.is_login eq 1">
+                <span>已登录</span>
+                <else/>
+                <span>去登录</span>
+            </if>
+
+        </div>
+
     </div>
 </div>
 <div id="main" class="hotel-page-height100">
@@ -72,11 +82,34 @@
                 </article>
             </div>
             <!--loading-->
+
+            <div class="g-btn2 js_myorder">我的订单</div>
+            <input type="hidden" value="{$user.is_login|default='0'}" class="login">
         </div>
     </div>
 </div>
 <script type="text/javascript">
     $(function(){
+        $('.is_login').click(function(){
+            var is_login = $('.login').val()
+            if(is_login == 1){
+
+            }else{
+                location.href="{:U('home/index/login')}"
+            }
+
+        })
+
+        $('.js_myorder').click(function(){
+            var is_login = $('.login').val()
+            if(is_login == 1){
+                location.href="{:U('home/index/orderList')}"
+            }else{
+                location.href="{:U('home/index/login')}"
+            }
+
+        })
+
         $('#js_city').click(function(){
             var starttime   = document.getElementById("start_time").value;
             var endtime     = document.getElementById("end_time").value;

@@ -27,7 +27,7 @@ return array(
         'errorpage'=>'User/myorder?ordtype=unpay',
     ),
 
-//    /* 服务器*/
+    /* ���ݿ����� */
 //    'DB_TYPE'               =>  'mysql',     // ���ݿ�����
 //    'DB_HOST'               =>  '192.168.100.254', // ��������ַ
 //    'DB_NAME'               =>  'wowo_hotel_front',          // ���ݿ���
@@ -40,7 +40,7 @@ return array(
 //    'DB_CHARSET'            =>  'utf8',      // ���ݿ����Ĭ�ϲ���utf8
 
 
-// 本地
+
     'DB_TYPE'               =>  'mysql',     // 数据库类型
     'DB_HOST'               =>  '192.168.18.121', // 服务器地址
     'DB_NAME'               =>  'wowo_airchina',          // 数据库名
@@ -52,6 +52,4 @@ return array(
     'DB_FIELDS_CACHE'       =>  true,        // 启用字段缓存
     'DB_CHARSET'            =>  'utf8',      // 数据库编码默认采用utf8
 
-
-//    'SESSION_AUTO_START'    =>  false,    // 是否自动开启Session
 );

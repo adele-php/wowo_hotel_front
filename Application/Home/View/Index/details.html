@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
     <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
     <link rel="stylesheet" href="__ROOT__/Public/Index/css/date_select.css" />
+    <link rel="stylesheet" href="__ROOT__/Public/Index/icon/iconfont.css" />
     <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
     <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
     <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
@@ -124,7 +125,7 @@
             margin-right: .5rem;
             border-radius: .15rem;
             overflow: hidden;
-            background: #f2f2f2 url(//pic.c-ctrip.com/h5/hotel/hotel-loading-default.png) 50% no-repeat;
+            background: #f2f2f2 ;
             background-size: 1.35rem 1.45rem;
         }
 
@@ -222,13 +223,6 @@
 
                     <div class="hotel_img">
                         <div class="imgs">
-                            <!--<foreach name="hotel_img.paths" item="img">-->
-                                <!--<div class="img">-->
-                                    <!--<img src="{$img}"-->
-                                         <!--data-state="https://dimg04.c-ctrip.com/images/hotel/373000/372135/c3028fa548b34dd883e187498a1fe26e_C_550_412_Q50.jpg_.webp"-->
-                                         <!--width="100%" is="c-img" pagecode="H5HotelDetail">-->
-                                <!--</div>-->
-                            <!--</foreach>-->
                         </div>
                         <ul class="dt-list dt-cell-list dt-t-border dt-b-base mt5" id="hotel_img_info">
                             <li class="items js_goto_hotelintro" data-name="info"
@@ -275,7 +269,7 @@
                     <ul class="dt-list dt-cell-list dt-t-border dt-b-base mt5 js_goto_hotelintro_ul hotel_detail">
 
                         <li class="items js_goto_hotelintro" data-name="info"
-                            data-ubt-key="c_hotel_inland_detail_mod_detail">
+                            data-ubt-key="c_hotel_inland_detail_mod_detail" _type="introduction">
                             <div class="cell-star ellips dt-color8">
                                 <span style="color:red;margin-left:10px;" class='show_more_intro'>酒店介绍</span>
                                 <span id="hotel_intro">{$hotel_info.introduction}</span>
@@ -284,7 +278,7 @@
 
 
                         <li class="items js_goto_hotelintro" data-name="info"
-                            data-ubt-key="c_hotel_inland_detail_mod_detail">
+                            data-ubt-key="c_hotel_inland_detail_mod_detail" _type="facilities">
                             <div class="cell-star ellips dt-color8 hotel_facilities">
                                 <span style="color:red;margin-left:10px;" class='show_more_faci'>酒店设施</span>
                                 <foreach name="hotel_info.facilities" item="facilities" key="key">
@@ -292,12 +286,6 @@
                                 </foreach>
                             </div>
                         </li>
-
-
-
-
-
-
 
                     </ul>
                     <!--Star 同类型&浏览历史-->
@@ -445,7 +433,7 @@
                             str += ' <div class="cell-end dt-cell room--space2 js_baseroomtoggle "><div class="cell-star room-column">'
                             str += ' <p><span class="price"><small>总¥</small>'
                             str += ' <span class="js-cas-p">'+data[b].list[0].total_money+'</span>'
-                            str += ' </span><span class="price-star">起</span></p></div><div class="cell-end room-column"> <i class="font-dt-icon-fold-up js_basearrow_icon"></i>'
+                            str += ' </span><span class="price-star">起</span></p></div><div class="cell-end room-column"> <i class="font-dt-icon-fold-up js_basearrow_icon iconfont icon-jiantouxia"></i>'
                             str += ' </div></div></div>'
 
                             /**
@@ -475,7 +463,7 @@
                                 str    += ' <small>总¥</small>'+data[b].list[a].total_money+' </b>起 '
                                 str    += ' <button class="dt-btn-t" >预订</button></span></div> </div></li></a></ul> </div> </div>'
                                 str    += ' <div class="lay_info" style="display: none;"> '
-                                str    += ' <div class="l js_pop_box" rel="房型弹层html区域"> '
+                                str    += ' <div class="l js_pop_box" rel="房型弹层html区域" style="top:400px;"> '
                                 str    += ' <div class="hd js_hd gray" rel="灰色固定头部">'+data[b].list[a].cname+'<span class="a-area js_btn_close"><i class="l-close"></i></span></div> '
                                 str    += ' <div class="bd js_swrapper" rel="中间带滚动条区域" style="overflow: auto; position: relative; height: 225px;"> '
                                 str    += ' <div style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"> '
@@ -521,7 +509,7 @@
                 $('.hotel_facilities').append(facilities);
 
                 if(data.data.arounds){
-                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail">'
+                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail" _type="arounds">'
                     str    += '<div class="cell-star ellips dt-color8">';
                     str    += ' <span style="color:red;margin-left:10px;" class="show_more_arounds">周边设施</span>';
                     var around = '';
@@ -536,7 +524,7 @@
                 }
 
                 if(data.data.traffics){
-                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail">'
+                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail" _type="traffics">'
                     str    += '<div class="cell-star ellips dt-color8">';
                     str    += ' <span style="color:red;margin-left:10px;" class="show_more_arounds">周边交通</span>';
                     var around = '';
@@ -549,11 +537,7 @@
 
                     $('.hotel_detail').append(str);
 
-
-
-
                 }
-
             }
         })
 
@@ -562,10 +546,10 @@
             location.href="{:U('home/index/hotelImg','','')}/hotel_id/{$data.hotel_id}"
         })
 
-
         //酒店详情
-        $('.hotel_detail').click(function(){
-            location.href="{:U('home/index/hotelDetail','','')}/hotel_id/{$data.hotel_id}"
+        $(document).on('click','.hotel_detail li',function(){
+            var type = $(this).attr('_type');
+            location.href="{:U('home/index/hotelDetail','','')}/hotel_id/{$data.hotel_id}/type/"+type
         })
 
         $(document).on('click','.search-results-mod',function(){
@@ -593,10 +577,10 @@
         $(document).on('click','.house_item',function(){
             if ($(this).next().css('display') == 'none') {
                 $(this).next().css('display', 'block');
-                $(this).find('i').addClass('font-dt-icon-fold-up').removeClass('font-dt-icon-fold-down')
+                $(this).find('i').addClass('icon-jiantoushang').removeClass('icon-jiantouxia')
             } else {
                 $(this).next().css('display', 'none');
-                $(this).find('i').removeClass('font-dt-icon-fold-up').addClass('font-dt-icon-fold-down')
+                $(this).find('i').removeClass('icon-jiantoushang').addClass('icon-jiantouxia')
             }
         })
 

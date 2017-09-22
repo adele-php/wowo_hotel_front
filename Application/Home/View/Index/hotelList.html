@@ -78,8 +78,8 @@
                                     <a href="{:U('home/index/details','','')}?{$query}&hotel_id={$v.hotel_id}"
                                        class="js_a_seo" title="{$v.cname}">
                                         <li class="js_hotel_detail  hotel-list-historybrows">
-                                            <div class="hotel_img">
-                                                <img src="{$v.image}">
+                                            <div class="hotel_img" >
+                                                <img src="{$v.image|default=$default_img}">
                                             </div>
                                             <div class="hotel-g-cbd"><h4 class="ellips js_hotelname">{$v.cname}</h4>
                                                 <div class="list-c" address=""><span

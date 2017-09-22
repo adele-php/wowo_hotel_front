@@ -44,6 +44,16 @@
     </div>
 <script type="text/javascript">
     $(function(){
+        //手机号验证
+        function is_mobile(mobile){
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(!myreg.test(mobile)) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+
         $('.code_img').click(function(){
             var url = "{:U('home/index/code','','')}?"+Math.random()
             $(this).find('img').attr('src',url)
@@ -53,6 +63,10 @@
             var mobile = $('.mobile').val()
             if(!mobile){
                 layer.alert('请输入手机号！');
+                return;
+            }
+            if(!is_mobile(mobile)){
+                layer.alert('请输入正确的手机号！');
                 return;
             }
 

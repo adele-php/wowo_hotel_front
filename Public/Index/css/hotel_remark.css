@@ -88,7 +88,7 @@ body, button {font-family: -apple-system,Helvetica,'Hiragino Sans GB W3','Micros
 .h-place h2 {height: 2rem; line-height: 2rem; background-color: #f5f5f5;font-size: 0.75rem;color: #808080;text-align: center;font-weight: normal;margin-top: 1rem;}
 .h-place .h-items li {padding:0.5rem;background-color: #fff;overflow: hidden;border-width: 0 0 1px 0;}
 .h-place .h-items li h3 {margin: 0;font-size: 0.95rem;color: #2b2b2b;padding: 0.4rem 0 0.65rem;line-height: 1}
-.h-place .h-items .fl {width: 8rem;height: 4rem;border-radius: 0.2rem;overflow: hidden;background: #f2f2f2 url(//pic.c-ctrip.com/h5/hotel/hotel-loading-default.png) center center no-repeat;  background-size: 1.35rem 1.45rem;}
+.h-place .h-items .fl {width: 8rem;height: 4rem;border-radius: 0.2rem;overflow: hidden;background: #f2f2f2;  background-size: 1.35rem 1.45rem;}
 .h-place .h-items .fl img {min-width: 8rem;max-width: 8rem;min-height: 4rem;}
 .h-place .h-items .of {overflow: hidden;padding-left: 0.5rem;text-align: right;color: #b2b2b2;font-size: 0.6rem;}
 

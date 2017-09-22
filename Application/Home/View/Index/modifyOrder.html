@@ -45,9 +45,9 @@
                     <li id="js_checkInOutDay" class="cell-v">
                         <p class="smeal-evl bk-cell-num">
 
-                            <em>入住：<input type="date" class='start_time' name="start_time" class="g-fn1" style="border: 0px;" value="{$data.check_in}"/></em>
+                            <em>入住：<input type="date" id='start_time' name="start_time" class="g-fn1 start_time" style="border: 0px;" value="{$data.check_in}"/></em>
                             <!--钟点房不显示离店日期及晚数-->
-                            <em>离店：<input type="date" class="end_time" name="end_time" class="g-fn1" style="border: 0px;" value="{$data.check_out}"/></em></em>
+                            <em>离店：<input type="date" id="end_time" name="end_time" class="g-fn1 end_time" style="border: 0px;" value="{$data.check_out}"/></em></em>
                         </p>
                     </li>
                     <!-- end 修改日期按钮 -->
@@ -145,6 +145,15 @@
 <input type="hidden" class="mark" value="0">
 <script type="text/javascript">
     $(function () {
+        //手机号验证
+        function is_mobile(mobile){
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(!myreg.test(mobile)) {
+                return false;
+            }else{
+                return true;
+            }
+        }
 
         //提交修改
         $('#js_booking_paybtn').click(function(){
@@ -165,6 +174,11 @@
             }
             room_username_list = room_username_list.substring(0, room_username_list.length - 1);
             var contact_username =$('.name .firstname').val() + $('.name .lastname').val();
+            var contact_tel = $('.phone').val()
+            if( !is_mobile(contact_tel) ){
+                layer.alert('请输入正确的手机号！');
+                return;
+            }
 
             var data = {
                 'order_no':'{$data.order_no}',
@@ -172,7 +186,7 @@
                 'check_in':$('.start_time').val(),
                 'check_out':$('.end_time').val(),
                 'room_count':$('.adult_num').val(),
-                'contact_tel':$('.phone').val(),
+                'contact_tel':contact_tel,
                 'contact_username':contact_username,
                 'room_username_list':room_username_list,
             }
@@ -211,13 +225,15 @@
                 }
             },5000)
 
+            var check_in   = $('.start_time').val();
+            var check_out  = $('.end_time').val();
             $.ajax({
                 type: "POST",
                 url: 'http://demo.wowoyoo.com/airchina_api/query_room_price',
                 data: {
                     city_id:'{$data.city_id}',
-                    check_in:'{$data.check_in}',
-                    check_out:'{$data.check_out}',
+                    check_in:check_in,
+                    check_out:check_out,
                     hotel_id:'{$data.hotel_id}',
                     rate_code:'{$data.rate_code}',
                     room_count:count,
