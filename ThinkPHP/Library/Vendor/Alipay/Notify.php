@@ -13,8 +13,7 @@
  * 调试通知返回时，可查看或改写log日志的写入TXT里的数据，来检查通知返回是否正常
  */
 
-//require_once("alipay_core.function.php");
-//require_once("alipay_md5.function.php");
+
 
 class AlipayNotify {
     /**
@@ -45,7 +44,7 @@ class AlipayNotify {
 			//生成签名结果
 			$isSign = $this->getSignVeryfy($_POST, $_POST["sign"]);
 			//获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
-			$responseTxt = 'true';
+			$responseTxt = 'false';
 			if (! empty($_POST["notify_id"])) {$responseTxt = $this->getResponse($_POST["notify_id"]);}
 			
 			//写日志记录
@@ -82,7 +81,7 @@ class AlipayNotify {
 			//生成签名结果
 			$isSign = $this->getSignVeryfy($_GET, $_GET["sign"]);
 			//获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
-			$responseTxt = 'true';
+			$responseTxt = 'false';
 			if (! empty($_GET["notify_id"])) {$responseTxt = $this->getResponse($_GET["notify_id"]);}
 			
 			//写日志记录

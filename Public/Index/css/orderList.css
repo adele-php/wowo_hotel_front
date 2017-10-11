@@ -1,14 +1,16 @@
 html{font-size:16px;}
 #main {  text-align: center;  }
-.btn-adele{  background-color: #ff7d13;  }
-.btn-left{  background-color: rgb(199,155,189);  }
-.btn-right{  background-color: rgb(116,67,111);  }
+.btn-adele{  background-color: #3065a1;  }
+.btn-left{  background-color: #3065a1;  }
+.btn-right{  background-color: #00a0e9;  }
 .btn{  color:#fff;  }
+
+.btn-cancel{background-color: #008bcb;}
 
 .order{
     text-align: left;
-    width:90%;
-    border:1px solid grey;
+    width:95%;
+  /*  border:1px solid grey;*/
     background: #fff;
     margin:0.625rem auto;
     padding:0.2rem;
@@ -22,20 +24,21 @@ html{font-size:16px;}
     /*font-size:*/
 }
 .order .order_one .number{
-    background-color: rgb(199,155,189) ;
+    background-color: #18467a;
     display: inline-block;
     width:1rem;
     height:1rem;
     line-height: 1rem;text-align: center;color: #fff;
 }
 .status{
-    color:#ff7d13;
+    color:#00a0e9;
 }
 .order_three{
-    color:gray;
+    color:#898989;
+    border-top: #c9c9c9 solid 1px;
 }
 .check_in,.check_out{
-    color: #31708f;
+    color: #00a0e9;
 }
 
 

@@ -16,6 +16,16 @@
     <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
     <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
 
+    <style type="text/css">
+    .tips{width: 100%;float: left;position: relative;margin-bottom: 300px;}
+    @media (min-width: 320px){
+        .tips{margin-bottom: 300px;}
+    }
+    @media (min-width: 375px){
+        .tips{margin-bottom: 300px;}
+    }
+    </style>
+
 </head>
 <body>
 <div id="headerview" style="height: 2.2rem;">
@@ -34,13 +44,22 @@
                     <li class="cell-v" style="">
                         <div class="bk-cell-num">
                             <div class="smeal-evl">
+                                <p>{$data.cname}
+                                    <if condition="$data['ename']">
+                                         / {$data.ename}
+                                    </if>
+                                </p>
                                 <p>
-                                    <em>{$data.bed_remark}</em>
-                                    <em>{$data.max_people}</em>
+                                    <em>{$data.bed_remark} | </em>
+                                    <if condition="$data['max_people']">
+                                        <em>{$data.max_people} | </em>
+                                    </if>
                                     <!--钟点房不显示早餐信息-->
-                                    <em>{$data.breakfast}</em>
-                                    <em>{$data.internet}</em>
-                                    <em>{$data.remarks}</em>
+                                    <em>{$data.breakfast} | </em>
+                                    <em>{$data.internet} | </em>
+                                    <em>{$data.cancel_tag} | </em>
+
+                                    <em><eq name="data['confirm_type']" value="1">立即确认<else/>二次确认</eq></em>
                                 </p>
                             </div>
                         </div>
@@ -153,7 +172,10 @@
             }
         }
 
-        var init = layer.load(1, {time: 5*1000});
+        var init = layer.msg('加载中', {
+            icon: 16
+            ,shade: 0.01
+        });
         $.ajax({
             type: "POST",
             url: 'http://demo.wowoyoo.com/airchina_api/query_room_price',
@@ -182,6 +204,7 @@
 
         //提交订单 || 立即支付
         $('#js_booking_paybtn').click(function(){
+            var hotel_name = "{$info.hotel_name}";
             var contact_tel = $('.phone').val();
             if (!contact_tel) {
                 layer.alert('请填写联系电话！');
@@ -211,31 +234,54 @@
             var hotel_id = '{$info.hotel_id}';
             var room_count =$('.adult_num').val();      //TODO
             var adult_count = '{$info.adult_count}';
-            var children_count = '{$info.child_count}';
+            var children_count = '{$info.children_count}';
             var children_ages = ( children_count != 0)?'{$info.children_ages}':'';
 
             login(contact_tel,room_username_list)
 
+            init = layer.msg('提交中...', {
+                icon: 16
+                ,shade: 0.01
+            });
+
+            var data = {
+                'mobile':contact_tel,
+                'name':room_username_list,
+                'city_id':city_id,
+                'confirm_type':confirm_type,
+                'hotel_id':hotel_id,
+                'room_count'    :room_count,
+                'adult_count'    :adult_count,
+                'children_count'    :children_count,
+                'children_ages'    :children_ages,
+                'hotel_name':hotel_name
+            }
+            data.check_in = '{$info.check_in}';
+            data.check_out = '{$info.check_out}';
+            data.room_name = '{$data.cname}';
+            data.rate_code = '{$data.rate_code}';
+            if ($('.code').val()) {
+                data.coupon_code = $('.code').val();
+            }
+//            var index = layer.load(2, {time: 10*1000});
             $.ajax({
                 type: "POST",
-                url: '{:U("home/index/createOrder")}',
-                data: {
-                    'mobile':contact_tel,
-                    'name':room_username_list,
-                    'city_id':city_id,
-                    'confirm_type':confirm_type,
-                    'hotel_id':hotel_id,
-                    'room_count'    :room_count,
-                    'adult_count'    :adult_count,
-                    'children_count'    :children_count,
-                    'children_ages'    :children_ages,
-                },
+                url: '{:U("home/index/createLocAndWoOrder")}',
+                data: data,
+                dataType: "json",
                 success: function (data) {
-                    if(data==0){
+                    layer.close(init);
+                    if(data.status==0){
+                        layer.alert(data.errmsg)
                         return;
                     }
-                    var index = layer.load(2, {time: 10*1000});
-                    pay(data,index,type)
+
+                    if(type==1){
+                        location.href="{:U('home/index/pay')}?wowo_order_no="+data.data.wowo_order_no+'&oid='+data.data.order_no+'&order_status='+data.data.order_status;
+                    }else{
+                        location.href="{:U('home/index/orderCheck')}?wowo_order_no="+data.data.wowo_order_no+'&oid='+data.data.order_no+'&order_status='+data.data.order_status;
+                    }
+//                    pay(data,index,type)
                 }
             });
         })
@@ -348,15 +394,17 @@
                 count -=1;
                 count = (count<0)?0:count;
             }
-            var index = layer.load();
             var mark = 1;
             setTimeout(function(){
                 if(mark == 1){
                     layer.close(index);
                     layer.alert('请求超时！');
                 }
-            },5000)
-
+            },60000)
+            init = layer.msg('加载中', {
+                icon: 16
+                ,shade: 0.01
+            });
             $.ajax({
                 type: "POST",
                 url: 'http://demo.wowoyoo.com/airchina_api/query_room_price',
@@ -371,7 +419,7 @@
                 dataType: "json",
                 success: function(data){
                     mark=0;
-                    layer.close(index);
+                    layer.close(init);
                     if(data.status ==0 ){
                         layer.alert(data.errmsg);
                     }else{
@@ -414,6 +462,17 @@
             $('.hotel-cost-layer').css('display','table');
         })
     });
+</script>
+<include file="Common/tongji" />
+<script type="text/javascript">
+ $(document).ready(function($) {
+     // $('input').focus(function(event) {
+     //     $("#js_paybar_wrap").hide();
+     // });
+     // $('input').blur(function(event) {
+     //     $("#js_paybar_wrap").show();
+     // });
+ });   
 </script>
 </body>
 </html>

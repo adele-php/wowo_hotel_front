@@ -69,8 +69,8 @@
                 状态：<span class="status">{$order.order_status|orderStatus}</span>
             </div>
             <div class="order_two">
-                <span style="color:#ff7d13">{$order.contact_username}</span>预定{$order.room_name}
-                <span class="check_in">{$order.check_in}</span>
+                <span style="color:#00a0e9">{$order.contact_username}</span>预定{$order.room_name}<br>
+                <span class="check_in">{$order.check_in}</span>至
                 <span class="check_out">{$order.check_out}</span>
             </div>
             <div class="order_three">
@@ -114,9 +114,10 @@
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-left btn-extend" oid="{$order.order_no}" wid="{$order.wowo_order_no}">一键延住</button>
                             </div>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-adele btn-early" oid="{$order.order_no}" wid="{$order.wowo_order_no}">提前离开</button>
-                            </div>
+                            <!--<div class="btn-group" role="group">-->
+                                <!--<button type="button" class="btn btn-adele btn-early">提前离开</button>-->
+                            <!--</div>-->
+
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-right btn-info" oid="{$order.order_no}" wid="{$order.wowo_order_no}">查看详情</button>
                             </div>
@@ -136,7 +137,7 @@
                                 <button type="button" class="btn btn-right btn-info" oid="{$order.order_no}" wid="{$order.wowo_order_no}">查看详情</button>
                             </div>
                         </case>
-                        <default />default
+                        <default />
                     </switch>
 
                     <!--<div class="btn-group" role="group">-->
@@ -191,16 +192,16 @@
                 location.href="{:U('home/index/extend','','')}/oid/"+oid+"/wowo_order_no/"+wowo_order_no
             });
             //我要评价  TODO
-            $(".btn-info").click(function () {
+            $(".btn-comment").click(function () {
                 var oid = $(this).attr('oid')
                 var wowo_order_no = $(this).attr('wid')
-//                location.href="{:U('home/index/orderDetail','','')}/oid/"+oid+"/wowo_order_no/"+wowo_order_no
+                location.href="{:U('home/index/comment','','')}/oid/"+oid+"/wowo_order_no/"+wowo_order_no
             });
             //提前离开   TODO
             $(".btn-early").click(function () {
                 var oid = $(this).attr('oid')
                 var wowo_order_no = $(this).attr('wid')
-//                location.href="{:U('home/index/orderDetail','','')}/oid/"+oid+"/wowo_order_no/"+wowo_order_no
+                location.href="{:U('home/index/early','','')}/oid/"+oid+"/wowo_order_no/"+wowo_order_no
             });
             //修改订单
             $(".btn-modify").click(function () {
@@ -214,7 +215,7 @@
             })
 
             $(".icon-back").click(function () {
-                history.back()
+                location.href="{:U('home/index/index')}"
             });
 
 
@@ -223,5 +224,6 @@
 
     });
 </script>
+<include file="Common/tongji" />
 </body>
 </html>

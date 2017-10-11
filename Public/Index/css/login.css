@@ -38,6 +38,10 @@ body, button {font-family: -apple-system,Helvetica,'Hiragino Sans GB W3','Micros
 .code_img{
     text-align: right;
 }
+.code_img img{
+    height:100%;
+    width: 100%;
+}
 .other_info{
     height: 2.2rem;
     line-height: 2.2rem;
@@ -55,6 +59,28 @@ body, button {font-family: -apple-system,Helvetica,'Hiragino Sans GB W3','Micros
     left:0.5rem;
     top:0;
 }
+
+.forget,.wait{
+    position: absolute;
+    right:5px;
+    top:10px;
+    z-index: 10;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

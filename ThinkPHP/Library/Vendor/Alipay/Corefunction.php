@@ -53,21 +53,11 @@ function createLinkstringUrlencode($para) {
 function paraFilter($para) {
 	$para_filter = array();
 	while (list ($key, $val) = each ($para)) {
-		if($key == "sign" || $key == "sign_type" || $key == '_URL_' || $val == "")continue;    //添加了$key == '_URL_' 
+		if($key == "sign" || $key == "sign_type" || $val == "")continue;
 		else	$para_filter[$key] = $para[$key];
 	}
 	return $para_filter;
 }
-
-function myparaFilter($para) {
-	$para_filter = array();
-	while (list ($key, $val) = each ($para)) {
-		if($key == '_URL_')continue;
-		else $para_filter[$key] = $para[$key];
-	}
-	return $para_filter;
-}
-
 /**
  * 对数组排序
  * @param $para 排序前的数组

@@ -220,7 +220,7 @@
 .hotellist_date_input{width: 111px;}
 /* iphone5 */
 @media (min-width: 320px) {
-.hotellist_date_box{width:110px;}    
+.hotellist_date_box{width:90px;}    
 .hotellist_date_input{width: 80px;}
 }
 /* 华为 */

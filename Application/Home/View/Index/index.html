@@ -21,11 +21,12 @@
         <h1 class="cm-page-title js_title"> 国内/海外酒店 </h1>
         <div class="is_login">
             <i class="iconfont icon-user"></i>
-            <if condition="$user.is_login eq 1">
-                <span>已登录</span>
-                <else/>
-                <span>去登录</span>
-            </if>
+            <a href="https://m.wowoyoo.com/" style="text-decoration: none;color:#fff;">回首页</a>
+            <!--<if condition="$user.is_login eq 1">-->
+                <!--<span>已登录</span>-->
+                <!--<else/>-->
+                <!--<span>去登录</span>-->
+            <!--</if>-->
 
         </div>
 
@@ -66,7 +67,7 @@
                         <!--凌晨开关-->
 
                         <li class="g-b g-arr">成人儿童数:
-                            <input class="g-fn1 g-e1 g-def-txt nofastclick" id="people_num" style="width: 95%;border: 0px" value="成人:{$people.adult_count|default='2'}，儿童:{$people.child_count|default='0'}" readonly="readonly" />
+                            <input class="g-fn1 g-e1 g-def-txt nofastclick" id="people_num" style="width: 95%;border: 0px" value="成人:{$people.adult_count|default='2'}，儿童:{$people.children_count|default='0'}" readonly="readonly" />
                         </li>
 
                         <li class="g-b g-arr">星级/价格/类型:
@@ -196,10 +197,14 @@ jQuery(document).ready(function($) {
     var bind_date=function(){
         if($('.select-time')[0]){
             $('.select-time').hotelDate();
+            $('.select-time').click(function(event) {
+                $('input').blur();
+            });
         }
     }
     bind_date();
 });   
 </script>
+<include file="Common/tongji" />
 </body>
 </html>

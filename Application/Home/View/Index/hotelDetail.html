@@ -51,39 +51,54 @@
         <div class="main-viewport">
             <div class="roomDetail">
                 <!--主体-->
-                <img  src="{$hotel_info.image}">
+                <!--<img  src="{$hotel_info.image}">-->
                 <p>酒店星级：{$hotel_info.star}</p>
-                <switch name="type">
-                    <case value="introduction">
-                        <p>酒店介绍：{$hotel_info.introduction}</p>
-                    </case>
-                    <case value="facilities">
-                        <p>酒店设施：<br/>
-                            <foreach name="hotel_info['facilities']" item="v" key="k">
-                                {$k}:{$v}<br/>
-                            </foreach>
-                        </p>
-                    </case>
-                    <case value="arounds">
-                        <p>周边设施：<br/>
-                            <foreach name="hotel_info.arounds" item="v" key="k">
-                                {$k}:{$v}<br/>
-                            </foreach>
-                        </p>
-                    </case>
-                    <case value="traffics">
-                        <p>周边交通：<br/>
-                            <foreach name="hotel_info.traffics" item="v" key="k">
-                                {$k}:{$v}<br/>
-                            </foreach>
-                        </p>
-                    </case>
-                </switch>
 
+                <if condition="$hotel_info['address']">
+                    <p>酒店地址:{$hotel_info.address} <if condition="$hotel_info['address_en']">/ {$hotel_info.address_en}</if></p>
+                </if>
 
+                <if condition="$hotel_info['tags']">
+                    <p>酒店标签:</p>
+                    <foreach name="hotel_info['tags']" item="vo" >
+                        {$vo}
+                    </foreach>
+                </if>
+
+                <if condition="$hotel_info['introduction']">
+                    <p>酒店介绍：{$hotel_info.introduction}</p>
+                </if>
+
+                <if condition="$hotel_info['remark']">
+                    <p>温馨提示：{$hotel_info.remark}</p>
+                </if>
+
+                <if condition="$hotel_info['facilities']">
+                    <p>酒店设施:
+                        <foreach name="hotel_info['facilities']" item="v" key="k" >
+                            <span style="margin-right: 10px;">{$k}:{$v}</span>
+                        </foreach>
+                    </p>
+                </if>
+
+                <if condition="$hotel_info['arounds']">
+                    <p>周边设施:
+                        <foreach name="hotel_info['arounds']" item="v">
+                            {$v}<br/>
+                        </foreach>
+                    </p>
+                </if>
+
+                <if condition="$hotel_info['traffics']">
+                    <p>周边交通：
+                        <foreach name="hotel_info.traffics" item="v" key="k">
+                            {$v}<br/>
+                        </foreach>
+                    </p>
+                </if>
             </div>
             <!--loading-->
-            <button class="g_btn_s js_confirm_btn">返回预定</button>
+            <button class="g_btn_s js_confirm_btn">返回详情</button>
         </div>
     </div>
 </div>
@@ -100,5 +115,6 @@
 
     });
 </script>
+<include file="Common/tongji" />
 </body>
 </html>

@@ -89,7 +89,7 @@ var date = function ($) {
         }
 
         if(!$('.leave').parents('.day').siblings('.title').find('.m').text() && $('.enter').parents('.day').siblings('.title').find('.y').text()){
-          alert('请选择返回时间');
+          alert('请选择退房时间');
           return false;
         }
         custom_close_date=0;

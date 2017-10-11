@@ -19,26 +19,32 @@
     <div class="head w100">
         <h1>会员登录</h1>
         <!--<i class="icon iconfont icon-sousuo"></i>-->
+        <div class="return">
+            <i class="icon iconfont icon-fanhui"></i>
+        </div>
     </div>
 
     <div class="login">
         <div class="input-group input-group-lg">
             <span class="input-group-addon" ><i class="icon iconfont icon-shouji"></i></span>
-            <input type="text" class="form-control mobile" placeholder="mobile" aria-describedby="basic-addon1">
+            <input type="text" class="form-control mobile" placeholder="手机号" aria-describedby="basic-addon1">
         </div>
         <div class="input-group input-group-lg">
             <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
-            <input type="password" class="form-control password" placeholder="Password" aria-describedby="basic-addon1">
-        </div>
-        <div class="code_img"><img src="{:U('home/index/code')}" class="" ></div>
-        <div class="input-group input-group-lg ">
-            <span class="input-group-addon"><i class="icon iconfont icon-yanzhengma"></i></span>
-            <input type="text" class="form-control code" placeholder="验证码" aria-describedby="basic-addon1">
-        </div>
-        <div class="other_info">
-            <a href="{:U('home/index/register')}" class="register">注册</a>
+            <input type="password" class="form-control password" placeholder="密码" aria-describedby="basic-addon1">
             <a href="javascript:void(0)" class="forget">发密码给我</a>
             <a href="javascript:void(0)" class="wait" style="display: none;">已发送请等待</a>
+        </div>
+
+        <div class="input-group input-group-lg ">
+            <span  class="input-group-addon"><i class="icon iconfont icon-yanzhengma"></i></span>
+            <input  style="" type="text" class="form-control code" placeholder="验证码" aria-describedby="basic-addon1">
+            <div  style="height:46px;position:absolute;right:0;z-index: 5;width:40%;" class="code_img"><img src="{:U('home/index/code')}" class="" ></div>
+        </div>
+        <div class="other_info">
+            <!--<a href="{:U('home/index/register')}" class="register">注册</a>-->
+
+
         </div>
         <button class="in_login-submit" >登录</button>
     </div>
@@ -59,6 +65,10 @@
             $(this).find('img').attr('src',url)
         })
 
+        $('.return').click(function(){
+            location.href="{:U('home/index/index')}"
+        })
+
         $('.forget').click(function(){
             var mobile = $('.mobile').val()
             if(!mobile){
@@ -71,7 +81,7 @@
             }
 
             $('.forget').hide();
-            $('.wait').show('');
+            $('.wait').html('10秒后可以重新发送').show('');
             var second = 10
             var int = setInterval(function () {
                 second -= 1;
@@ -101,6 +111,21 @@
         })
 
         $('.in_login-submit').click(function(){
+            var mobile = $('.mobile').val()
+            if(!mobile){
+                layer.alert('手机号不能为空');
+                return false;
+            }
+            var password = $('.password').val()
+            if(!password){
+                layer.alert('密码不能为空');
+                return false;
+            }
+            var code = $('.code').val()
+            if(!code){
+                layer.alert('验证码不能为空');
+                return false;
+            }
             $.ajax({
                 type: "POST",
                 url: "{:U('home/index/login')}",
@@ -122,6 +147,6 @@
         })
     });
 </script>
-
+    <include file="Common/tongji" />
 </body>
 </html>

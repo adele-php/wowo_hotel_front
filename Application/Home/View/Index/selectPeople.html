@@ -143,6 +143,9 @@
         .adult{
             border-bottom:1px solid #eee;
         }
+        .search-txt{
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -162,7 +165,7 @@
                         <span>成人</span>
                         <div class="cm-num-adjust" style="float:right">
                             <span class="cm-adjust-minus js_num_minus   js_adult_num" _type="del"></span>
-                            <input type="tel" class="cm-adjust-view js_cur_num adult_num" value="{$data.adult_count|default='1'}">
+                            <input type="tel" class="cm-adjust-view js_cur_num adult_num" value="{$data.adult_count|default='2'}">
                             <span class="cm-adjust-plus js_num_plus js_adult_num" _type="add"></span>
                         </div>
                     </div>
@@ -195,8 +198,8 @@
             //console.log(child_ages);
             var str='';
             for(var i=0;i<'{$data.child_num}';i++){
-                //str += '<div class="child_old adult"><input type="text" value='+child_ages[i]+' class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
-                str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;" value='+child_ages[i]+'><option value="1">孩子"'+i+'"年龄 ≤1岁</option><option value="2">孩子"'+i+'"年龄 2岁</option><option value="3">孩子"'+i+'"年龄 3岁</option><option value="4">孩子"'+i+'"年龄 4岁</option><option value="5">孩子"'+i+'"年龄 5岁</option><option value="6">孩子"'+i+'"年龄 6岁</option><option value="7">孩子"'+i+'"年龄 7岁</option><option value="8">孩子"'+i+'"年龄 8岁</option><option value="9">孩子"'+i+'"年龄 9岁</option><option value="10">孩子"'+i+'"年龄 10岁</option><option value="11">孩子"'+i+'"年龄 11岁</option><option value="12">孩子"'+i+'"年龄 12岁</option><option value="13">孩子"'+i+'"年龄 13岁</option><option value="14">孩子"'+i+'"年龄 14岁</option><option value="15">孩子"'+i+'"年龄 15岁</option><option value="16">孩子"'+i+'"年龄 16岁</option><option value="17">孩子"'+i+'"年龄 17岁</option></select></div>';
+                //str += '<div class="child_old adult"><input type="text" value='+child_ages[i]+' class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;"></div>';
+                str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;" value='+child_ages[i]+'><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
             }
             $('.every_room_info').append(str);
 
@@ -259,9 +262,9 @@
                 count +=1;
                 $('.child_old').remove();
                 for(var i=1;i<=count;i++){
-                    //str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
-                    //str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
-                    str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">孩子"'+i+'"年龄 ≤1岁</option><option value="2">孩子"'+i+'"年龄 2岁</option><option value="3">孩子"'+i+'"年龄 3岁</option><option value="4">孩子"'+i+'"年龄 4岁</option><option value="5">孩子"'+i+'"年龄 5岁</option><option value="6">孩子"'+i+'"年龄 6岁</option><option value="7">孩子"'+i+'"年龄 7岁</option><option value="8">孩子"'+i+'"年龄 8岁</option><option value="9">孩子"'+i+'"年龄 9岁</option><option value="10">孩子"'+i+'"年龄 10岁</option><option value="11">孩子"'+i+'"年龄 11岁</option><option value="12">孩子"'+i+'"年龄 12岁</option><option value="13">孩子"'+i+'"年龄 13岁</option><option value="14">孩子"'+i+'"年龄 14岁</option><option value="15">孩子"'+i+'"年龄 15岁</option><option value="16">孩子"'+i+'"年龄 16岁</option><option value="17">孩子"'+i+'"年龄 17岁</option></select></div>';
+                    //str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;"></div>';
+                    //str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
+                    str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
                 }
                 $('.every_room_info').append(str);
             }else{
@@ -269,9 +272,9 @@
                 count = (count<0)?0:count;
                 $('.child_old').remove();
                 for(var i=1;i<=count;i++){
-                    //str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"></div>';
-                    //str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
-                    str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=孩子"'+i+'"年龄 style="width:100%;"><option value="1">孩子"'+i+'"年龄 ≤1岁</option><option value="2">孩子"'+i+'"年龄 2岁</option><option value="3">孩子"'+i+'"年龄 3岁</option><option value="4">孩子"'+i+'"年龄 4岁</option><option value="5">孩子"'+i+'"年龄 5岁</option><option value="6">孩子"'+i+'"年龄 6岁</option><option value="7">孩子"'+i+'"年龄 7岁</option><option value="8">孩子"'+i+'"年龄 8岁</option><option value="9">孩子"'+i+'"年龄 9岁</option><option value="10">孩子"'+i+'"年龄 10岁</option><option value="11">孩子"'+i+'"年龄 11岁</option><option value="12">孩子"'+i+'"年龄 12岁</option><option value="13">孩子"'+i+'"年龄 13岁</option><option value="14">孩子"'+i+'"年龄 14岁</option><option value="15">孩子"'+i+'"年龄 15岁</option><option value="16">孩子"'+i+'"年龄 16岁</option><option value="17">孩子"'+i+'"年龄 17岁</option></select></div>';
+                    //str += '<div class="child_old adult"><input type="text" class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;"></div>';
+                    //str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
+                    str += '<div class="child_old adult"><select class="search-txt js_search nofastclick child_age" placeholder=style="width:100%;"><option value="1">≤1岁</option><option value="2">2岁</option><option value="3">3岁</option><option value="4">4岁</option><option value="5">5岁</option><option value="6">6岁</option><option value="7">7岁</option><option value="8">8岁</option><option value="9">9岁</option><option value="10">10岁</option><option value="11">11岁</option><option value="12">12岁</option><option value="13">13岁</option><option value="14">14岁</option><option value="15">15岁</option><option value="16">16岁</option><option value="17">17岁</option></select></div>';
                 }
                 $('.every_room_info').append(str);
             }
@@ -332,5 +335,6 @@
        
     });
 </script>
+<include file="Common/tongji" />
 </body>
 </html>

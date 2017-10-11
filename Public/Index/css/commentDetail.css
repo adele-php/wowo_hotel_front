@@ -1,0 +1,53 @@
+#main {
+    text-align: center;
+}
+
+.pay-submit {
+    background-color: #008acb;
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+    color: #fff;
+    border-radius: 0.2rem;
+    line-height: 1.05rem;
+
+    width:40%;
+}
+h2{
+    margin-top:20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom:10px;
+}
+.info{
+    padding:0.4rem 1rem;
+    text-align: left;
+}
+.comment p{
+    text-indent: 2em;
+    word-break:break-all;
+}
+.img{
+    margin-bottom:50px;
+}
+.comment_img{
+    margin-top:10px;
+    background: deepskyblue;
+    padding:1%;
+}
+.comment_img img{
+    height:80px;
+    width:28%;
+    margin-left:3%;
+    margin-top:5px;
+}
+
+
+
+
+
+
+
+
+
+
+

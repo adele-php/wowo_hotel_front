@@ -6,7 +6,7 @@
  * Time: 9:39
 */
 
-function curl($url,$opt=[]){
+function curl($url,$opt=[],$curl_info=false){
     $ch = curl_init();
 //2.设置URL和相应的选项
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -19,7 +19,11 @@ function curl($url,$opt=[]){
 //3.抓取URL并把它传递给浏览器
     $res = curl_exec($ch);
 //    echo curl_getinfo($ch)['total_time'].'<br/>';
-//4.关闭cURL资源，并且释放系统资源
+
+    if($curl_info === true){
+        return curl_getinfo($ch);
+    }
+    //4.关闭cURL资源，并且释放系统资源
     curl_close($ch);
     return json_decode($res,true);
 }
@@ -115,4 +119,34 @@ function confirmType( $type ){
             break;
     }
     return $type;
+}
+
+function putKVToCache($key,$value){
+    return S($key,$value);
+}
+
+function getVFromCache($key){
+    return S($key);
+}
+
+function scoreToDesc( $score ){
+    switch($score){
+        case 1:
+            $score = '很差';
+            break;
+        case 2:
+            $score = '差';
+            break;
+        case 3:
+            $score = '一般';
+            break;
+        case 4:
+            $score = '好';
+            break;
+        case 5:
+            $score = '很好';
+            break;
+
+    }
+    return $score;
 }

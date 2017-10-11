@@ -20,7 +20,7 @@
 <body>
 <div id="headerview" style="height: 2.2rem;">
     <div class="cm-header" id="ui-view-15">
-        <h1 class="cm-page-title js_title"> 延住申请</h1>
+        <h1 class="cm-page-title js_title"> 提前离店申请</h1>
         <i class="icon-back" style="float:left"></i>
     </div>
 </div>
@@ -48,10 +48,7 @@
                     <li id="js_checkInOutDay" class="cell-v">
                         <p class="smeal-evl bk-cell-num">
 
-                            <em>入住：<br/>
-                                <!--<input type="date" class='start_time' name="start_time" class="g-fn1 disabled" style="border: 0px;" value="{$data.check_out}"/>-->
-                                <span class='start_time' name="start_time" class="g-fn1 disabled" style="padding: 0 .25rem;border: 0px;">{$data.check_out}</span><br/>
-                            </em>
+                            <em>入住：<input type="date" class='start_time' name="start_time" class="g-fn1 disabled" style="border: 0px;" value="{$data.check_out}"/></em>
                             <!--钟点房不显示离店日期及晚数-->
                             <em>离店：<input type="date" class="end_time" name="end_time" class="g-fn1" style="border: 0px;" value=""/></em></em>
                         </p>
@@ -89,112 +86,91 @@
             var adult_count        = '{$data.adult_count}';
             var children_count     = '{$data.children_count}';
             var children_ages      = ( children_count != 0)?'{$data.children_ages}':'';
-            var hotel_name = "{$data.hotel_name}"
-
-            var data={
-                'mobile'        :contact_tel,
-                'name'          :room_username_list,
-                'city_id'       :city_id,
-                'confirm_type'  :confirm_type,
-                'hotel_id'      :hotel_id,
-                'room_count'    :room_count,
-                'adult_count'   :adult_count,
-                'children_count':children_count,
-                'children_ages' :children_ages,
-                'hotel_name':hotel_name
-            }
-            data.check_in = '{$data.check_out}';
-            data.check_out =$('.end_time').val();
-            data.room_name = '{$data.room_name}';
-            data.rate_code = '{$data.rate_code}';
-            data.is_extension       = '1';
-            data.coupon_code       ='{$data.coupon_code}';
-
-            if(!data.check_out){
-                layer.alert('请选择离店日期');
-                return;
-            }else if(data.check_out <= data.check_in){
-                layer.alert('离店日期必须大于入住日期');
-                return;
-            }
 
             $.ajax({
                 type: "POST",
-                url: '{:U("home/index/createLocAndWoOrder")}',      //创建本地订单
-                data: data,
-                dataType: "json",
-                success: function (data) {
-                    //layer.close(init);
-                    if(data.status==0){
-                        layer.alert(data.errmsg)
+                url: '{:U("home/index/createOrder")}',      //创建本地订单
+                data: {
+                    'mobile'        :contact_tel,
+                    'name'          :room_username_list,
+                    'city_id'       :city_id,
+                    'confirm_type'  :confirm_type,
+                    'hotel_id'      :hotel_id,
+                    'room_count'    :room_count,
+                    'adult_count'   :adult_count,
+                    'children_count':children_count,
+                    'children_ages' :children_ages,
+                },
+                success: function (oid) {
+                    if(oid==0){
+                        layer.alert('请先登录！')
                         return;
                     }
-                        var query = "wowo_order_no="+data.data.wowo_order_no+'&oid='+data.data.order_no
-
-                    location.href="{:U('home/index/extendCheck')}?"+query;
+                    var index = layer.load(2, {time: 10*1000});
+                    pay(oid,index)
                 }
             });
         })
 
-//        //支付
-//        function pay(oid,index) {
-//            var data = {};
-//            data.city_id            = '{$data.city_id}';
-//            data.check_in           = $('.start_time').val();
-//            data.check_out          = $('.end_time').val();
-//            data.hotel_id           = '{$data.hotel_id}';
-//            data.room_name          = '{$data.room_name}';
-//            data.rate_code          = '{$data.rate_code}';
-//            data.room_count         = '{$data.room_count}';      //TODO
-//            data.adult_count        = '{$data.adult_count}';
-//            data.children_count     = '{$data.children_count}';
-//            data.contact_tel        = '{$data.contact_tel}';
-//            data.contact_username   = '{$data.contact_username}';
-//            data.room_username_list = '{$data.room_username_list}';
-//            data.confirm_type       = '2';
-//            data.is_extension       = '1';
-//            if (data.children_count != 0) {
-//                data.children_ages = '{$data.children_ages}'
-//            }
-//
-//            if (1 == 2) {
-//                //特殊要求
-//                data.remark = '';
-//            }
-//
-//            //订单号
-//            data.order_no =oid;
-//
-//            $.ajax({
-//                type: "POST",
-//                url: "{:U('home/index/createWoWoYooOrder')}",
-//                data: data,
-//                dataType: "json",
-//                success: function (d) {
-//                    layer.close(index);
-//                    if (d.status == 0) {
-//                        layer.alert(d.errmsg);
-//                    } else {
-//                        var query = "wowo_order_no="+d.data.wowo_order_no+'&oid='+oid+'&order_status='+d.data.order_status+'&total_money='+d.data.total_money+'&is_cancel='+d.data.is_cancel;
-//                        if(d.data.is_cancel == 1){
-//                            query += '&cancel_time='+d.data.cancel_time
-//                        }
-//                        location.href="{:U('home/index/extendCheck')}?"+query;
-//                    }
-//                }
-//            });
-//
-//
-//        }
-//        //支付 end
+        //支付
+        function pay(oid,index) {
+            var data = {};
+            data.city_id            = '{$data.city_id}';
+            data.check_in           = $('.start_time').val();
+            data.check_out          = $('.end_time').val();
+            data.hotel_id           = '{$data.hotel_id}';
+            data.room_name          = '{$data.room_name}';
+            data.rate_code          = '{$data.rate_code}';
+            data.room_count         = '{$data.room_count}';      //TODO
+            data.adult_count        = '{$data.adult_count}';
+            data.children_count     = '{$data.children_count}';
+            data.contact_tel        = '{$data.contact_tel}';
+            data.contact_username   = '{$data.contact_username}';
+            data.room_username_list = '{$data.room_username_list}';
+            data.confirm_type       = '2';
+            data.is_extension       = '1';
+            if (data.children_count != 0) {
+                data.children_ages = '{$data.children_ages}'
+            }
+
+            if (1 == 2) {
+                //特殊要求
+                data.remark = '';
+            }
+
+            //订单号
+            data.order_no =oid;
+
+            $.ajax({
+                type: "POST",
+                url: "{:U('home/index/createWoWoYooOrder')}",
+                data: data,
+                dataType: "json",
+                success: function (d) {
+                    layer.close(index);
+                    if (d.status == 0) {
+                        layer.alert('订单创建失败');
+                    } else {
+                        var query = "wowo_order_no="+d.data.wowo_order_no+'&oid='+oid+'&order_status='+d.data.order_status+'&total_money='+d.data.total_money+'&is_cancel='+d.data.is_cancel;
+                        if(d.data.is_cancel == 1){
+                            query += '&cancel_time='+d.data.cancel_time
+                        }
+                        location.href="{:U('home/index/extendCheck')}?"+query;
+                    }
+                }
+            });
+
+
+        }
+        //支付 end
 
 
 
         //更改时间
-//        $(".start_time").bind("change", function(){
-//            layer.alert('只能修改离店时间!');
-//            $('.start_time').val("{$data.check_out}");
-//        });
+        $(".start_time").bind("change", function(){
+            layer.alert('只能修改离店时间!');
+            $('.start_time').val("{$data.check_out}");
+        });
 //        $(".end_time").bind("change", function(){
 //            var index = layer.load(1, {time: 10*1000}); //又换了种风格，并且设定最长等待10秒
 //            var data  = {

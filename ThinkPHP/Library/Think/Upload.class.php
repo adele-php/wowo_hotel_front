@@ -143,7 +143,8 @@ class Upload {
             $finfo   =  finfo_open ( FILEINFO_MIME_TYPE );
         }
         // 对上传文件数组信息处理
-        $files   =  $this->dealFiles($files);    
+        $files   =  $this->dealFiles($files);
+
         foreach ($files as $key => $file) {
             $file['name']  = strip_tags($file['name']);
             if(!isset($file['key']))   $file['key']    =   $key;
@@ -202,7 +203,6 @@ class Upload {
                     continue;
                 }
             }
-
             /* 保存文件 并记录保存成功的文件 */
             if ($this->uploader->save($file,$this->replace)) {
                 unset($file['error'], $file['tmp_name']);
@@ -254,6 +254,7 @@ class Upload {
         $driver = $driver ? : ($this->driver       ? : C('FILE_UPLOAD_TYPE'));
         $config = $config ? : ($this->driverConfig ? : C('UPLOAD_TYPE_CONFIG'));
         $class = strpos($driver,'\\')? $driver : 'Think\\Upload\\Driver\\'.ucfirst(strtolower($driver));
+
         $this->uploader = new $class($config);
         if(!$this->uploader){
             E("不存在上传驱动：{$name}");

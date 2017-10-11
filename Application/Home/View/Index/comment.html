@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html data-dpi="3" style="font-size: 21.9937px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>添加点评</title>
+    <meta name="viewport"
+          content="width=320.1, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui"/>
+    <!-- UC浏览器全屏 -->
+    <meta name="x5-fullscreen" content="true"/>
+    <!-- QQ浏览器全屏 -->
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/order.css" type="text/css"/>
+
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/comment.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
+    <script>
+        function toValid(){
+            if( $('#pinfen').val()==0 ){
+                layer.alert('请对本次入住体验进行评分！');
+                return false;
+            }
+
+//            var comment = $('.ttd-comment-text').val().length;
+//            if( comment<=15 ){
+//                layer.alert('请输入不少于15个字');
+//                return false;
+//            }
+            return true;
+        }
+
+    </script>
+
+    <style type="text/css">
+    .pay-submit{text-align: center !important;width: 100% !important;}
+    .detail_btn{text-align: center !important;width: 100% !important;float:left !important; display: inline !important;}
+    </style>
+</head>
+<body>
+<div id="headerview" style="height: 2.2rem;">
+    <div class="cm-header" id="ui-view-15">
+        <h1 class="cm-page-title js_title"> 添加点评 </h1>
+        <i class="icon-back" style="float:left"></i>
+    </div>
+</div>
+
+<div id="main" class="hotel-page-height100">
+    <div class="info">
+        <h2>{$data.room_name}</h2>
+    </div>
+
+    <div class="detail">
+        <div class="detail_info">
+            <div>
+                <span>评分：</span>
+                <i class="iconfont icon-xing1"></i>
+                <i class="iconfont icon-xing1"></i>
+                <i class="iconfont icon-xing1"></i>
+                <i class="iconfont icon-xing1"></i>
+                <i class="iconfont icon-xing1"></i>
+                <span style="margin-left:5px;font-size:0.75rem;" class="pinfen" num="0"></span>
+            </div>
+        </div>
+    </div>
+
+    <form onsubmit="return toValid()" action="{:U('home/index/commentAdd','','')}/oid/{$data.order_no}" enctype="multipart/form-data" method="post" >
+        <div class="input_box ttd-comment-add-item ttd-hairline-horizboth ttd-comment-add-text ">
+            <textarea name="comment" class="share_content  ttd-comment-text nofastclick" placeholder="分享一下您的感受吧"></textarea>
+            <!--<div class="ttd-text-tip"><span class="count_tip ttd-text-tip">至少输入15个字</span></div>-->
+        </div>
+
+        <input type='file'  name='img[]' multiple>
+        <input type='hidden'  name='score' id="pinfen" value="0">
+        <input type='hidden'  name='room_name' value="{$data.room_name}">
+        <input type='hidden'  name='order_no' value="{$data.order_no}">
+
+
+        <div class="detail_btn" style="width:100%; text-align:center;">
+            <button class="pay-submit" style="width:100%; text-align:center;float:left; display:inline;" type="submit"> 提交 </button>
+        </div>
+
+    </form>
+
+</div>
+<input type="hidden" class="confirm_type" value="{$data.confirm_type|default='1'}">
+<script type="text/javascript">
+    $(function () {
+
+//        $('.ttd-comment-text').bind('input propertychange', function() {
+//            //进行相关操作
+//            var comment = $('.ttd-comment-text').val();
+//            var index = 15-comment.length;
+//            if(index<0){
+//                index = '字数已够'
+//            }else{
+//                index = '还差'+index+'个字'
+//            }
+//            var str = '已输入'+comment.length+'字,'+index
+//            $('.count_tip').text(str);
+//        });
+
+        $(".icon-back").click(function () {
+            history.back()
+        });
+
+        $('.detail_info i').click(function () {
+            $('.detail_info i').removeClass('icon-xing').addClass('icon-xing1');
+            var index=$(this).index();
+            for(var i=0;i<index;i++){
+                $('.detail_info i').eq(i).removeClass('icon-xing1').addClass('icon-xing')
+            }
+
+            var desc = '';
+            switch (index){
+                case 1:
+                    desc='很差';
+                    break;
+                case 2:
+                    desc='差';
+                    break;
+                case 3:
+                    desc='一般';
+                    break;
+                case 4:
+                    desc='好';
+                    break;
+                case 5:
+                    desc='很好';
+                    break;
+            }
+            $('.pinfen').text(desc);
+            $('#pinfen').val(index);
+
+        })
+    });
+</script>
+<include file="Common/tongji" />
+</body>
+</html>

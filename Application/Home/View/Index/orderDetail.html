@@ -58,12 +58,18 @@
         </tr>
         <tr>
             <td >酒店确认号：</td>
-            <td colspan="2">{$data.wowo_order_no}</td>
+            <td colspan="2">{$data.confirm_code|default='--'}</td>
         </tr>
 
         <tr>
             <td>订单金额：</td>
-            <td colspan="2">{$data.total_money|default='等待客服确认价格'}</td>
+            <td colspan="2">
+                {$data.total_money|default='等待客服确认价格'}
+                <if condition="$data.spread_money neq 0">
+                    <span style="color:#ff7d13;">+{$data.spread_money}</span>
+                </if>
+
+            </td>
         </tr>
         <tr>
             <td>状态：</td>
@@ -90,8 +96,9 @@
         <span class="pay-submit " id="cancel_order">取消订单</span>
         <elseif condition="$data.order_status eq  2"/>
         <span class="pay-submit " id="pay">立即支付</span>
+        <elseif condition="$data.order_status eq  4"/>
+        <span class="pay-submit " id="extend">一键延住</span>
         <else/>
-
     </if>
     </div>
 
@@ -124,11 +131,15 @@
                 location.href="{:U('home/index/orderCancel','','')}/oid/{$data.order_no}/wowo_order_no/{$data.wowo_order_no}"
             })
 
-
+            //一键延住
+            $('#extend').click(function(){
+                location.href="{:U('home/index/extend','','')}/oid/{$data.order_no}/wowo_order_no/{$data.wowo_order_no}"
+            })
 
 
 
     });
 </script>
+<include file="Common/tongji" />
 </body>
 </html>

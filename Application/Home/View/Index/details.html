@@ -82,7 +82,6 @@
 
         .hotel_addr {
             width: 100%;
-            height: 81px;
             font-size: .7rem;
             line-height: 1.5;
             font-family: -apple-system, Helvetica, Hiragino Sans GB W3, Microsoft YaHei, arial, sans-serif;
@@ -195,6 +194,23 @@
             border-radius: .2rem .2rem 0 0;
             background-color: #ff9a14;
         }
+
+
+        .l-pay .btn--ui3{padding: 1px 1rem 1px 1rem;}
+        .room--space{width:66% !important;}
+        .room--space2{display:inline; margin-right: 10px;}
+        .cell-star.room-column{padding: 0 !important;}
+        .iconfont{width: 100%;float: right;text-align: right;}
+        .room-size{font-size: 0.4rem !important;}
+
+        @media (min-width: 320px){
+            .dt-m .m-checkin-out{padding: 0 !important;}
+        }
+        @media (min-width: 375px){
+            .hotellist_date_input {
+                width: 110px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -203,7 +219,7 @@
         <span class=" cm-header-icon fl  js_back">
         <i class="icon-back"></i>
         </span>
-        <h4><b><span id="title" style="line-height:2.2rem">{$hotel_info.cname}</span></b></h4>
+        <h4><b><span id="title" style="line-height:2.2rem"></span></b></h4>
     </div>
 </div>
 
@@ -213,7 +229,7 @@
 
         <div>
             <div class="dt-h94-test"
-                 style="background-color: rgb(255, 255, 255); min-height: 50px;    margin-top: 50px;">
+                 style="background-color: rgb(255, 255, 255); min-height: 46px;    margin-top: 46px;">
 
                 <section class="dt-b mt5" id="hotel_id">
                     <!--Star 基础信息-->
@@ -239,7 +255,7 @@
 
                     <div class="hotel_addr">
                         <div class="adr-area">
-                            <span id="hotel_address">{$hotel_info.address}</span><p class="cust">{$hotel_info.address_en}</p>
+                            <span id="hotel_address"></span><p class="cust"></p>
                         </div>
                     </div>
 
@@ -268,24 +284,24 @@
 
                     <ul class="dt-list dt-cell-list dt-t-border dt-b-base mt5 js_goto_hotelintro_ul hotel_detail">
 
-                        <li class="items js_goto_hotelintro" data-name="info"
+                        <li class="items" data-name="info"
+                            data-ubt-key="c_hotel_inland_detail_mod_detail" _type="facilities">
+                            <div class="cell-star ellips dt-color8 ">
+                                <span style="color:red;margin-left:10px;" class='show_more_faci'>酒店详情：</span>
+                                <span >查看酒店信息</span>
+                            </div>
+                        </li>
+
+                        <li class="items" data-name="info" id="hotelinfo"
                             data-ubt-key="c_hotel_inland_detail_mod_detail" _type="introduction">
                             <div class="cell-star ellips dt-color8">
-                                <span style="color:red;margin-left:10px;" class='show_more_intro'>酒店介绍</span>
-                                <span id="hotel_intro">{$hotel_info.introduction}</span>
+                                <span style="color:red;margin-left:10px;" class='show_more_intro'>温馨提示：</span>
+                                <span id="hotel_intro"></span>
                             </div>
                         </li>
 
 
-                        <li class="items js_goto_hotelintro" data-name="info"
-                            data-ubt-key="c_hotel_inland_detail_mod_detail" _type="facilities">
-                            <div class="cell-star ellips dt-color8 hotel_facilities">
-                                <span style="color:red;margin-left:10px;" class='show_more_faci'>酒店设施</span>
-                                <foreach name="hotel_info.facilities" item="facilities" key="key">
-                                    <span style="margin-left:10px;">{$key}:{$facilities}</span>
-                                </foreach>
-                            </div>
-                        </li>
+
 
                     </ul>
                     <!--Star 同类型&浏览历史-->
@@ -304,7 +320,7 @@
         </section>
     </article>
 </div>
-
+<input type="hidden" value="" class="hotel_name" />
 <!--弹出层-->
 <div class="view cui-layer" style="z-index: 3006;display:none;" id="ui-view-16">
 
@@ -383,112 +399,9 @@
 
     $(function () {
         //异步加载
-        var index = layer.load(2, {time: 10*1000});
+        var index = layer.load();
         var hotel_id = "{$data.hotel_id}"
         var url = '{:U("home/index/order")}?{$query}';
-        $.ajax({
-            type: "GET",
-            url: "{:U('home/index/roomImgs','','')}/hotel_id/{$data.hotel_id}",
-            dataType: "json",
-            success: function (data) {
-                $('.imgs_count').text('1/'+data.count)
-                for( var a in data.paths){
-                    var str = '<div class="img">'
-                    str    += '<img src="'+data.paths[a]+'"  width="100%" is="c-img" pagecode="H5HotelDetail">'
-                    str    += ' </div>'
-                }
-                $('.imgs').append(str)
-                //加载房型
-                $.ajax({
-                    type: "GET",
-                    url: "{:U('home/index/rooms','','')}?{$query}",
-                    dataType: "json",
-                    success: function (data) {
-                        layer.close(index)
-                        if(data.status ==0 ){
-                            //TODO
-                            layer.alert('房型获取失败！');
-                            return ;
-                        }
-                        var str = '';
-                        for(var b in data){
-                            str += ' <div class="item house_item" style="" data-ubt-key="c_hotel_inland_detaila_room_basic">'
-                            str += ' <div class="cell-star room--space js_show_baseroom" data-bid="14159268">'
-                            str += ' <div class="room-img">'
-                            str += ' <img class="js_rommimage" src="'+data[b].list[0].room_image+'" width="60" height="60" alt=""  >'
-                            str += ' </div><div class="room-bd">'
-                            str += ' <h3>'+data[b].list[0].cname+'</h3>'
-                            str += ' <p class="room-size">'
-                            str += ' <em>'+data[b].list[0].bed_remark+'</em>'
-                            str += ' <em>'+data[b].list[0].breakfast+'</em>'
-                            str += ' <em>'+data[b].list[0].internet+'</em>'
-                            str += ' <em>'+data[b].list[0].cancel_tag+'</em>'
-                            if(data[b].list[0].confirm_type ==2){
-                                str += ' <em>二次确认</em>'
-                            }else{
-                                str += ' <em>立即确认</em>'
-                            }
-
-                            str += ' </p> </div> </div>'
-                            str += ' <div class="cell-end dt-cell room--space2 js_baseroomtoggle "><div class="cell-star room-column">'
-                            str += ' <p><span class="price"><small>总¥</small>'
-                            str += ' <span class="js-cas-p">'+data[b].list[0].total_money+'</span>'
-                            str += ' </span><span class="price-star">起</span></p></div><div class="cell-end room-column"> <i class="font-dt-icon-fold-up js_basearrow_icon iconfont icon-jiantouxia"></i>'
-                            str += ' </div></div></div>'
-
-                            /**
-                             * Created by TC on 2017/9/19.
-                             */
-                            str    += '<div class="room_list" style="display: none;">'
-                            for( var a in data[b].list){
-                                str    += ' <div class="search-results-mod" style="margin: 5px 0;">'
-                                str    += ' <div class="hotel-g-bd hotel-hot js_hotel_list">'
-                                str    += ' <ul class="hotel-g-list"> '
-                                str    += ' <a href="javascript:void(0)" class="js_a_seo" title="'+data[b].list[a].cname+'"> '
-                                str    += '  <li class="js_hotel_detail  hotel-list-historybrows">'
-                                str    += ' <div class="hotel-g-cbd"><h4 class="ellips js_hotelname">'+data[b].list[a].cname+'</h4> '
-                                str    += ' <div class="list-c list-tags-flex" style="margin-bottom: 10px;height:100%;"> '
-                                str    += ' <div class="ico-txt flex-l" style="width:66%;overflow: inherit"> '
-                                str    += '  <em class="ico-2">'+data[b].list[a].bed_remark+'</em>'
-                                str    += '  <em class="ico-2">'+data[b].list[a].breakfast+'</em>'
-                                str    += '  <em class="ico-2">'+data[b].list[a].internet+'</em>'
-                                str += ' <em class="ico-2">'+data[b].list[0].cancel_tag+'</em>'
-                                if(data[b].list[0].confirm_type ==2){
-                                    str += ' <em class="ico-2">二次确认</em>'
-                                }else{
-                                    str += ' <em class="ico-2">立即确认</em>'
-                                }
-                                str    += '  </div>'
-                                str    += ' <span class="price-num fr"  style="width:23%;    text-align: right;"><b class="num js_translog_price  "> '
-                                str    += ' <small>总¥</small>'+data[b].list[a].total_money+' </b>起 '
-                                str    += ' <button class="dt-btn-t" >预订</button></span></div> </div></li></a></ul> </div> </div>'
-                                str    += ' <div class="lay_info" style="display: none;"> '
-                                str    += ' <div class="l js_pop_box" rel="房型弹层html区域" style="top:400px;"> '
-                                str    += ' <div class="hd js_hd gray" rel="灰色固定头部">'+data[b].list[a].cname+'<span class="a-area js_btn_close"><i class="l-close"></i></span></div> '
-                                str    += ' <div class="bd js_swrapper" rel="中间带滚动条区域" style="overflow: auto; position: relative; height: 225px;"> '
-                                str    += ' <div style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"> '
-                                str    += ' <ul class="l-base c-box l-tb-border mb5"> '
-                                str    += ' <li class="item"><span class="tit">可住人数</span><p>'+data[b].max_people+'</p></li> '
-                                str    += ' <li class="item"><span class="tit">早餐</span><p>'+data[b].list[a].breakfast+'</p></li> '
-                                str    += '  <li class="item"><span class="tit">床</span><p>'+data[b].list[a].bed_remark+'</p></li>'
-                                str    += '  <li class="item"><span class="tit">是否可退</span><p>'+data[b].list[a].remarks+'</p></li>'
-                                str    += ' </ul> </div>'
-                                str    += '  <div style="position: absolute; z-index: 9999; width: 7px; bottom: 2px; top: 2px; right: 1px; overflow: hidden; transform: translateZ(0px); transition-duration: 0ms; opacity: 0;"><div style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; width: 100%; transition-duration: 0ms; height: 104px; transform: translate(0px, 0px) translateZ(0px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);"></div>'
-                                str    += '</div></div> <div class="ed js_footer" rel="固定底部"> <ul class="l-pay l-list"><li class="item"> '
-                                str    += '  <div class="l-cell-num"><p><span class="l-price"><small>¥</small>'+data[b].list[a].total_money+'</span></p>'
-                                url +='&rate_code='+data[b].list[a].rate_code
-                                str    += ' </div> <button data-ubt-key="c_hotel_inland_detail_room_sub_reserve" class="l-btn btn--ui3 js_btn_book " _url='+url+' >';
-                                str    += ' <em class="pay-way  way-yf ">在线付</em>预订</button></li> </ul></div> </div> </div> '
-                            }
-                            str    += ' </div> '
-                        }
-
-
-                        $('.house_type').html(str);
-                    }
-                })
-            }
-        })
 
         $.ajax({
             type: "GET",
@@ -497,49 +410,130 @@
             dataType: "json",
             success: function(data) {
                 $('#title').text(data.data.cname);
-                $('#hotel_img_info .hotel_img_info').text(data.data.star);
+                $('.hotel_name').val(data.data.cname);
+                // $("#hotel_name").text(data.data.cname+","+data.data.ename);
+                $('#hotel_img_info .cell-star').text(data.data.star);
+
                 $('#hotel_address').text(data.data.address);
                 $('.cust').text(data.data.address_en);
-                $('#hotel_intro').text(data.data.introduction);
-//                           <span style="margin-left:10px;">{$key}:{$facilities}</span>
-                var facilities = '';
-                for(var a in data.data.facilities){
-                    facilities += a+':'+data.data.facilities[a];
-                }
-                $('.hotel_facilities').append(facilities);
 
-                if(data.data.arounds){
-                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail" _type="arounds">'
-                    str    += '<div class="cell-star ellips dt-color8">';
-                    str    += ' <span style="color:red;margin-left:10px;" class="show_more_arounds">周边设施</span>';
-                    var around = '';
-                    for(var a in data.data.arounds){
-                        around += data.data.arounds[a];
-                    }
-                    str    += '<span style="margin-left:10px;">'+around+'</span>';
-                    str    += ' </div>';
-                    str    += ' </li>';
-
-                    $('.hotel_detail').append(str);
+                var remark = data.data.remark;
+                if(remark){
+                    $('#hotel_intro').text(remark);
+                }else{
+                    $("#hotelinfo").hide();
                 }
 
-                if(data.data.traffics){
-                    var str = '<li class="items js_goto_hotelintro" data-name="info" data-ubt-key="c_hotel_inland_detail_mod_detail" _type="traffics">'
-                    str    += '<div class="cell-star ellips dt-color8">';
-                    str    += ' <span style="color:red;margin-left:10px;" class="show_more_arounds">周边交通</span>';
-                    var around = '';
-                    for(var a in data.data.traffics){
-                        around += data.data.traffics[a];
-                    }
-                    str    += '<span style="margin-left:10px;">'+around+'</span>';
-                    str    += ' </div>';
-                    str    += ' </li>';
 
-                    $('.hotel_detail').append(str);
-
-                }
+                $('.imgs_count').text('1/'+data.data.image_count)
+                var str = '<div class="img">';
+                str    += '<img src="'+data.data.image+'"  width="100%" is="c-img" pagecode="H5HotelDetail">';
+                str    += ' </div>';
+                $('.imgs').append(str);
             }
-        })
+        });
+
+        //加载房型
+        $.ajax({
+            type: "GET",
+            url: "{:U('home/index/rooms','','')}?{$query}",
+            dataType: "json",
+            success: function (data) {
+
+                if(data.status ==0 ){
+                    //TODO
+                    location.href="{:U('home/index/errorShow','','')}/action/hotelList/info/没有找到符合您要求的房型";
+                    layer.close(index);
+                    return ;
+                }
+                var str = '';
+                for(var b in data){
+                    str += ' <div class="item house_item" style="" data-ubt-key="c_hotel_inland_detaila_room_basic">'
+                    str += ' <div class="cell-star room--space js_show_baseroom" data-bid="14159268">'
+                    str += ' <div class="room-img">'
+                    str += ' <img class="js_rommimage" src="'+data[b].room_image[0]+'" width="60" height="60" alt=""  >'
+                    str += ' </div><div class="room-bd">'
+                    str += ' <h3>'+data[b].cname+'</h3>'
+                    str += ' <p class="room-size">'
+                    str += ' <em>'+data[b].bed_remark+'</em>'
+                    str += ' <em>'+data[b].internet+'</em>';
+                    str += ' <em>'+data[b].max_people+'</em>';
+                    str += ' </p> </div> </div>'
+                    str += ' <div class="cell-end dt-cell room--space2 js_baseroomtoggle "><div class="cell-star room-column">'
+                    str += ' <p><span class="price-star" style="color: #ff7d13;">均</span><span class="price">'
+                    str += ' <span class="js-cas-p">￥'+data[b].list[0].total_money+'</span>'
+                    str += ' </span><span class="price-star">起</span></p></div><div class="cell-end room-column"> <i class="font-dt-icon-fold-up js_basearrow_icon iconfont icon-jiantouxia"></i>'
+                    str += ' </div></div></div>'
+
+                    /**
+                     * Created by TC on 2017/9/19.
+                     */
+                    str    += '<div class="room_list" style="display: none;">'
+                    for( var a in data[b].list){
+                        str    += ' <div class="search-results-mod" style="margin: 5px 0;">'
+                        str    += ' <div class="hotel-g-bd hotel-hot js_hotel_list">'
+                        str    += ' <ul class="hotel-g-list"> '
+                        str    += ' <a href="javascript:void(0)" class="js_a_seo" title="'+data[b].list[a].cname+'"> '
+                        str    += '  <li class="js_hotel_detail  hotel-list-historybrows">'
+                        str    += ' <div class="hotel-g-cbd"><h4 class="ellips js_hotelname">'+data[b].list[a].cname+'</h4> '
+                        str    += ' <div class="list-c list-tags-flex" style="margin-bottom: 10px;height:100%;"> '
+                        str    += ' <div class="ico-txt flex-l" style="width:66%;overflow: inherit"> '
+                        str += ' <em class="ico-2">'+data[b].list[a].cancel_tag+'</em>'
+                        str += ' <em class="ico-2">'+data[b].list[a].breakfast+'</em>'
+                        if(data[b].list[a].confirm_type ==2){
+                            str += ' <em class="ico-2">二次确认</em>'
+                        }else{
+                            str += ' <em class="ico-2">立即确认</em>'
+                        }
+                        str    += '  </div>'
+                        str    += ' <span class="price-num fr"  style="width:23%;    text-align: right;"><span class="price-star" style="color: #ff7d13;">均</span><b class="num js_translog_price  "> '
+                        str    += ' ￥'+data[b].list[a].total_money+' </b>起 '
+                        str    += ' <button class="dt-btn-t" >预订</button></span></div> </div></li></a></ul> </div> </div>'
+                        str    += ' <div class="lay_info" style="display: none;"> '
+                        str    += ' <div class="l js_pop_box" rel="房型弹层html区域" style="top:400px;"> '
+                        str    += ' <div class="hd js_hd gray" rel="灰色固定头部">'+data[b].list[a].cname+'<span class="a-area js_btn_close"><i class="l-close"></i></span></div> '
+                        str    += ' <div class="bd js_swrapper" rel="中间带滚动条区域" style="overflow: auto; position: relative; height: 225px;"> '
+                        str    += ' <div style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"> '
+                        str    += ' <ul class="l-base c-box l-tb-border mb5"> '
+                        var max_people = data[b].list[a].max_people
+                        max_people = max_people?max_people:0;
+                        str    += ' <li class="item"><span class="tit">可住人数</span><p>'+max_people+'</p></li> '
+                        str    += ' <li class="item"><span class="tit">早餐</span><p>'+data[b].list[a].breakfast+'</p></li> '
+                        str    += '  <li class="item"><span class="tit">床</span><p>'+data[b].list[a].bed_remark+'</p></li>'
+                        str    += '  <li class="item"><span class="tit">是否可退</span><p>'+data[b].list[a].cancel_tag+'</p></li>'
+                        str    += '  <li class="item"><span class="tit">网络</span><p>'+data[b].list[a].internet+'</p></li>'
+                        str    += '  <li class="item"><span class="tit"></span><p>'+data[b].list[a].remarks+'</p></li>'
+                        str    += ' </ul> </div>'
+                        str    += '  <div style="position: absolute; z-index: 9999; width: 7px; bottom: 2px; top: 2px; right: 1px; overflow: hidden; transform: translateZ(0px); transition-duration: 0ms; opacity: 0;"><div style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; width: 100%; transition-duration: 0ms; height: 104px; transform: translate(0px, 0px) translateZ(0px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);"></div>'
+                        str    += '</div></div> <div class="ed js_footer" rel="固定底部"> <ul class="l-pay l-list"><li class="item"> '
+                        str    += '  <div class="l-cell-num"><p><span class="price-star">每间每晚均价</span><br/><span class="l-price"><small>¥</small>'+data[b].list[a].total_money+'</span></p>'
+                        var url1 =url+'&rate_code='+data[b].list[a].rate_code+'&hotel_name='+$('.hotel_name').val();
+                        str    += ' </div> <button data-ubt-key="c_hotel_inland_detail_room_sub_reserve" class="l-btn btn--ui3 js_btn_book " _url='+url1+' >';
+                        //str    += ' <em class="pay-way  way-yf ">在线付</em>预订</button></li> </ul></div> </div> </div> '
+                        str    += '预订</button></li> </ul></div> </div> </div> '
+                    }
+                    str    += ' </div> '
+                }
+
+                $('.house_type').html(str);
+                layer.close(index);
+
+                $(".house_item").unbind('click');
+                $(".house_item").each(function(index, el) {
+                    $(this).click(function(event) {
+                        if ($(this).next().css('display') == 'none') {
+                        $(this).next().css('display', 'block');
+                        $(this).find('i').addClass('icon-jiantoushang').removeClass('icon-jiantouxia')
+                    } else {
+                        $(this).next().css('display', 'none');
+                        $(this).find('i').removeClass('icon-jiantoushang').addClass('icon-jiantouxia')
+                    }
+                    });
+                });
+            }
+        });
+
+
 
         //酒店图片
         $('.imgs').click(function(){
@@ -548,9 +542,17 @@
 
         //酒店详情
         $(document).on('click','.hotel_detail li',function(){
+            //console.log("HAHAH");
             var type = $(this).attr('_type');
             location.href="{:U('home/index/hotelDetail','','')}/hotel_id/{$data.hotel_id}/type/"+type
-        })
+        });
+
+        $(".hotel_detail li").each(function(index, el) {
+            $(this).click(function(event) {
+                var type = $(this).attr('_type');
+                location.href="{:U('home/index/hotelDetail','','')}/hotel_id/{$data.hotel_id}/type/"+type
+            });
+        });
 
         $(document).on('click','.search-results-mod',function(){
             var str = $(this).next().html();
@@ -566,23 +568,23 @@
             self.location=document.referrer;
         });
 
-        $('.house_item').click(function () {
+        // $('.house_item').click(function () {
 
-        })
+        // })
 
         $(document).on('click','.js_btn_book',function(){
             location.href=$(this).attr('_url')
         })
 
-        $(document).on('click','.house_item',function(){
-            if ($(this).next().css('display') == 'none') {
-                $(this).next().css('display', 'block');
-                $(this).find('i').addClass('icon-jiantoushang').removeClass('icon-jiantouxia')
-            } else {
-                $(this).next().css('display', 'none');
-                $(this).find('i').removeClass('icon-jiantoushang').addClass('icon-jiantouxia')
-            }
-        })
+        // $(document).on('click','.house_item',function(){
+        //     if ($(this).next().css('display') == 'none') {
+        //         $(this).next().css('display', 'block');
+        //         $(this).find('i').addClass('icon-jiantoushang').removeClass('icon-jiantouxia')
+        //     } else {
+        //         $(this).next().css('display', 'none');
+        //         $(this).find('i').removeClass('icon-jiantoushang').addClass('icon-jiantouxia')
+        //     }
+        // })
 
         //更改日期 city_id=18568&foreign=0&check_in=2017-09-08&check_out=2017-09-17&adult_count=2&children_ages=2&city=香港&keyword=&children_count=1&hotel_id=568834
         $('#js_submit').click(function(){
@@ -692,11 +694,15 @@ jQuery(document).ready(function($) {
     var bind_date=function(){
         if($('.select-time')[0]){
             $('.select-time').hotelDate();
+            $('.select-time').click(function(event) {
+                $('input').blur();
+            });
         }
     }
     bind_date();
 });   
 </script>
+<include file="Common/tongji" />
 </body>
 </html>
 

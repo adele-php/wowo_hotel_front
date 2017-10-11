@@ -333,6 +333,23 @@
             layer.alert(_html);
         });
 
+        $(".show_more_intro").click(function(event) {
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_intro").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+        $(".show_more_faci").click(function(event) {
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_facilities").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+        $(".show_more_arounds").click(function(event) {
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_arounds").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+        $(".show_more_traffics").click(function(event) {
+            var _html  = $(this).parents(".js_goto_hotelintro_ul").find(".show_traffics").html().replace("\n","<br/><br/>");
+            layer.alert(_html);
+        });
+
     })
 
     function getUrlParam(name) {

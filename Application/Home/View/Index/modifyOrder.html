@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="__ROOT__/Public/Index/css/details.css" type="text/css"/>
     <link rel="stylesheet" href="__ROOT__/Public/Index/css/order.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Index/icon/iconfont.css">
+    <link rel="stylesheet" href="__ROOT__/Public/Index/css/date_select.css" />
+
     <script type="text/javascript" src="__ROOT__/Public/Index/js/jquery.js"></script>
     <script type="text/javascript" src="__ROOT__/Public/Index/js/comm.js"></script>
     <script type="text/javascript" src="__ROOT__/Public/Index/js/layer/layer.js"></script>
@@ -45,9 +47,9 @@
                     <li id="js_checkInOutDay" class="cell-v">
                         <p class="smeal-evl bk-cell-num">
 
-                            <em>入住：<input type="date" id='start_time' name="start_time" class="g-fn1 start_time" style="border: 0px;" value="{$data.check_in}"/></em>
+                            <em>入住：<input type="text" id='start_time' readonly="readonly" name="start_time" class="g-fn1 start_time select-time input-enter" style="border: 0px;" value="{$data.check_in}"/></em>
                             <!--钟点房不显示离店日期及晚数-->
-                            <em>离店：<input type="date" id="end_time" name="end_time" class="g-fn1 end_time" style="border: 0px;" value="{$data.check_out}"/></em></em>
+                            <em>离店：<input type="text" id="end_time" readonly="readonly" name="end_time" class="g-fn1 end_time select-time input-leave" style="border: 0px;" value="{$data.check_out}"/></em></em>
                         </p>
                     </li>
                     <!-- end 修改日期按钮 -->
@@ -223,7 +225,7 @@
                     layer.close(index);
                     layer.alert('请求超时！');
                 }
-            },5000)
+            },60000)
 
             var check_in   = $('.start_time').val();
             var check_out  = $('.end_time').val();
@@ -325,6 +327,19 @@
     });
 
 
+</script>
+<include file="Common/tongji" />
+<script type="text/javascript" src="__ROOT__/Public/Index/js/date_select.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    //绑定南航日期
+    var bind_date=function(){
+        if($('.select-time')[0]){
+            $('.select-time').hotelDate();
+        }
+    }
+    bind_date();
+});   
 </script>
 </body>
 </html>

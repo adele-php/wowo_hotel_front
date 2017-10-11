@@ -34,7 +34,7 @@
     <div class="detail">
         <div class="detail_info">
             <p><span>订单编号：</span><span class="order_id">{$data.order_no}</span></p>
-            <p><span>酒店确认号：</span><span class="wowo_id">{$data.wowo_order_no}</span></p>
+            <p><span>酒店确认号：</span><span class="wowo_id">{$data.confirm_code}</span></p>
             <p><span>订单金额：</span><span class="money">{$data.total_money}</span></p>
             <p> <span>酒店名称：</span><span class="hotel_name">{$data.room_name}</span></p>
 
@@ -73,5 +73,6 @@
         })
     });
 </script>
+<include file="Common/tongji" />
 </body>
 </html>

@@ -105,41 +105,45 @@
                                         <!--style="display: none;"></li>-->
                                 <!--</ul>-->
                             <!--</li>-->
-
-                            <li class="js_simple_city js_history_city">
-                                <span class="cui-city-t">历史选择</span>
-                                <ul class="hotel-city-tags city_ul">
-                                    <foreach name="history_city" item="city" key="cid">
-                                        <li  data-cityid="{$cid}" city="{$city}">{$city}</li>
-                                    </foreach>
-                                </ul>
-                            </li>
+                            <if condition="$history_city">
+                                <li class="js_simple_city js_history_city">
+                                    <span class="cui-city-t">历史选择</span>
+                                    <ul class="hotel-city-tags city_ul">
+                                        <foreach name="history_city" item="city" key="cid">
+                                            <li  data-cityid="{$cid}" city="{$city}">{$city}</li>
+                                        </foreach>
+                                    </ul>
+                                </li>
+                            </if>
                             <!--国内热门列表-->
-                            <li class="js_simple_city js_hot_city not-foreign">
-                                <span class="cui-city-t">热门城市</span>
-                                <ul class="hotel-city-tags city_ul">
-                                    <foreach name="citys['国内']['hot']" item="hots">
-                                        <li  data-cityid="{$hots.id}" city="{$hots.cname}">{$hots.cname}</li>
-                                    </foreach>
-                                </ul>
-                            </li>
+                            <if condition="$citys['国内']['hot']">
+                                <li class="js_simple_city js_hot_city not-foreign">
+                                    <span class="cui-city-t">热门城市</span>
+                                    <ul class="hotel-city-tags city_ul">
+                                        <foreach name="citys['国内']['hot']" item="hots">
+                                            <li  data-cityid="{$hots.id}" city="{$hots.cname}">{$hots.cname}</li>
+                                        </foreach>
+                                    </ul>
+                                </li>
+                            </if>
                             <!--国外热门列表-->
-                            <li class="js_simple_city js_hot_city foreign">
-                                <span class="cui-city-t">热门城市</span>
-                                <ul class="hotel-city-tags city_ul">
-                                    <foreach name="citys['国外']['hot']" item="hots">
-                                        <li  data-cityid="{$hots.id}" city="{$hots.cname}">{$hots.cname}</li>
-                                    </foreach>
-                                </ul>
-                            </li>
-
+                            <if condition="$citys['国外']['hot']">
+                                <li class="js_simple_city js_hot_city foreign">
+                                    <span class="cui-city-t">热门城市</span>
+                                    <ul class="hotel-city-tags city_ul">
+                                        <foreach name="citys['国外']['hot']" item="hots">
+                                            <li  data-cityid="{$hots.id}" city="{$hots.cname}">{$hots.cname}</li>
+                                        </foreach>
+                                    </ul>
+                                </li>
+                            </if>
                             <!--国内列表-->
                             <foreach name="citys['国内']['prefix']" item="prefix" key="key">
                                 <li class="js_simple_city js_char_city cui-arrow-close not-foreign" data-key="{$key}">
                                     <span class="cui-city-t js_cat_btn">{$key}</span>
                                     <ul class="cui-city-n city_ul" style="display: none;">
                                         <foreach name="prefix" item="city">
-                                            <li  data-cityid="{$city.id}" city="{$city.cname}">{$city.cname}</li>
+                                            <li  data-cityid="{$city.id}" city="{$city.cname}">{$city.cname} <if condition="$city['state_cn']">/ {$city.state_cn}</if></li>
                                         </foreach>
                                     </ul>
                                 </li>
@@ -147,14 +151,16 @@
 
                             <!--国外列表-->
                             <foreach name="citys['国外']['prefix']" item="prefix" key="key">
-                                <li class="js_simple_city js_char_city cui-arrow-close foreign" data-key="{$key}">
-                                    <span class="cui-city-t js_cat_btn">{$key}</span>
-                                    <ul class="cui-city-n city_ul" style="display: none;">
-                                        <foreach name="prefix" item="city">
-                                            <li  data-cityid="{$city.id}" city="{$city.cname}">{$city.cname}</li>
-                                        </foreach>
-                                    </ul>
-                                </li>
+                                <if condition="$key">
+                                    <li class="js_simple_city js_char_city cui-arrow-close foreign" data-key="{$key}">
+                                        <span class="cui-city-t js_cat_btn">{$key}</span>
+                                        <ul class="cui-city-n city_ul" style="display: none;">
+                                            <foreach name="prefix" item="city">
+                                                <li  data-cityid="{$city.id}" city="{$city.cname}">{$city.cname} <if condition="$city['state_cn']">/ {$city.state_cn} </if> <if condition="$city['country_cn']"> / {$city.country_cn}</if></li>
+                                            </foreach>
+                                        </ul>
+                                    </li>
+                                </if>
                             </foreach>
 
                         </ul>
@@ -226,6 +232,14 @@
                     str += '</div>';
                 }
                 $('.select_body').empty().append(str);
+                $('.select_city').unbind('click');
+                $('.select_city').each(function(index, el) {
+                    $(this).click(function(event) {
+                        var cityid = $(this).find('p').attr('_id');
+                        var city = $(this).find('p').attr('_city');
+                        location.href="{:U('home/index/index')}?city_id="+cityid+'&city='+city+'&{$query}';
+                    });
+                });
             }
         })
     });
@@ -276,7 +290,13 @@
         }
     });
 
+    $(function(){
+       $(".cui-city-n:eq(0)").show();
+       $(".foreign .cui-city-n:eq(0)").show();
+    });
+
 
 </script>
+<include file="Common/tongji" />
 </body>
 </html>

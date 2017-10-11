@@ -121,8 +121,8 @@
                 query += '&children_ages={$data.children_ages}'
             }
 
-            if ('{$data.child_count}') {
-                query += '&child_num={$data.child_count}'
+            if ('{$data.children_count}') {
+                query += '&child_num={$data.children_count}'
             } else if ('{$data.child_num}') {
                 query += '&child_num={$data.child_num}'
             }
@@ -131,14 +131,14 @@
                 query += '&adult_count={$data.adult_count}'
             }
 
-            if ('{$data.stars}') {
-                query += '&stars={$data.stars}'
+            if ('{$data.star_id}') {
+                query += '&stars={$data.star_id}'
             }
-            if ('{$data.prices}') {
-                query += '&stars={$data.prices}'
+            if ('{$data.price_range}') {
+                query += '&prices={$data.price_range}'
             }
-            if ('{$data.hotel_types}') {
-                query += '&stars={$data.hotel_types}'
+            if ('{$data.hotel_type}') {
+                query += '&hotel_types={$data.hotel_type}'
             }
 
             location.href = "{:U('home/index/index','','')}?" + query;
@@ -158,8 +158,8 @@
                 query += '&children_ages={$data.children_ages}'
             }
 
-            if ('{$data.child_count}') {
-                query += '&child_num={$data.child_count}'
+            if ('{$data.children_count}') {
+                query += '&child_num={$data.children_count}'
             } else if ('{$data.child_num}') {
                 query += '&child_num={$data.child_num}'
             } else if ('{$data.children_count}') {
@@ -192,11 +192,15 @@ jQuery(document).ready(function($) {
     var bind_date=function(){
         if($('.select-time')[0]){
             $('.select-time').hotelDate();
+            $('.select-time').click(function(event) {
+                $('input').blur();
+            });
         }
     }
     bind_date();
 });   
 </script>
+<include file="Common/tongji" />
 </body>
 </html>
 

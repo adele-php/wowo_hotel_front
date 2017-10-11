@@ -202,7 +202,7 @@
     display: block;
 }
 .hotel-city-tags li {
-    width: 17%;
+    /*width: 17%;*/
     float: left;
     height: 1.5rem;
     line-height: 1.5rem;

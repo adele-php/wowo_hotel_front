@@ -1,0 +1,110 @@
+.info{
+    border-bottom:1px solid #dbdbdb;
+    text-align: left;
+    padding: 0.25rem 0 0.25rem 0.4rem;
+    background: #fff;
+}
+.info h2{
+    font-size:0.9rem;
+    color:#333;
+}
+.info span{
+    font-size:0.455rem;
+    color:#222;
+}
+.pay-submit {
+    background-color: #ff7d13;
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+    color: #fff;
+    border-radius: 0.2rem;
+    line-height: 1.05rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.detail_info{
+    padding: 0.4rem;
+}
+.detail_info span,.detail_info i{
+    font-size:1rem;
+    line-height: 36px;
+}
+.detail_info span.money{
+    color:#ff7d13;
+}
+.detail_info i{
+    /*color:#008acb;*/
+}
+.detail{
+    background: #fff;
+    margin-bottom:20px;
+}
+
+
+.ttd-comment-add-text {
+    padding: 15px;
+}
+.ttd-comment-add-item {
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+.ttd-comment-text {
+    font-size:0.8rem;
+    display: block;
+    background-color: #fff;
+    width: 100%;
+    min-height: 45px;
+    resize: none;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+
+    border: none;
+    font-family: inherit;
+
+    font-weight: inherit;
+    outline: 0;
+    box-shadow: none;
+}
+.ttd-text-tip {
+    display: block;
+    height: 12px;
+    padding-top: 3px;
+    font-size: 12px;
+    line-height: 12px;
+    text-align: right;
+    color: #999;
+}
+
+.ttd-text-tip {
+    display: block;
+    height: 12px;
+    padding-top: 3px;
+    font-size: 12px;
+    line-height: 12px;
+    text-align: right;
+    color: #999;
+}
+
+.icon-xing{
+    color:rgb(255,210,0);
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,8 +9,6 @@
  * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
  * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
  */
-//require_once("Corefunction.php");
-//require_once("alipay_md5.function.php");
 
 class AlipaySubmit {
 
@@ -102,48 +100,13 @@ class AlipaySubmit {
         }
 
 		//submit按钮控件请不要含有name属性
-        $sHtml = $sHtml."<input type='hidden' value='".$button_name."'></form>正在向支付宝提交数据...";
-
+        $sHtml = $sHtml."<input type='submit'  value='".$button_name."' style='display:none;'></form>";
+		
 		$sHtml = $sHtml."<script>document.forms['alipaysubmit'].submit();</script>";
 		
 		return $sHtml;
 	}
 	
-	/**
-     * 建立请求，以模拟远程HTTP的POST请求方式构造并获取支付宝的处理结果
-     * @param $para_temp 请求参数数组
-     * @return 支付宝处理结果
-     */
-	function buildRequestHttp($para_temp) {
-		$sResult = '';
-		
-		//待请求参数数组字符串
-		$request_data = $this->buildRequestPara($para_temp);
-
-		//远程获取数据
-		$sResult = getHttpResponsePOST($this->alipay_gateway_new, $this->alipay_config['cacert'],$request_data,trim(strtolower($this->alipay_config['input_charset'])));
-
-		return $sResult;
-	}
-	
-	/**
-     * 建立请求，以模拟远程HTTP的POST请求方式构造并获取支付宝的处理结果，带文件上传功能
-     * @param $para_temp 请求参数数组
-     * @param $file_para_name 文件类型的参数名
-     * @param $file_name 文件完整绝对路径
-     * @return 支付宝返回处理结果
-     */
-	function buildRequestHttpInFile($para_temp, $file_para_name, $file_name) {
-		
-		//待请求参数数组
-		$para = $this->buildRequestPara($para_temp);
-		$para[$file_para_name] = "@".$file_name;
-		
-		//远程获取数据
-		$sResult = getHttpResponsePOST($this->alipay_gateway_new, $this->alipay_config['cacert'],$para,trim(strtolower($this->alipay_config['input_charset'])));
-
-		return $sResult;
-	}
 	
 	/**
      * 用于防钓鱼，调用接口query_timestamp来获取时间戳的处理函数
@@ -151,7 +114,7 @@ class AlipaySubmit {
      * return 时间戳字符串
 	 */
 	function query_timestamp() {
-		$url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']));
+		$url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']))."&_input_charset=".trim(strtolower($this->alipay_config['input_charset']));
 		$encrypt_key = "";		
 
 		$doc = new DOMDocument();
